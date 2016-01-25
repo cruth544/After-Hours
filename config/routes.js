@@ -6,7 +6,14 @@ var usersController = require('../controllers/users')
 
 router.route('/')
   .get(usersController.index)
+
+router.route('/login')
+  .post(usersController.login)
+
+router.route('/SignUp')
   .post(usersController.create)
+
+
 
 
 
