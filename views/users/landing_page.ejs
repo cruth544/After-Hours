@@ -13,19 +13,8 @@
 </head>
 
 <body>
-  <!-- NAV BAR -->
-  <div id = "navBar">
-
-    <!-- LOGO -->
-    <div id = "afterHoursLogo"></div>
-    <!-- SIGN UP | LOG IN -->
-    <div id = "rightSideNav">
-      <div id = "signUp"><a class="btn btn-link" role="button" id= "signUp" data-toggle="modal" data-target="#mySignupModal">SIGN UP</a></div>
-      <div id = "logIn"><a class="btn btn-link" role="button" id= "logIn" data-toggle="modal" data-target="#myLoginModal">LOG IN</a></div>
-    </div>
-
-
-  </div>
+<!-- NAV BAR -->
+<%- include('../partials/navigation_bar') %>
 
 <div class="containerSignup">
   <!-- Trigger the modal with a button -->
@@ -101,9 +90,9 @@
 
 </body>
 <!-- GOOGLE MAP -->
-  <div id = "main">
-    <div id = "googleMapLanding"></div>
-  </div>
+  <%- include('../partials/map') %>
+
+<!-- FOOTER / JS -->
   <%- include('../partials/footer') %>
   <%- include('../partials/scripts') %>
 
