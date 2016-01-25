@@ -7,9 +7,15 @@ var usersController = require('../controllers/users')
 router.route('/')
   .get(usersController.landing)
 
-// User Routes
-router.route('/user/new')
-  .get(usersController.new)
+router.route('/login')
+  .post(usersController.login)
+
+router.route('/SignUp')
+  .post(usersController.create)
+
+
+
+
 
 
 
