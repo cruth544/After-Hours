@@ -1,5 +1,26 @@
 var express = require('express')
-var router = express.Router()
+var router  = new express.Router()
+var usersController = require('../controllers/users')
 
 
-module.exports = router
+
+router.route('/')
+  .get(usersController.index)
+
+router.route('/login')
+  .post(usersController.login)
+
+router.route('/signUp')
+  .post(usersController.create)
+
+router.route('/logout')
+  .get(usersController.logout)
+
+
+
+
+
+
+
+// router.get('/welcome', usersController.index);
+module.exports = router;
