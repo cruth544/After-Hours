@@ -1,5 +1,10 @@
 var express = require('express')
-var router = express.Router()
+    router  = new express.Router();
 
+// Require user controllers.
+var usersController   = require('../controllers/users');
 
-module.exports = router
+// users resource paths:
+router.get('/', usersController.landing);
+// router.get('/welcome', usersController.index);
+module.exports = router;
