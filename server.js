@@ -1,3 +1,4 @@
+'use strict'
 
 require('dotenv').load()
 
@@ -10,9 +11,14 @@ var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 
-var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/After-Hours')
+var dbConfig = require('./db/credentials.js')
+var mongoose = Promise.promisifyAll( require('mongoose'))
 
+var credentials = require('./config/credentials.js')
+app.use( require('cookie-parser')(credentials.cookieSecret))
+app.use( require('express-session')({
+  resave: false, saveUnitialized: false,
+  secret: credentials.cookieSecret }))
 
 // Set View Engine to EJS
 app.set('view engine', 'ejs')
@@ -27,6 +33,21 @@ app.use(express.static('public'));
 
 var routes = require('./config/routes')
 app.use('/', routes)
+
+
+
+
+// use db connection string based on whether the environment is development or production
+switch(app.get('env')){
+  case 'development':
+      mongoose.connect(dbConfig.mongo.dev.conn, dbConfig.mongo.options);
+      break;
+  case 'production':
+      mongoose.connect(dbConfig.mongo.prod.conn, dbConfig.mongo.options);
+      break;
+  default:
+      throw new Error('Unknown execution environment: ' + app.get('env'));
+}
 
 
 app.listen(3000)
