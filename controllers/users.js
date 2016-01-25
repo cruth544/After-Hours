@@ -31,17 +31,24 @@ module.exports = {
       newUser[key] = req.body[key]
     })
 
-    newUser.user.saveAsync()
+    newUser.saveAsync()
       .then(function() {
-          req.session.email = user.email
+          req.session.email = newUser.email
           res.redirect(303,'/')
       })
-  },
+   },
 
-  new: function (req, res, next) {
-    res.send("Create new user")
-    res.render('users/new')
-  },
+   login: function (req, res, next) {
+      User.findOneAsync({email: req.body.email}).then(function(user){
+        user.comparePasswordAsync(req.body.password).then(function(isMatch){
+         console.log('match: '+ isMatch);
+         console.log(req.session)
+         req.session.email = user.email;
+         res.redirect(303, '/')
+        })
+      })
+
+   }
 
 
 }
