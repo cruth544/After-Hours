@@ -23,6 +23,7 @@ module.exports = {
   },
 
   new: function (req, res, next) {
+    res.send("Create new user")
     res.render('users/new')
   },
 

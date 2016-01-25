@@ -9,24 +9,13 @@
 </head>
 
 <body>
-  <!-- NAV BAR -->
-  <div id = "navBar">
-
-    <!-- LOGO -->
-    <div id = "afterHoursLogo"></div>
-    <!-- SIGN UP | LOG IN -->
-    <div id = "rightSideNav">
-      <div id = "signUp"><a id= "signUp" href = '/welcome'>SIGN UP</a></div>
-      <div id = "logIn"><a id = "logIn" href = '/welcome'>LOG IN</a></div>
-    </div>
-
-
-  </div>
+<!-- NAV BAR -->
+  <%- include('../partials/navigation_bar') %>
 
 <!-- GOOGLE MAP -->
-  <div id = "main">
-    <div id = "googleMapLanding"></div>
-  </div>
+  <%- include('../partials/map') %>
+
+<!-- FOOTER / JS -->
   <%- include('../partials/footer') %>
   <%- include('../partials/scripts') %>
 
