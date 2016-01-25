@@ -1,18 +1,30 @@
-// var User = require("../models/user");
+var User = require("../models/user");
 
-var landing = function(req, res, next){
-
-    res.render('users/landing_page')
-  };
-
-// var index = function(req, res, next){
-
-//   User.find({}, function(error, users){
-//     res.render('users/index', {users: users});
-//   });
-// };
 
 module.exports = {
-  landing: landing,
-  // index: index
-};
+
+  landing: function (req, res, next) {
+    res.render('users/landing_page')
+    // Check to see if current user exists
+    // If current user exits, show index page
+  },
+
+  create: function (req, res, next) {
+    var newUser = new User()
+    var keys = Object.keys(req.body)
+    keys.forEach(function (key) {
+      newUser[key] = req.body[key]
+    })
+
+    newUser.save(function (err) {
+      if (err) console.log(err)
+      else res.send('User Created!')
+    })
+  },
+
+  new: function (req, res, next) {
+    res.render('users/new')
+  },
+
+
+}
