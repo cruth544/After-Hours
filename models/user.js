@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = Promise.promisifyAll(require('../node_modules/bcrypt'));
-var Promise = require('bluebird');
+// var bcrypt = Promise.promisifyAll(require('../node_modules/bcrypt'));
+// var Promise = require('bluebird');
 
 
 var userSchema = Schema({
@@ -42,5 +42,5 @@ userSchema.methods.comparePasswordAsync = function(candidatePassword) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-module.exports = User;
+// module.exports = User;
 

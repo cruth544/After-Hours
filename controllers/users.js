@@ -4,7 +4,7 @@ var User = require("../models/user");
 module.exports = {
 
   landing: function (req, res, next) {
-    res.render('users/landing_page')
+    res.render('index')
     // Check to see if current user exists
     // If current user exits, show index page
   },
