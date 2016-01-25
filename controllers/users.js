@@ -2,7 +2,9 @@ var User = require("../models/user");
 
 
 module.exports = {
-
+  index: function (req, res, next) {
+    res.render('index')
+  },
   landing: function (req, res, next) {
     if(req.session && req.session.email){
         User.findOne({ email: req.session.email }).then(function(user){

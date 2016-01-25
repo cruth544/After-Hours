@@ -5,7 +5,7 @@ var usersController = require('../controllers/users')
 
 
 router.route('/')
-  .get(usersController.landing)
+  .get(usersController.index)
   .post(usersController.create)
 
 
