@@ -2,8 +2,11 @@
 
   <!-- LOGO -->
   <div id = "afterHoursLogo"></div>
-  <!-- SIGN UP | LOG IN -->
-
+  <!-- Search Box -->
+  <div id="searchBox">
+    <input type="search" id="search" placeholder="Enter city or address">
+    <button onclick="myFunction()">Let's Get Drunk!</button>
+  </div>
 
   <div id = "rightSideNav">
   <% if( curr_user ){ %>
@@ -18,3 +21,10 @@
 
 
 </div>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("mySearch").placeholder;
+    document.getElementById("demo").innerHTML = x;
+}
+</script>
