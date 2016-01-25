@@ -4,7 +4,22 @@ var User = require("../models/user");
 module.exports = {
 
   landing: function (req, res, next) {
-    res.render('users/landing_page')
+    if(req.session && req.session.email){
+        User.findOne({ email: req.session.email }).then(function(user){
+            res.render('index',{
+                curr_user: user.email,
+                users: null  })
+        })
+    }
+    else{
+        User.findAsync({})
+            .then( function(users){
+                res.render('index', {
+                    curr_user: null,
+                    users: users
+                })
+            }).catch()
+    }
     // Check to see if current user exists
     // If current user exits, show index page
   },
@@ -16,10 +31,11 @@ module.exports = {
       newUser[key] = req.body[key]
     })
 
-    newUser.save(function (err) {
-      if (err) console.log(err)
-      else res.send('User Created!')
-    })
+    newUser.user.saveAsync()
+      .then(function() {
+          req.session.email = user.email
+          res.redirect(303,'/')
+      })
   },
 
   new: function (req, res, next) {

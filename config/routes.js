@@ -6,10 +6,9 @@ var usersController = require('../controllers/users')
 
 router.route('/')
   .get(usersController.landing)
+  .post(usersController.create)
 
-// User Routes
-router.route('/user/new')
-  .get(usersController.new)
+
 
 
 
