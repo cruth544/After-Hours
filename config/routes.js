@@ -10,8 +10,11 @@ router.route('/')
 router.route('/login')
   .post(usersController.login)
 
-router.route('/SignUp')
+router.route('/signUp')
   .post(usersController.create)
+
+router.route('/logout')
+  .get(usersController.logout)
 
 
 

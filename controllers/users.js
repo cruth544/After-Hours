@@ -2,10 +2,8 @@ var User = require("../models/user");
 
 
 module.exports = {
+
   index: function (req, res, next) {
-    res.render('index')
-  },
-  landing: function (req, res, next) {
     if(req.session && req.session.email){
         User.findOne({ email: req.session.email }).then(function(user){
             res.render('index',{
@@ -49,7 +47,12 @@ module.exports = {
          res.redirect(303, '/')
         })
       })
+   },
 
+   logout: function (req, res, next) {
+      req.session.destroy(function () {
+        res.redirect(303, '/')
+      })
    }
 
 
