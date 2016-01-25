@@ -95,16 +95,12 @@ body {
   height: 70%;
   width: 100%;
   position: relative;
+  text-align: center;
 }
 
-#googleMapLanding {
+iframe {
 /*  border: 1px dotted rgba(255, 255, 255, 0.5);*/
   box-shadow: 0 0 0.1em #fff,
               0 0 0.5em #fff;
-  height: 330px;
-  width: 565px;
-  margin: 0px auto;
   margin-top: 40px;
-  background-image: url('../assets/images/google_map_sample.png');
-  background-size: cover;
 }
