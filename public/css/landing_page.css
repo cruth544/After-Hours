@@ -1,0 +1,90 @@
+a {
+  text-decoration: none;
+  color: white;
+  text-shadow: 0 0 0.1em #fff,
+               0 0 0.3em #fff,
+               0 0 0.6em #fff,;
+}
+
+a#signUp:hover {
+  text-shadow: 0 0 0.1em #fff,
+               0 0 0.2em #fff,
+               0 0 0.3em #fff,
+               0 0 0.4em #77f,
+               0 0 0.6em #00f,
+               0 0 0.8em #00f,
+               0 0 1.0em #00f,
+               0 0 1.2em #00f,
+}
+
+a#logIn:hover {
+  text-shadow: 0 0 0.1em #fff,
+               0 0 0.2em #fff,
+               0 0 0.3em #fff,
+               0 0 0.4em #77f,
+               0 0 0.6em #f00,
+               0 0 0.8em #f00,
+               0 0 1.0em #f00,
+               0 0 1.2em #f00,
+}
+
+body {
+  color: white;
+  background-image: url("http://www.ambientestones.ch/data/uploads/gallery/bricks/msd-280-wandpaneel-steinoptik-ladrillo-loft-dark-red-3.30-x-1.28-m.jpg");
+  background-color: black;
+  background-size: cover;
+}
+
+#afterHoursLogo {
+  height: 90px;
+  width: 160px;
+  border: 1px solid blue;
+}
+
+#signUp, #logIn {
+/*  border: 1px solid blue;*/
+  width: 110px;
+  height: 70px;
+  font-family: 'Dosis', sans-serif;
+  font-size: 30px;
+}
+
+#logIn {
+  margin-left: 7px;
+}
+
+#rightSideNav {
+  height: 70px;
+  width: 222px;
+/*  border: 1px solid red;*/
+  display: flex;
+  position: absolute;
+  right: 0px;
+  top: 16px;
+}
+
+#navBar {
+  width: 100%;
+  height: 70px;
+/*  border: 1px solid white;*/
+  position: relative;
+  display: flex;
+}
+
+#main {
+  height: 70%;
+  width: 100%;
+  position: relative;
+}
+
+#googleMapLanding {
+/*  border: 1px dotted rgba(255, 255, 255, 0.5);*/
+  box-shadow: 0 0 0.1em #fff,
+              0 0 0.5em #fff;
+  height: 330px;
+  width: 565px;
+  margin: 0px auto;
+  margin-top: 40px;
+  background-image: url('../assets/images/google_map_sample.png');
+  background-size: cover;
+}
