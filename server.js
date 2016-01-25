@@ -29,7 +29,7 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(cookieParser())
-app.use(express.static('public'));
+app.use('/public', express.static('public'));
 
 var routes = require('./config/routes')
 app.use('/', routes)
