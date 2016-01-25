@@ -8,10 +8,11 @@ var userSchema = mongoose.Schema({
       email               : String,
       password            : String,
       profile_image_url   : String,
-      reviews             : [ restaurantName : String,
-                              body           : String,
-                              rating         : Number
-                            ],
+      reviews             : [{ restaurant : { type  : Schema.Types.ObjectId,
+                                              ref   : 'Restaurant'},
+                               body  : String,
+                               rating: Number
+                            }],
       restaurants         : [{ type: Schema.Types.ObjectId, ref: 'Restaurant' }]
 
 })
