@@ -8,7 +8,7 @@
   <div id = "rightSideNav">
   <% if( curr_user ){ %>
     <h5> Welcome: <%= curr_user %></h5>
-    <div id = "logIn"><a class="btn btn-link" role="button" id= "logIn" href="/logout">LOG OUT</a></div>
+    <div id = "logOut"><a class="btn btn-link" role="button" id= "logOut" href="/logout">LOG OUT</a></div>
 
   <% } else{ %>
         <div id = "signUp"><a class="btn btn-link" role="button" id= "signUp" data-toggle="modal" data-target="#mySignupModal">SIGN UP</a></div>
