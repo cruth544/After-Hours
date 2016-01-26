@@ -4,15 +4,20 @@ require('dotenv').load()
 
 var express = require('express')
 var app = express()
+// var helpers = require('express-helpers')()
+// app = helpers.all(app);
 var Promise = require('bluebird')
 var path  = require('path');
 var passport   = require('passport');
+var path  = require('path')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
-var passport       = require('passport');
+var passport       = require('passport')
 var dbConfig = require('./db/credentials.js')
 var mongoose = Promise.promisifyAll( require('mongoose'))
+var helper = require('./helper.js')
+app.locals = helper
 
 var credentials = require('./config/credentials.js')
 app.use( require('cookie-parser')(credentials.cookieSecret))
