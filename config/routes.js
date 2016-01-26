@@ -1,11 +1,12 @@
 var express = require('express')
 var router  = new express.Router()
 var usersController = require('../controllers/users')
+var restaurantsController = require('../controllers/restaurants')
 
 
 
 router.route('/')
-  .get(usersController.index)
+  .get(restaurantsController.index)
 
 router.route('/login')
   .post(usersController.login)
