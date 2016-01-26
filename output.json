@@ -1,40 +1,22 @@
 {
     "Arts District Brewing Company": {},
-    "La Chuperia": {},
-    "Sunset Beer Company": {
-        "1": {
-            "review": [
-                " 4-7",
-                null,
-                "-",
-                null
-            ]
-        },
-        "4": {
-            "review": [
-                " 4-7pm",
-                null,
-                "-",
-                "pm"
-            ]
-        }
-    },
-    "Everson Royce Bar": {},
-    "The Hermosillo": {},
     "The Faculty": {
         "2": {
             "review": [
                 " 4-7 ",
                 null,
+                null,
                 "-",
                 null
             ]
         }
     },
+    "The Hermosillo": {},
     "1642 Beer and Wine": {
         "0": {
             "review": [
-                " 6 to 8 pm.",
+                "from 6 to 8 pm.",
+                "from",
                 null,
                 "to",
                 "pm."
@@ -43,6 +25,7 @@
         "3": {
             "review": [
                 " until 2016",
+                null,
                 null,
                 "until",
                 null
@@ -54,75 +37,47 @@
             "review": [
                 " and 5",
                 null,
+                null,
                 "and",
                 null
             ]
         }
     },
-    "Melody Lounge": {
+    "La Chuperia": {},
+    "Sunset Beer Company": {
         "1": {
             "review": [
-                " until 2am",
+                " 4-7",
                 null,
-                "until",
-                "am"
-            ]
-        },
-        "2": {
-            "review": [
-                " 5-9",
                 null,
                 "-",
                 null
             ]
         },
-        "3": {
+        "4": {
             "review": [
-                " 5-9 ",
+                " 4-7pm",
                 null,
-                "-",
-                null
-            ]
-        },
-        "7": {
-            "review": [
-                " 5pm-9pm",
-                "pm",
-                "-",
-                "pm"
-            ]
-        },
-        "10": {
-            "review": [
-                " 6-8pm",
                 null,
                 "-",
                 "pm"
-            ]
-        }
-    },
-    "BAR Ama": {
-        "7": {
-            "review": [
-                " 30-45 ",
-                null,
-                "-",
-                null
             ]
         }
     },
     "Jay's Bar": {
         "0": {
             "review": [
-                " 2 to 4 ",
+                "from 2 to 4 ",
+                "from",
                 null,
                 "to",
                 null
             ]
         },
-        "8": {
+        "7": {
             "review": [
-                " 4-7 ",
+                "from 4-7 ",
+                "from",
                 null,
                 "-",
                 null
@@ -132,31 +87,47 @@
             "review": [
                 " is 7 ",
                 null,
+                null,
                 "is",
                 null
             ]
         },
         "13": {
             "review": [
-                " 5-7 pm",
+                "from 5-7 pm",
+                "from",
                 null,
                 "-",
                 "pm"
             ]
         }
     },
-    "Wolf & Crane Bar": {
-        "14": {
+    "Everson Royce Bar": {},
+    "Public School 213": {
+        "1": {
             "review": [
-                " 5-7",
+                " until 6:30pm",
+                null,
+                null,
+                "until",
+                "pm"
+            ]
+        }
+    },
+    "Wolf & Crane Bar": {
+        "15": {
+            "review": [
+                "from 5-7",
+                "from",
                 null,
                 "-",
                 null
             ]
         },
-        "15": {
+        "16": {
             "review": [
-                " 5pm-7pm",
+                "from 5pm-7pm",
+                "from",
                 "pm",
                 "-",
                 "pm"
@@ -166,6 +137,7 @@
             "review": [
                 " until 7pm",
                 null,
+                null,
                 "until",
                 "pm"
             ]
@@ -173,6 +145,150 @@
         "19": {
             "review": [
                 " 5-7",
+                null,
+                null,
+                "-",
+                null
+            ]
+        }
+    },
+    "Melody Lounge": {
+        "1": {
+            "review": [
+                " until 2am",
+                null,
+                null,
+                "until",
+                "am"
+            ]
+        },
+        "2": {
+            "review": [
+                "from 5-9",
+                "from",
+                null,
+                "-",
+                null
+            ]
+        },
+        "3": {
+            "review": [
+                " 5-9 ",
+                null,
+                null,
+                "-",
+                null
+            ]
+        },
+        "6": {
+            "review": [
+                "from 5pm-9pm",
+                "from",
+                "pm",
+                "-",
+                "pm"
+            ]
+        },
+        "10": {
+            "review": [
+                " 6-8pm",
+                null,
+                null,
+                "-",
+                "pm"
+            ]
+        }
+    },
+    "Plan Check Kitchen + Bar": {
+        "4": {
+            "review": [
+                " 4-7 ",
+                null,
+                null,
+                "-",
+                null
+            ]
+        },
+        "6": {
+            "review": [
+                " is 75",
+                null,
+                null,
+                "is",
+                null
+            ]
+        },
+        "11": {
+            "review": [
+                " to 7",
+                null,
+                null,
+                "to",
+                null
+            ]
+        }
+    },
+    "Preux & Proper": {
+        "5": {
+            "review": [
+                " is 2 ",
+                null,
+                null,
+                "is",
+                null
+            ]
+        },
+        "10": {
+            "review": [
+                "from 4-6pm",
+                "from",
+                null,
+                "-",
+                "pm"
+            ]
+        },
+        "12": {
+            "review": [
+                "from 4-6pm",
+                "from",
+                null,
+                "-",
+                "pm"
+            ]
+        },
+        "20": {
+            "review": [
+                " is 6",
+                null,
+                null,
+                "is",
+                null
+            ]
+        },
+        "40": {
+            "review": [
+                " is 6",
+                null,
+                null,
+                "is",
+                null
+            ]
+        },
+        "60": {
+            "review": [
+                " is 6",
+                null,
+                null,
+                "is",
+                null
+            ]
+        }
+    },
+    "BAR Ama": {
+        "7": {
+            "review": [
+                " 30-45 ",
+                null,
                 null,
                 "-",
                 null
@@ -184,6 +300,7 @@
             "review": [
                 " 25-45",
                 null,
+                null,
                 "-",
                 null
             ]
@@ -191,6 +308,7 @@
         "20": {
             "review": [
                 " 20-25 ",
+                null,
                 null,
                 "-",
                 null
@@ -200,101 +318,17 @@
             "review": [
                 " 20-25 ",
                 null,
-                "-",
-                null
-            ]
-        }
-    },
-    "Plan Check Kitchen + Bar": {
-        "4": {
-            "review": [
-                " 4-7 ",
                 null,
                 "-",
-                null
-            ]
-        },
-        "6": {
-            "review": [
-                " is 75",
-                null,
-                "is",
-                null
-            ]
-        },
-        "11": {
-            "review": [
-                " to 7",
-                null,
-                "to",
-                null
-            ]
-        }
-    },
-    "Public School 213": {
-        "1": {
-            "review": [
-                " until 6:30pm",
-                null,
-                "until",
-                "pm"
-            ]
-        }
-    },
-    "Preux & Proper": {
-        "5": {
-            "review": [
-                " is 2 ",
-                null,
-                "is",
-                null
-            ]
-        },
-        "11": {
-            "review": [
-                " 4-6pm",
-                null,
-                "-",
-                "pm"
-            ]
-        },
-        "12": {
-            "review": [
-                " 4-6pm",
-                null,
-                "-",
-                "pm"
-            ]
-        },
-        "20": {
-            "review": [
-                " is 6",
-                null,
-                "is",
-                null
-            ]
-        },
-        "40": {
-            "review": [
-                " is 6",
-                null,
-                "is",
-                null
-            ]
-        },
-        "60": {
-            "review": [
-                " is 6",
-                null,
-                "is",
                 null
             ]
         }
     },
     "Pour Haus Wine Bar": {
-        "8": {
+        "11": {
             "review": [
                 " and 6 ",
+                null,
                 null,
                 "and",
                 null
@@ -306,13 +340,15 @@
             "review": [
                 " until 8pm",
                 null,
+                null,
                 "until",
                 "pm"
             ]
         },
-        "9": {
+        "7": {
             "review": [
                 " until 8pm",
+                null,
                 null,
                 "until",
                 "pm"
@@ -322,13 +358,15 @@
             "review": [
                 " 5-8pm",
                 null,
+                null,
                 "-",
                 "pm"
             ]
         },
-        "16": {
+        "17": {
             "review": [
-                " 5-8 ",
+                "from 5-8 ",
+                "from",
                 null,
                 "-",
                 null
