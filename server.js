@@ -10,7 +10,7 @@ var path  = require('path');
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
-
+var passport       = require('passport');
 var dbConfig = require('./db/credentials.js')
 var mongoose = Promise.promisifyAll( require('mongoose'))
 
@@ -30,7 +30,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(cookieParser())
 app.use('/public', express.static('public'));
-
+app.use(passport.initialize());
 var routes = require('./config/routes')
 app.use('/', routes)
 
