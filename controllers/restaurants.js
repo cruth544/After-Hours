@@ -11,12 +11,16 @@ require('../db/seed.js').seedRestaurants();
 
 module.exports = {
   index: function (req, res, next) {
-
+    var location = {
+                    "latitude": 34.123814,
+                    "longitude": -118.268692
+                  }
+    io.emit('drop-pin', {location: location})
   },
 
   all: function (req, res, next) {
     Restaurant.find({}, function (err, restaurants) {
-      res.render('restaurants/all', { restaurants: restaurants })
+      res.render('restaurants/all', { restaurants: restaurants, name: "The Morrison" })
     })
   },
 
@@ -34,12 +38,6 @@ module.exports = {
     })
   }
 }
-
-io.on('connection', function (socket) {
-  socket.on('drop-pin', function (data) {
-    // body...
-  })
-})
 
 
 
