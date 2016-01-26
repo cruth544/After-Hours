@@ -25,30 +25,21 @@ router.route('/logout')
 
 
 // RESTAURANT ROUTES
-
-router.route('/restaurants')
+router.route('/restaurants/all')
+  .get(restaurantsController.all)
+router.route('/:name' )
   .get(restaurantsController.show)
 
 
-
+// FACEBOOK OATH ROUTES
 router.route('/auth/facebook')
   .get(passport.authenticate('facebook', {scope: 'email'}));
-
-
-// app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'} ));
 
 router.route('/auth/facebook/callback')
   .get(passport.authenticate('facebook', {
     successRedirect: '/',
     failureRedirect: '/'
   }));
-
-// app.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', {
-//     successRedirect: '/',
-//     failureRedirect: '/'
-//   })
-// );
 
 
 
