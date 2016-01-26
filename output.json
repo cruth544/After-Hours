@@ -1,11 +1,19 @@
 {
-    "The Faculty": {
-        "2": {
+    "Sunset Beer Company": {
+        "1": {
             "review": [
-                " 4-7 ",
+                " 4-7",
                 null,
                 "-",
                 null
+            ]
+        },
+        "4": {
+            "review": [
+                " 4-7pm",
+                null,
+                "-",
+                "pm"
             ]
         }
     }
