@@ -4,14 +4,15 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
+
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants();
 
 module.exports = {
+  index: function (req, res, next) {
   //******************************************************************\\
  //COMMENTED OUT BECAUSE YELP WILL LOCK YOU OUT AFTER TOO MANY REQUESTS\\
 //**********************************************************************\\
-  index: function (req, res, next) {
     // var businessesJson = {}
     // var responsesCompleted = 0
     // var yelp = new Yelp({
@@ -58,6 +59,7 @@ module.exports = {
       else res.send('Restaurant created!')
     })
   }
+
 }
 
   //******************************************************************\\
