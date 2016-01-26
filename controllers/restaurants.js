@@ -32,9 +32,13 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
+var map         = require('../public/js/google-maps')
 
 module.exports = {
   index: function (req, res, next) {
+    var map = cheerio.load('#map')
+    // console.log("from restaurant.js")
+    // console.log(map)
     var businessesJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -47,15 +51,16 @@ module.exports = {
     yelp.search({ term: 'happy hour', location: 'Los Angeles'})
       .then(function (data) {
         res.render('index', {data: data, curr_user: null})
-        yelpParse(data, businessesJson, function () {
-          responsesCompleted++
-          console.log(responsesCompleted)
-          if (responsesCompleted === data.businesses.length) {
-            fs.writeFile('output.json', JSON.stringify(businessesJson, null, 4), function(err){
-              console.log('File successfully written! - Check your project directory for the output.json file');
-            })
-          }
-        })
+
+        // yelpParse(data, businessesJson, function () {
+        //   responsesCompleted++
+        //   console.log(responsesCompleted)
+        //   if (responsesCompleted === data.businesses.length) {
+        //     fs.writeFile('output.json', JSON.stringify(businessesJson, null, 4), function(err){
+        //       console.log('File successfully written! - Check your project directory for the output.json file');
+        //     })
+        //   }
+        // })
       }).catch(function (err) {
         console.log(err)
       })
@@ -74,12 +79,11 @@ function yelpParse (data, businessJson, complete) {
     // function to call every iteration
     function (callback) {
       var restaurant = businesses[businessCount]
-      // promiseArray.push(getReviewCount(restaurant.name, restaurant.url))
+      businessJson[restaurant.name] = {}
+      businessJson[restaurant.name].location = restaurant.location.coordinate
       getReviewCount(restaurant.name, restaurant.url, businessJson, function () {
         complete()
       })
-      // console.log(reviewCount)
-      //DO STUFF HERE
 
       // increment counter
       businessCount++
@@ -145,8 +149,7 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
             if (happyHoursRegEx.test(review)) {
               review = review.match(happyHoursRegEx)
               var jsonKey = Number(key) + counter
-              restaurantJson[jsonKey] = {}
-              restaurantJson[jsonKey].review = review
+              restaurantJson[jsonKey] = review
               forEachCallback()
             }
           })
@@ -158,8 +161,9 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
     },
     function (err) {
       // console.log(restaurantJson)
-      console.log("stopped extractHappyHourTime")
-      businessJson[name] = restaurantJson
+      // console.log("stopped extractHappyHourTime")
+      console.log(name)
+      businessJson[name].reviews = restaurantJson
       complete()
       // fs.writeFile('output.json', JSON.stringify(allRestaurants, null, 4), function(err){
       //         console.log('File successfully written! - Check your project directory for the output.json file');

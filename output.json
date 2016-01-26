@@ -1,378 +1,142 @@
 {
-    "Arts District Brewing Company": {},
-    "The Faculty": {
-        "2": {
-            "review": [
-                " 4-7 ",
-                null,
-                null,
-                "-",
-                null
-            ]
-        }
-    },
-    "The Hermosillo": {},
-    "1642 Beer and Wine": {
-        "0": {
-            "review": [
-                "from 6 to 8 pm.",
-                "from",
-                null,
-                "to",
-                "pm."
-            ]
-        },
-        "3": {
-            "review": [
-                " until 2016",
-                null,
-                null,
-                "until",
-                null
-            ]
-        }
-    },
     "The Black Sheep": {
-        "8": {
-            "review": [
-                " and 5",
-                null,
-                null,
-                "and",
-                null
-            ]
-        }
+        "location": {
+            "latitude": 34.0447654724121,
+            "longitude": -118.249443054199
+        },
+        "reviews": {}
     },
-    "La Chuperia": {},
-    "Sunset Beer Company": {
-        "1": {
-            "review": [
-                " 4-7",
-                null,
-                null,
-                "-",
-                null
-            ]
+    "The Morrison": {
+        "location": {
+            "latitude": 34.123814,
+            "longitude": -118.268692
         },
-        "4": {
-            "review": [
-                " 4-7pm",
-                null,
-                null,
-                "-",
-                "pm"
-            ]
-        }
+        "reviews": {}
     },
-    "Jay's Bar": {
-        "0": {
-            "review": [
-                "from 2 to 4 ",
-                "from",
-                null,
-                "to",
-                null
-            ]
+    "Arts District Brewing Company": {
+        "location": {
+            "latitude": 34.044548034668,
+            "longitude": -118.235313415527
         },
-        "7": {
-            "review": [
-                "from 4-7 ",
-                "from",
-                null,
-                "-",
-                null
-            ]
-        },
-        "11": {
-            "review": [
-                " is 7 ",
-                null,
-                null,
-                "is",
-                null
-            ]
-        },
-        "13": {
-            "review": [
-                "from 5-7 pm",
-                "from",
-                null,
-                "-",
-                "pm"
-            ]
-        }
+        "reviews": {}
     },
-    "Everson Royce Bar": {},
-    "Public School 213": {
-        "1": {
-            "review": [
-                " until 6:30pm",
-                null,
-                null,
-                "until",
-                "pm"
-            ]
-        }
-    },
-    "Wolf & Crane Bar": {
-        "15": {
-            "review": [
-                "from 5-7",
-                "from",
-                null,
-                "-",
-                null
-            ]
+    "The Faculty": {
+        "location": {
+            "latitude": 34.0839004516602,
+            "longitude": -118.29524230957
         },
-        "16": {
-            "review": [
-                "from 5pm-7pm",
-                "from",
-                "pm",
-                "-",
-                "pm"
-            ]
-        },
-        "17": {
-            "review": [
-                " until 7pm",
-                null,
-                null,
-                "until",
-                "pm"
-            ]
-        },
-        "19": {
-            "review": [
-                " 5-7",
-                null,
-                null,
-                "-",
-                null
-            ]
-        }
-    },
-    "Melody Lounge": {
-        "1": {
-            "review": [
-                " until 2am",
-                null,
-                null,
-                "until",
-                "am"
-            ]
-        },
-        "2": {
-            "review": [
-                "from 5-9",
-                "from",
-                null,
-                "-",
-                null
-            ]
-        },
-        "3": {
-            "review": [
-                " 5-9 ",
-                null,
-                null,
-                "-",
-                null
-            ]
-        },
-        "6": {
-            "review": [
-                "from 5pm-9pm",
-                "from",
-                "pm",
-                "-",
-                "pm"
-            ]
-        },
-        "10": {
-            "review": [
-                " 6-8pm",
-                null,
-                null,
-                "-",
-                "pm"
-            ]
-        }
-    },
-    "Plan Check Kitchen + Bar": {
-        "4": {
-            "review": [
-                " 4-7 ",
-                null,
-                null,
-                "-",
-                null
-            ]
-        },
-        "6": {
-            "review": [
-                " is 75",
-                null,
-                null,
-                "is",
-                null
-            ]
-        },
-        "11": {
-            "review": [
-                " to 7",
-                null,
-                null,
-                "to",
-                null
-            ]
-        }
-    },
-    "Preux & Proper": {
-        "5": {
-            "review": [
-                " is 2 ",
-                null,
-                null,
-                "is",
-                null
-            ]
-        },
-        "10": {
-            "review": [
-                "from 4-6pm",
-                "from",
-                null,
-                "-",
-                "pm"
-            ]
-        },
-        "12": {
-            "review": [
-                "from 4-6pm",
-                "from",
-                null,
-                "-",
-                "pm"
-            ]
-        },
-        "20": {
-            "review": [
-                " is 6",
-                null,
-                null,
-                "is",
-                null
-            ]
-        },
-        "40": {
-            "review": [
-                " is 6",
-                null,
-                null,
-                "is",
-                null
-            ]
-        },
-        "60": {
-            "review": [
-                " is 6",
-                null,
-                null,
-                "is",
-                null
-            ]
-        }
-    },
-    "BAR Ama": {
-        "7": {
-            "review": [
-                " 30-45 ",
-                null,
-                null,
-                "-",
-                null
-            ]
-        }
-    },
-    "Villains Tavern": {
-        "16": {
-            "review": [
-                " 25-45",
-                null,
-                null,
-                "-",
-                null
-            ]
-        },
-        "20": {
-            "review": [
-                " 20-25 ",
-                null,
-                null,
-                "-",
-                null
-            ]
-        },
-        "40": {
-            "review": [
-                " 20-25 ",
-                null,
-                null,
-                "-",
-                null
-            ]
-        }
-    },
-    "Pour Haus Wine Bar": {
-        "11": {
-            "review": [
-                " and 6 ",
-                null,
-                null,
-                "and",
-                null
-            ]
-        }
+        "reviews": {}
     },
     "Thirsty Crow": {
-        "4": {
-            "review": [
-                " until 8pm",
-                null,
-                null,
-                "until",
-                "pm"
-            ]
+        "location": {
+            "latitude": 34.083794,
+            "longitude": -118.273689
         },
-        "7": {
-            "review": [
-                " until 8pm",
-                null,
-                null,
-                "until",
-                "pm"
-            ]
-        },
-        "12": {
-            "review": [
-                " 5-8pm",
-                null,
-                null,
-                "-",
-                "pm"
-            ]
-        },
-        "17": {
-            "review": [
-                "from 5-8 ",
-                "from",
-                null,
-                "-",
-                null
-            ]
-        }
+        "reviews": {}
     },
-    "Blue Cow Kitchen & Bar": {},
-    "The Morrison": {}
+    "Sunset Beer Company": {
+        "location": {
+            "latitude": 34.0755693192187,
+            "longitude": -118.255361068726
+        },
+        "reviews": {}
+    },
+    "Everson Royce Bar": {
+        "location": {
+            "latitude": 34.034294128418,
+            "longitude": -118.232574462891
+        },
+        "reviews": {}
+    },
+    "Public School 213": {
+        "location": {
+            "latitude": 34.0495414733887,
+            "longitude": -118.257453918457
+        },
+        "reviews": {}
+    },
+    "Wolf & Crane Bar": {
+        "location": {
+            "latitude": 34.0479536,
+            "longitude": -118.2397511
+        },
+        "reviews": {}
+    },
+    "La Chuperia": {
+        "location": {
+            "latitude": 34.0617485,
+            "longitude": -118.2133102
+        },
+        "reviews": {}
+    },
+    "Blue Cow Kitchen & Bar": {
+        "location": {
+            "latitude": 34.05141,
+            "longitude": -118.251562
+        },
+        "reviews": {}
+    },
+    "Pour Haus Wine Bar": {
+        "location": {
+            "latitude": 34.03545,
+            "longitude": -118.2338486
+        },
+        "reviews": {}
+    },
+    "Villains Tavern": {
+        "location": {
+            "latitude": 34.0401668,
+            "longitude": -118.2310422
+        },
+        "reviews": {}
+    },
+    "Plan Check Kitchen + Bar": {
+        "location": {
+            "latitude": 34.05289,
+            "longitude": -118.26351
+        },
+        "reviews": {}
+    },
+    "BAR Ama": {
+        "location": {
+            "latitude": 34.048336,
+            "longitude": -118.2477798
+        },
+        "reviews": {}
+    },
+    "Melody Lounge": {
+        "location": {
+            "latitude": 34.0655981,
+            "longitude": -118.2382151
+        },
+        "reviews": {}
+    },
+    "1642 Beer and Wine": {
+        "location": {
+            "latitude": 34.0682453269512,
+            "longitude": -118.26194916621
+        },
+        "reviews": {}
+    },
+    "Jay's Bar": {
+        "location": {
+            "latitude": 34.0952586,
+            "longitude": -118.283366
+        },
+        "reviews": {}
+    },
+    "The Hermosillo": {
+        "location": {
+            "latitude": 34.121162,
+            "longitude": -118.203751
+        },
+        "reviews": {}
+    },
+    "Preux & Proper": {
+        "location": {
+            "latitude": 34.0422977507114,
+            "longitude": -118.254331424832
+        },
+        "reviews": {}
+    }
 }
