@@ -1,10 +1,8 @@
 function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 37.4038824, lng: -122.1162865},
     zoom: 1
   })
-  console.log("from google-map.js")
-  console.log(map)
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
     function toggleBounce() {
@@ -23,7 +21,7 @@ function initMap() {
         position: pos,
         map: map,
         animation: google.maps.Animation.DROP,
-        title: 'Hello World!'
+        title: 'You!'
       })
       map.setCenter(pos)
       map.setZoom(12)

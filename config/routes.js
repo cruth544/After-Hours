@@ -6,6 +6,9 @@ var restaurantsController = require('../controllers/restaurants')
 router.route('/')
   .get(restaurantsController.index)
 
+router.route('/restaurants/getAll')
+  .get(restaurantsController.yelp)
+
 router.route('/login')
   .post(usersController.login)
 
