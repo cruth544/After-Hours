@@ -26,11 +26,10 @@ module.exports = {
   }
 }
 
-
-
 function yelpParse (data) {
   var businesses = data.businesses
   var businessCount = 0
+  var businessesWithReviews = {}
   async.whilst(
     // Condition to check every loop
     function () {
@@ -39,7 +38,7 @@ function yelpParse (data) {
     // function to call every iteration
     function (callback) {
       var restaurant = businesses[businessCount]
-      getReviewCount(restaurant.name, restaurant.url)
+      businessesWithReviews[restaurant.name] = getReviewCount(restaurant.name, restaurant.url, businessesWithReviews)
       // console.log(reviewCount)
       //DO STUFF HERE
 
@@ -51,13 +50,12 @@ function yelpParse (data) {
     },
     // Stopped loop
     function (err) {
-      // console.log("STOPPED!")
-      // console.log("REVIEW COUNT:\n")
-      // console.log(reviewCount)
+      console.log("STOPPED EVERYTHING!")
+      console.log(businessesWithReviews)
     })
 }
 
-function getReviewCount (name, url) {
+function getReviewCount (name, url, businessesObject) {
   url = url.split('?')[0]
   var yelpSearchUrl = url
   yelpSearchUrl += '?q=happy%20hour'
@@ -71,22 +69,22 @@ function getReviewCount (name, url) {
       var reviewCount = $('.feed_search-results').first().text()
       // use regex to extract number from node
       reviewCount = reviewCount.match(reviewCountRegEx)[0]
-      extractHappyHourTime(name, reviewCount, url)
+      extractHappyHourTime(name, reviewCount, url, businessesObject)
     } else {
       console.log(err)
     }
   })
 }
 
-function extractHappyHourTime (restaurantName, reviewCount, url) {
+function extractHappyHourTime (name, reviewCount, url, allRestaurants) {
   var counter = 0
   var restaurantJson = {}
   async.whilst(
     function () {
-      console.log("Counter: " + counter)
-      console.log("is less than")
-      console.log("ReviewCount: " + reviewCount)
-      console.log(counter < reviewCount)
+      // console.log("Counter: " + counter)
+      // console.log("is less than")
+      // console.log("ReviewCount: " + reviewCount)
+      // console.log(counter < reviewCount)
       return counter < reviewCount
     },
     function (callback) {
@@ -100,30 +98,29 @@ function extractHappyHourTime (restaurantName, reviewCount, url) {
           var $ = cheerio.load(body)
           var reviews = $('.review-content')
           var happyHoursRegEx = /\s1?\d?:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?\s?(is|to|from|through|until|and|-)\s?\d{1,2}:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?/
-          restaurantJson[restaurantName] = {}
           async.forEachOf(reviews, function (item, key, forEachCallback) {
             var review = $(item).children().last().text()
             if (happyHoursRegEx.test(review)) {
               review = review.match(happyHoursRegEx)
               var jsonKey = Number(key) + counter
-              restaurantJson[restaurantName][jsonKey] = {}
-              restaurantJson[restaurantName][jsonKey].review = review
+              restaurantJson[jsonKey] = {}
+              restaurantJson[jsonKey].review = review
               forEachCallback()
             }
           })
           counter += 20
-          console.log("incrementing... " + counter)
+          // console.log("incrementing... " + counter)
           callback()
         }
       })
     },
     function (err) {
-      console.log("STOPPED!")
-      console.log(restaurantJson)
-      fs.writeFile('output.json', JSON.stringify(restaurantJson, null, 4),
-        function (err) {
-          console.log("Write Success")
-        })
+      // console.log(restaurantJson)
+      console.log("stopped extractHappyHourTime")
+      allRestaurants[name] = restaurantJson
+      // fs.writeFile('output.json', JSON.stringify(allRestaurants, null, 4), function(err){
+      //         console.log('File successfully written! - Check your project directory for the output.json file');
+      //       })
     }
   )
 }
