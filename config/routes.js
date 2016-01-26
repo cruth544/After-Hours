@@ -4,6 +4,11 @@ var usersController = require('../controllers/users')
 var passport = require('passport')
 require("./passport")(passport)
 
+var restaurantsController = require('../controllers/restaurants')
+
+
+// USER ROUTES
+
 router.route('/')
   .get(usersController.index)
 
@@ -18,6 +23,7 @@ router.route('/logout')
 
 router.route('/auth/facebook')
   .get(passport.authenticate('facebook', {scope: 'email'}));
+
 
 // app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'} ));
 
