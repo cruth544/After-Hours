@@ -7,8 +7,9 @@ var app = express()
 // var helpers = require('express-helpers')()
 // app = helpers.all(app);
 var Promise = require('bluebird')
+var path  = require('path');
+var passport   = require('passport');
 var path  = require('path')
-
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
@@ -35,13 +36,13 @@ app.use(bodyParser.urlencoded({ extended: true}))
 app.use(cookieParser())
 app.use('/public', express.static('public'));
 app.use(passport.initialize());
+app.use(passport.session());
 var routes = require('./config/routes')
 app.use('/', routes)
 
 app.get('/yelp/:location/:term', function (req, res) {
   console.log("Made yelp api call")
 })
-
 
 
 
