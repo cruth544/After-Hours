@@ -28,6 +28,10 @@ app.use( require('express-session')({
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));
 
+app.get('/', function(req, res) {
+    res.render('restaurants/show');
+});
+
 // Middlewares
 app.use(logger('dev'))
 app.use(bodyParser.json())
@@ -41,6 +45,8 @@ app.use('/', routes)
 app.get('/yelp/:location/:term', function (req, res) {
   console.log("Made yelp api call")
 })
+
+
 
 
 

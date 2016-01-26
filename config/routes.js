@@ -3,7 +3,6 @@ var router  = new express.Router()
 var usersController = require('../controllers/users')
 var restaurantsController = require('../controllers/restaurants')
 
-var restaurantsController = require('../controllers/restaurants')
 
 
 // USER ROUTES

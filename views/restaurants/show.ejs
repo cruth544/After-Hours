@@ -1,20 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/landing_page.css">
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One|Dosis:500,600|Asap|Josefin+Sans:400,700,600,600italic' rel='stylesheet' type='text/css'>
+</head>
+
 <!-- PROFILE PAGE OF RESTAURANT -->
 <body>
+
 <!-- NAV BAR -->
-<%- include('partials/header-footer-nav/navigation_bar') %>
+<%- include('../partials/header-footer-nav/navigation_bar') %>
 
 <!-- </div> -->
 
 
 </body>
 <!-- GOOGLE MAP -->
-  <%- include('partials/maps/map') %>
+  <%- include('../partials/maps/map') %>
+<div>
 
+    <strong><%= restaurant.name %></strong>
+    <div>Hours
+      <li>Monday: <%= restaurant.hours.monday.time[0].startTime %></li>
+      <li>Tuesday: <%= restaurant.hours.tuesday.time %></li>
+      <li>Wednesday: <%= restaurant.hours.wednesday.time %></li>
+      <li>Thursday: <%= restaurant.hours.thursday.time %></li>
+      <li>Friday: <%= restaurant.hours.friday.time %></li>
+      <li>Saturday: <%= restaurant.hours.saturday.time %></li>
+      <li>Sunday: <%= restaurant.hours.sunday.time %></li>
+    </div>
+
+    <div>Drinks: <%= restaurant.drinks %></div>
+    <div>Food: <%= restaurant.food %></div>
+    <div>Contact:
+      <li>Phone: <%= restaurant.contact.phone%></li>
+      <li>Address: <%= restaurant.contact.address %></li>
+      <li>Website: <%= restaurant.contact.website %></li>
+    </div>
+
+</div>
 <!-- FOOTER / JS -->
-  <%- include('partials/header-footer-nav/footer') %>
+  <%- include('../partials/header-footer-nav/footer') %>
 
 </body>
 
 </html>
 
-<%= restaurant.name %>
+

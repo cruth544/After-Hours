@@ -4,6 +4,7 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
+var User        = require('../models/user')
 
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants();
@@ -42,13 +43,19 @@ module.exports = {
 
   all: function (req, res, next) {
     Restaurant.find({}, function (err, restaurants) {
-      res.render('restaurants/all', { restaurants: restaurants })
+      res.render('restaurants/all', { restaurants: restaurants, })
     })
   },
 
   show: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
-      res.render('restaurants/show', { restaurant: restaurant })
+      User.findOne({ email: req.session.email }).then(function(user){
+        console.log(restaurant)
+        console.log(req.session)
+        res.render('restaurants/show', { restaurant: restaurant,
+                                         curr_user: user.email,
+                                         users: null })
+      })
     })
   },
 
