@@ -31,6 +31,7 @@ module.exports = {
 function yelpParse (data) {
   var businesses = data.businesses
   var businessCount = 0
+  var extractHappyHourTimeArray = []
   async.whilst(
     // Condition to check every loop
     function () {
@@ -39,7 +40,8 @@ function yelpParse (data) {
     // function to call every iteration
     function (callback) {
       var restaurant = businesses[businessCount]
-      getReviewCount(restaurant.name, restaurant.url)
+      extractHappyHourTimeArray.push(getReviewCount(restaurant.name, restaurant.url))
+      // getReviewCount(restaurant.name, restaurant.url)
       // console.log(reviewCount)
       //DO STUFF HERE
 
@@ -51,6 +53,9 @@ function yelpParse (data) {
     },
     // Stopped loop
     function (err) {
+      async.parallel(extractHappyHourTimeArray, function (err, results) {
+        console.log("Stopped yelpParse function")
+      })
       // console.log("STOPPED!")
       // console.log("REVIEW COUNT:\n")
       // console.log(reviewCount)
@@ -71,7 +76,10 @@ function getReviewCount (name, url) {
       var reviewCount = $('.feed_search-results').first().text()
       // use regex to extract number from node
       reviewCount = reviewCount.match(reviewCountRegEx)[0]
-      extractHappyHourTime(name, reviewCount, url)
+      return function (done) {
+        return extractHappyHourTime
+      }
+      // extractHappyHourTime(name, reviewCount, url)
     } else {
       console.log(err)
     }
