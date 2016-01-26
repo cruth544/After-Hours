@@ -28,3 +28,82 @@ $.ajax({
 .always(function() {
   console.log("complete")
 })
+
+function getMyPosition (defaultPosition) {
+  var pos = {}
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      pos = {
+        lat: position.coordinate.latitude,
+        lng: position.coordinate.longitude
+      }
+    })
+  } else {
+    if (defaultPosition) {
+      pos = defaultPosition
+    } else {
+      pos = {
+        lat: 34.0309344,
+        lng: -118.2688299
+      }
+    }
+  }
+  return pos
+}
+
+function sortByDistance (restaurantArray) {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
