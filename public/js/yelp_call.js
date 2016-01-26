@@ -29,6 +29,13 @@ $.ajax({
   console.log("complete")
 })
 
+function addObjectsToArray (object) {
+  var array = []
+  for (var key in object) {
+    // add to array
+  }
+}
+
 function getMyPosition (defaultPosition) {
   var pos = {}
   if (navigator.geolocation) {
