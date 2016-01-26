@@ -19,15 +19,16 @@ var userSchema = Schema({
                                rating: Number
                             }],
       restaurants         : [{ type: Schema.Types.ObjectId, ref: 'Restaurant' }]
-
-    fb: {
+})
+module.exports = mongoose.model('user', {
+  fb: {
       id: String,
       access_token: String,
       firstName: String,
       lastName: String,
-      email:
+      email: String
     }
-})
+});
 
 userSchema.pre('save',function (next){
     var user = this;

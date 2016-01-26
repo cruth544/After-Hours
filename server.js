@@ -13,6 +13,7 @@ var bodyParser = require('body-parser')
 
 var dbConfig = require('./db/credentials.js')
 var mongoose = Promise.promisifyAll( require('mongoose'))
+var passport = require('passport');
 
 var credentials = require('./config/credentials.js')
 app.use( require('cookie-parser')(credentials.cookieSecret))
@@ -33,6 +34,13 @@ app.use('/public', express.static('public'));
 
 var routes = require('./config/routes')
 app.use('/', routes)
+
+// required for passport
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+require('./config/passport.js')(passport); // load our routes and pass in our app and fully configured passport
+
 
 
 

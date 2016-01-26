@@ -1,7 +1,7 @@
 var express = require('express')
 var router  = new express.Router()
 var usersController = require('../controllers/users')
-
+var passport =
 
 
 router.route('/')
@@ -16,6 +16,9 @@ router.route('/signUp')
 router.route('/logout')
   .get(usersController.logout)
 
+router.route('/auth/facebook')
+  .get(passport.authenticate('facebook', { scope: 'email'} ))
+
 
 
 
@@ -24,3 +27,4 @@ router.route('/logout')
 
 // router.get('/welcome', usersController.index);
 module.exports = router;
+
