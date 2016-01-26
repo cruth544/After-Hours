@@ -1,16 +1,17 @@
 <h1>All Restaurants</h1>
 
 <% restaurants.forEach(function (restaurant){ %>
+  <%- console.log(restaurant) %>
   <% var day = restaurant.hours %>
   <% var info = restaurant.contact %>
 
     <strong><%= restaurant.name %></strong>
     <div><strong>Hours</strong>
-      <li>Monday: <%= day.monday.time[0].startTime %> - <%= day.monday.time[0].endTime %></li>
-      <li>Tuesday: <%= day.tuesday.time[0].startTime %> - <%= day.tuesday.time[0].endTime %></li>
-      <li>Wednesday: <%= day.wednesday.time[0].startTime %> - <%= day.wednesday.time[0].endTime %></li>
-      <li>Thursday: <%= day.thursday.time[0].startTime %> - <%= day.thursday.time[0].endTime %></li>
-      <li>Friday: <%= day.friday.time[0].startTime %> - <%= day.friday.time[0].endTime %></li>
+      <li>Monday: <%= changeTime(day.monday.time[0].startTime) %> - <%= changeTime(day.monday.time[0].endTime) %></li>
+      <li>Tuesday: <%= changeTime(day.tuesday.time[0].startTime) %> - <%= changeTime(day.tuesday.time[0].endTime) %></li>
+      <li>Wednesday: <%= changeTime(day.wednesday.time[0].startTime) %> - <%= changeTime(day.wednesday.time[0].endTime) %></li>
+      <li>Thursday: <%= changeTime(day.thursday.time[0].startTime) %> - <%= changeTime(day.thursday.time[0].endTime) %></li>
+      <li>Friday: <%= changeTime(day.friday.time[0].startTime) %> - <%= changeTime(day.friday.time[0].endTime) %></li>
 
     </div>
 
