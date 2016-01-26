@@ -23,7 +23,7 @@ module.exports = {
 
     // yelp.search({ term: 'happy hour', location: 'Los Angeles'})
     //   .then(function (data) {
-        res.render('index', {data: data, curr_user: null})
+        res.render('index', {/*data: data, */curr_user: null})
 
       //   yelpParse(data, businessesJson, function () {
       //     responsesCompleted++
