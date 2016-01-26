@@ -11,6 +11,7 @@ module.exports = {
   },
 
   yelp: function (req, res, next) {
+    console.log(req)
     var businessesJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -29,9 +30,9 @@ module.exports = {
           console.log('returning')
           res.send(businessesJson)
 
-          // fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
-          //   console.log('File successfully written! - Check your project directory for the output.json file');
-          // })
+          fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
+            console.log('File successfully written! - Check your project directory for the output.json file');
+          })
         }
       })
     }).catch(function (err) {
@@ -86,6 +87,7 @@ function getReviewCount (name, url, businessJson, complete) {
       var reviewCount = $('.feed_search-results').first().text()
       // use regex to extract number from node
       reviewCount = reviewCount.match(reviewCountRegEx)[0]
+      reviewCount = reviewCount > 100 ? 100 : reviewCount
       extractHappyHourTime(name, businessJson, reviewCount, url, function () {
         complete()
       })
@@ -119,7 +121,7 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
         if (!err) {
           var $ = cheerio.load(body)
           var reviews = $('.review-content')
-          var happyHoursRegEx = /(from)?\s1?\d?:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?\s?(is|to|through|until|and|-)\s?\d{1,2}:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?/
+          var happyHoursRegEx = /(from)?\s[^$]1?\d?:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?\s?(is|to|through|until|and|-)\s?\d{1,2}:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?/
           async.forEachOf(reviews, function (item, key, forEachCallback) {
             var review = $(item).children().last().text()
             if (happyHoursRegEx.test(review)) {
