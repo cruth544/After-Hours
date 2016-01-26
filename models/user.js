@@ -20,6 +20,13 @@ var userSchema = Schema({
                             }],
       restaurants         : [{ type: Schema.Types.ObjectId, ref: 'Restaurant' }]
 
+    fb: {
+      id: String,
+      access_token: String,
+      firstName: String,
+      lastName: String,
+      email:
+    }
 })
 
 userSchema.pre('save',function (next){
