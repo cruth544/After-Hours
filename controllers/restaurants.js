@@ -17,12 +17,7 @@ module.exports = {
     },
 
     create: function (req, res, next) {
-      var newRestaurant = new Restaurant()
-      var keys = Object.keys(req.body)
-      keys.forEach(function (key){
-        newRestaurant[key] = req.body[key]
-      })
-
+      var newRestaurant = new Restaurant(req.body)
       newRestaurant.save(function (err) {
         if (err) console.log(err)
         else res.send('Restaurant created!')
