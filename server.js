@@ -35,6 +35,10 @@ app.use(passport.session());
 var routes = require('./config/routes')
 app.use('/', routes)
 
+app.get('/yelp/:location/:term', function (req, res) {
+  console.log("Made yelp api call")
+})
+
 
 
 // use db connection string based on whether the environment is development or production

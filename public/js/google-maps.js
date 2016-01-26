@@ -1,14 +1,18 @@
-console.log('init map')
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 37.4038824, lng: -122.1162865},
     zoom: 1
   })
+<<<<<<< HEAD
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+=======
+  console.log("from google-map.js")
+  console.log(map)
+>>>>>>> 389fe8d019fcd61b980ef5499f59dd42786e8a13
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
 
