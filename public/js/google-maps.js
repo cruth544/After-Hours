@@ -3,7 +3,6 @@ function initMap() {
     center: {lat: 37.4038824, lng: -122.1162865},
     zoom: 1
   })
-  var socket = io()
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
     function toggleBounce() {
@@ -34,6 +33,7 @@ function initMap() {
     handleLocationError(false, infoWindow, map.getCenter())
   }
   // socket functions
+  var socket = io()
   socket.on('drop-pin', function (data) {
     var marker = new google.maps.Marker({
       position: data.location,

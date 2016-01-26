@@ -64,7 +64,9 @@ module.exports = {
       if (err) console.log(err)
       else res.send('Restaurant created!')
     })
-  }
+  },
+
+  io: io
 
 }
 
