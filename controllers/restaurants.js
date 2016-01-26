@@ -4,12 +4,35 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
+var User = require("../models/user");
 
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants();
 
 module.exports = {
   index: function (req, res, next) {
+
+    // if there is a match for someone in the database, find them and render their profile
+    if(req.session && req.session.email){
+        User.findOne({ email: req.session.email }).then(function(user){
+            res.render('index',{
+                curr_user: user.email,
+                user: req.user,
+                users: null  })
+        })
+    }
+    else{
+        User.findAsync({})
+            .then( function(users){
+                res.render('index', {
+                    curr_user: null,
+                    user: req.user,
+                    users: users
+                })
+            }).catch()
+        }
+    // Check to see if current user exists
+    // If current user exits, show index page
   //******************************************************************\\
  //COMMENTED OUT BECAUSE YELP WILL LOCK YOU OUT AFTER TOO MANY REQUESTS\\
 //**********************************************************************\\
@@ -24,7 +47,7 @@ module.exports = {
 
     // yelp.search({ term: 'happy hour', location: 'Los Angeles'})
     //   .then(function (data) {
-        res.render('index', {/*data: data, */curr_user: null})
+
 
       //   yelpParse(data, businessesJson, function () {
       //     responsesCompleted++
