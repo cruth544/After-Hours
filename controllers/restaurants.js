@@ -4,13 +4,9 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
-var map         = require('../public/js/google-maps')
 
 module.exports = {
   index: function (req, res, next) {
-    var map = cheerio.load('#map')
-    // console.log("from restaurant.js")
-    // console.log(map)
     var businessesJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -24,15 +20,15 @@ module.exports = {
       .then(function (data) {
         res.render('index', {data: data, curr_user: null})
 
-        // yelpParse(data, businessesJson, function () {
-        //   responsesCompleted++
-        //   console.log(responsesCompleted)
-        //   if (responsesCompleted === data.businesses.length) {
-        //     fs.writeFile('output.json', JSON.stringify(businessesJson, null, 4), function(err){
-        //       console.log('File successfully written! - Check your project directory for the output.json file');
-        //     })
-        //   }
-        // })
+        yelpParse(data, businessesJson, function () {
+          responsesCompleted++
+          console.log(responsesCompleted)
+          if (responsesCompleted === data.businesses.length) {
+            fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
+              console.log('File successfully written! - Check your project directory for the output.json file');
+            })
+          }
+        })
       }).catch(function (err) {
         console.log(err)
       })
@@ -137,9 +133,6 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
       console.log(name)
       businessJson[name].reviews = restaurantJson
       complete()
-      // fs.writeFile('output.json', JSON.stringify(allRestaurants, null, 4), function(err){
-      //         console.log('File successfully written! - Check your project directory for the output.json file');
-      //       })
     }
   )
 }
