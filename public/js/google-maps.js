@@ -32,16 +32,7 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter())
   }
-  // socket functions
   var socket = io()
-  socket.on('drop-pin', function (data) {
-    var marker = new google.maps.Marker({
-      position: data.location,
-      map: map,
-      animation: google.maps.Animation.DROP,
-      title: data.name
-    })
-  })
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {

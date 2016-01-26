@@ -1,5 +1,4 @@
 'use strict'
-
 require('dotenv').load()
 
 var express = require('express')
@@ -39,8 +38,6 @@ app.get('/yelp/:location/:term', function (req, res) {
 })
 
 
-
-
 // use db connection string based on whether the environment is development or production
 switch(app.get('env')){
   case 'development':
@@ -56,3 +53,9 @@ switch(app.get('env')){
 
 app.listen(3000)
 console.log("Server starting...go to localhost:3000")
+var http = require('http')
+var server = http.createServer(app)
+var io = require('./io')
+io.attach(server)
+
+

@@ -15,8 +15,14 @@ module.exports = {
                     "latitude": 34.123814,
                     "longitude": -118.268692
                   }
-    io.emit('drop-pin', {location: location})
     res.render('index', {/*data: data, */curr_user: null})
+    yelp.api.requset(function (argument) {
+      // body...
+    }).done(function (data) {
+      // body...
+    })
+    console.log(io.sockets.connected)
+    // io.sockets.connected[socketid].emit()
   },
 
   all: function (req, res, next) {
