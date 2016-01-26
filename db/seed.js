@@ -1,8 +1,10 @@
-var mongoose = require('mongoose')
 var Restaurant = require('..models/restaurant.js')
 
+exports.seedRestaurants = function seedRestaurants() {
+  Restaurant.find({}).exec(function (err, collection) {
+    if (collection.length ===0){
+      Restaurant.create({
 
-var barAma = new Restaurant({
       name          : 'Bar Ama',
       hours         :
                       { monday:
@@ -58,9 +60,9 @@ var barAma = new Restaurant({
                         address     : '118 W. 4th St Los Angeles, CA 90013',
                         yelpUrl     : 'http://www.yelp.com/biz/bar-ama-los-angeles'
                       }
-})
+    },
 
-var fuga = new Restaurant({
+    {
       name          : 'Izakaya Fu-ga',
       hours         :
                       { monday:
@@ -96,9 +98,9 @@ var fuga = new Restaurant({
                         address     : '111 S San Pedro St Los Angeles, CA 90012',
                         yelpUrl     : 'http://www.yelp.com/biz/izakaya-fu-ga-los-angeles'
                       }
-})
+      },
 
-var emc = new Restaurant({
+      {
       name          : 'EMC Seafood',
       hours         :
                       { monday:
@@ -154,9 +156,7 @@ var emc = new Restaurant({
                         address     : '3500 W 6th St #101 Los Angeles, CA 90020',
                         yelpUrl     : 'http://www.yelp.com/biz/emc-seafood-and-raw-bar-los-angeles'
                       }
+      })
+  }
 })
-
-
-
-
-db.restaurants.save(seedRestaurant)
+}

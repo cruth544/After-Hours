@@ -18,15 +18,29 @@ router.route('/logout')
   .get(usersController.logout)
 
 // RESTAURANT ROUTES
-
-router.route('/restaurants')
+router.route('/restaurants/all')
+  .get(restaurantsController.all)
+router.route('/:name' )
   .get(restaurantsController.show)
 
 
+<<<<<<< HEAD
 
 
 
 
+=======
+// FACEBOOK OATH ROUTES
+router.route('/auth/facebook')
+  .get(passport.authenticate('facebook', {scope: 'email'}));
+
+router.route('/auth/facebook/callback')
+  .get(passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  }));
+
+>>>>>>> 6a7e486... working on seeding restaurants
 
 
 // router.get('/welcome', usersController.index);
