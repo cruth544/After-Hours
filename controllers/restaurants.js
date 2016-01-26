@@ -4,7 +4,7 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
-var map         = require('../public/js/google-maps')
+var io          = require('socket.io')()
 
 module.exports = {
   index: function (req, res, next) {
@@ -13,31 +13,37 @@ module.exports = {
     // console.log(map)
     var businessesJson = {}
     var responsesCompleted = 0
-    var yelp = new Yelp({
-      consumer_key: 'ppGF7cs331hgnbdAMFtrKQ',
-      consumer_secret: 'vZIA3bJyHdn9q9JLLgLeY6c35eE',
-      token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
-      token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
-    })
+    // var yelp = new Yelp({
+    //   consumer_key: 'ppGF7cs331hgnbdAMFtrKQ',
+    //   consumer_secret: 'vZIA3bJyHdn9q9JLLgLeY6c35eE',
+    //   token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
+    //   token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
+    // })
 
-    yelp.search({ term: 'happy hour', location: 'Los Angeles'})
-      .then(function (data) {
-        res.render('index', {data: data, curr_user: null})
+    // yelp.search({ term: 'happy hour', location: 'Los Angeles'})
+    //   .then(function (data) {
+    //     res.render('index', {data: data, curr_user: null})
 
-        // yelpParse(data, businessesJson, function () {
-        //   responsesCompleted++
-        //   console.log(responsesCompleted)
-        //   if (responsesCompleted === data.businesses.length) {
-        //     fs.writeFile('output.json', JSON.stringify(businessesJson, null, 4), function(err){
-        //       console.log('File successfully written! - Check your project directory for the output.json file');
-        //     })
-        //   }
-        // })
-      }).catch(function (err) {
-        console.log(err)
-      })
+    //     // yelpParse(data, businessesJson, function () {
+    //     //   responsesCompleted++
+    //     //   console.log(responsesCompleted)
+    //     //   if (responsesCompleted === data.businesses.length) {
+    //     //     fs.writeFile('output.json', JSON.stringify(businessesJson, null, 4), function(err){
+    //     //       console.log('File successfully written! - Check your project directory for the output.json file');
+    //     //     })
+    //     //   }
+    //     // })
+    //   }).catch(function (err) {
+    //     console.log(err)
+    //   })
   }
 }
+
+io.on('connection', function (socket) {
+  socket.on('drop-pin', function (data) {
+    // body...
+  })
+})
 
 function yelpParse (data, businessJson, complete) {
   var businesses = data.businesses
