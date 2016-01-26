@@ -19,7 +19,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: 'Los Angeles', limit: '1'})
+      yelp.search({ term: 'happy hour', location: 'Los Angeles', limit: '10'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -52,7 +52,11 @@ function yelpParse (data, businessJson, complete) {
     function (callback) {
       var restaurant = businesses[businessCount]
       businessJson[restaurant.name] = {}
-      businessJson[restaurant.name].location = restaurant.location.coordinate
+      businessJson[restaurant.name].location = {}
+      businessJson[restaurant.name].location = {
+        lat: restaurant.location.coordinate.latitude,
+        lng: restaurant.location.coordinate.longitude
+      }
       getReviewCount(restaurant.name, restaurant.url, businessJson, function () {
         complete()
       })
