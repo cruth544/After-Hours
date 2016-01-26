@@ -1,33 +1,35 @@
 var User = require('../models/user');
-var FacebookStrategy = require('passport-facebook').strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+// var passport = require('passport')
 
-modules.exports = function(passport){
+module.exports = function(passport) {
   passport.serializeUser(function(user,done) {
-    don(null, user._id);
+    done(null, user._id);
   });
 
-passport.deserializerUser(function (id,done) {
-  User.findById(id, function(err, user){
-    console.log('deserializing user:', user);
-    done(err, user);
-  });
-});
+  passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      console.log('deserializing user:', user);
+      done(err, user);
+    });
+  }),
 
-passport.use('facebook', new FacebookStrategy({
-  clientID        : process.env.FACBOOK_API_KEY,
-  clientSecret    : process.env.FACBOOK_API_SECRET,
+  passport.use('facebook', new FacebookStrategy({
+  clientID        : '1549397488713169',
+  clientSecret    : '7410a108dcb12bdf3440bea0be5d2cff',
   callbackURL     : 'http://localhost:3000/auth/facebook/callback',
   enableProof     : true,
   profileFields   : ['name', 'emails']
+},
 
-}, function(access_token, refresh_token, profile, done){
-  console.log(profile)
-process.nextTick(function() {
-  User.findOne({ 'fb.id' : profile.id }, function(err, user){
-    if (err) return done(err);
-    if (user) {
-      return done(null, user);
-    } else {
+  function(access_token, refresh_token, profile, done){
+    console.log(profile)
+  process.nextTick(function() {
+    User.findOne({ 'fb.id' : profile.id }, function(err, user){
+      if (err) return done(err);
+      if (user) {
+        return done(null, user);
+      } else {
       var newUser = new User();
       newUser.fb.id           = profile.id;
       newUser.fb.access_token = access_token;
@@ -41,18 +43,7 @@ process.nextTick(function() {
         return done(null, newUser);
       });
     }
-
   });
-});
+  });
 }));
-
 }
-
-
-
-
-
-
-
-
-

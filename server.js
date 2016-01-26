@@ -2,14 +2,14 @@
 
 require('dotenv').load()
 
-var express = require('express')
-var app = express()
-var Promise = require('bluebird')
-var path  = require('path');
+var express       = require('express')
+var app           = express()
+var Promise       = require('bluebird')
+var path          = require('path');
 
-var logger = require('morgan')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
+var logger        = require('morgan')
+var cookieParser  = require('cookie-parser')
+var bodyParser    = require('body-parser')
 
 var dbConfig = require('./db/credentials.js')
 var mongoose = Promise.promisifyAll( require('mongoose'))
@@ -39,7 +39,16 @@ app.use('/', routes)
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-require('./config/passport.js')(passport); // load our routes and pass in our app and fully configured passport
+require('./config/passport')(passport); // load our routes and pass in our app and fully configured passport
+
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'} ));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  })
+);
 
 
 
