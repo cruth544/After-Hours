@@ -71,7 +71,14 @@ module.exports = {
 
   show: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
-      res.render('restaurants/show', { restaurant: restaurant })
+      User.findOne({ email: req.session.email }).then(function(user){
+          console.log(restaurant)
+          console.log(req.session)
+          res.render('restaurants/show', { restaurant: restaurant,
+                                           curr_user: user.email,
+                                           user: req.user,
+                                           users: null })
+       })
     })
   },
 
