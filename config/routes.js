@@ -1,9 +1,10 @@
 var express = require('express')
 var router  = new express.Router()
 var usersController = require('../controllers/users')
+var restaurantsController = require('../controllers/restaurants')
 
 
-
+// USER ROUTES
 router.route('/')
   .get(usersController.index)
 
@@ -15,6 +16,9 @@ router.route('/signUp')
 
 router.route('/logout')
   .get(usersController.logout)
+
+// RESTAURANT ROUTES
+
 
 
 
