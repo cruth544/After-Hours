@@ -2,7 +2,8 @@ var express = require('express')
 var router  = new express.Router()
 var usersController = require('../controllers/users')
 var restaurantsController = require('../controllers/restaurants')
-
+ var passport = require('passport')
+  require("./passport")(passport)
 
 // USER ROUTES
 

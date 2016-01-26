@@ -6,7 +6,7 @@ var express = require('express')
 var app = express()
 var Promise = require('bluebird')
 var path  = require('path');
-
+var passport   = require('passport');
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
