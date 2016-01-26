@@ -19,6 +19,9 @@ router.route('/logout')
 
 // RESTAURANT ROUTES
 
+router.route('/restaurants)
+  .get(restaurantsController.show)
+
 
 
 

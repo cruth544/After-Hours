@@ -1,4 +1,4 @@
-var Restaurant = require("../models/restaurants");
+var Restaurant = require("../models/restaurant");
 
 module.exports = {
 
