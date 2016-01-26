@@ -1,43 +1,12 @@
-<<<<<<< HEAD
 var Restaurant = require('../models/restaurant');
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants();
 
 module.exports = {
-
-    all: function (req, res, next) {
-      Restaurant.find({}, function (err, restaurants) {
-        res.render('restaurants/all', { restaurants: restaurants })
-      })
-    },
-
-    show: function (req, res, next) {
-      Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
-        res.render('restaurants/show', { restaurant: restaurant })
-      })
-    },
-
-    create: function (req, res, next) {
-      var newRestaurant = new Restaurant(req.body)
-      newRestaurant.save(function (err) {
-        if (err) console.log(err)
-        else res.send('Restaurant created!')
-      })
-    }
-}
-=======
-var Restaurant  = require("../models/restaurant")
-var Yelp        = require('yelp')
-var cheerio     = require('cheerio')
-var async       = require('async')
-var fs          = require('fs')
-var request     = require('request')
-
-module.exports = {
+  index: function (req, res, next) {
   //******************************************************************\\
  //COMMENTED OUT BECAUSE YELP WILL LOCK YOU OUT AFTER TOO MANY REQUESTS\\
 //**********************************************************************\\
-  index: function (req, res, next) {
     // var businessesJson = {}
     // var responsesCompleted = 0
     // var yelp = new Yelp({
@@ -49,7 +18,7 @@ module.exports = {
 
     // yelp.search({ term: 'happy hour', location: 'Los Angeles'})
     //   .then(function (data) {
-        res.render('index', {data: data, curr_user: null})
+        res.render('index', {/*data: data, */curr_user: null})
 
       //   yelpParse(data, businessesJson, function () {
       //     responsesCompleted++
@@ -63,7 +32,36 @@ module.exports = {
       // }).catch(function (err) {
       //   console.log(err)
       // })
+  },
+
+  all: function (req, res, next) {
+    Restaurant.find({}, function (err, restaurants) {
+      res.render('restaurants/all', { restaurants: restaurants })
+    })
+  },
+
+  show: function (req, res, next) {
+    Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
+      res.render('restaurants/show', { restaurant: restaurant })
+    })
+  },
+
+  create: function (req, res, next) {
+    var newRestaurant = new Restaurant(req.body)
+    newRestaurant.save(function (err) {
+      if (err) console.log(err)
+      else res.send('Restaurant created!')
+    })
   }
+}
+var Restaurant  = require("../models/restaurant")
+var Yelp        = require('yelp')
+var cheerio     = require('cheerio')
+var async       = require('async')
+var fs          = require('fs')
+var request     = require('request')
+
+module.exports = {
 }
 
 
@@ -231,4 +229,3 @@ module.exports = {
 
 
 
->>>>>>> 352fc7f... loops once right now, does pull information correctly it seems, just not looping on the extractHappyHourTime function properly
