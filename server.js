@@ -34,6 +34,10 @@ app.use(passport.initialize());
 var routes = require('./config/routes')
 app.use('/', routes)
 
+app.get('/yelp/:location/:term', function (req, res) {
+  console.log("Made yelp api call")
+})
+
 
 
 

@@ -9,10 +9,11 @@ var restaurantsController = require('../controllers/restaurants')
 
 var passport = require('passport')
 require("./passport")(passport)
+var restaurantsController = require('../controllers/restaurants')
 
 
 router.route('/')
-  .get(usersController.index)
+  .get(restaurantsController.index)
 
 router.route('/login')
   .post(usersController.login)
