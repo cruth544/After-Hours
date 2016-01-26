@@ -1,4 +1,10 @@
-var Restaurant = require('../models/restaurant');
+var Restaurant  = require("../models/restaurant")
+var Yelp        = require('yelp')
+var cheerio     = require('cheerio')
+var async       = require('async')
+var fs          = require('fs')
+var request     = require('request')
+
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants();
 
@@ -53,15 +59,6 @@ module.exports = {
       else res.send('Restaurant created!')
     })
   }
-}
-var Restaurant  = require("../models/restaurant")
-var Yelp        = require('yelp')
-var cheerio     = require('cheerio')
-var async       = require('async')
-var fs          = require('fs')
-var request     = require('request')
-
-module.exports = {
 }
 
 
