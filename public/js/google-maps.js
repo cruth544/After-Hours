@@ -3,7 +3,8 @@ function initMap() {
     center: {lat: 37.4038824, lng: -122.1162865},
     zoom: 1
   })
-
+  console.log("from google-map.js")
+  console.log(map)
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
     function toggleBounce() {
