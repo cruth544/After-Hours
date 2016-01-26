@@ -1,4 +1,6 @@
 {
+    "Arts District Brewing Company": {},
+    "La Chuperia": {},
     "Sunset Beer Company": {
         "1": {
             "review": [
@@ -16,5 +18,323 @@
                 "pm"
             ]
         }
-    }
+    },
+    "Everson Royce Bar": {},
+    "The Hermosillo": {},
+    "The Faculty": {
+        "2": {
+            "review": [
+                " 4-7 ",
+                null,
+                "-",
+                null
+            ]
+        }
+    },
+    "1642 Beer and Wine": {
+        "0": {
+            "review": [
+                " 6 to 8 pm.",
+                null,
+                "to",
+                "pm."
+            ]
+        },
+        "3": {
+            "review": [
+                " until 2016",
+                null,
+                "until",
+                null
+            ]
+        }
+    },
+    "The Black Sheep": {
+        "8": {
+            "review": [
+                " and 5",
+                null,
+                "and",
+                null
+            ]
+        }
+    },
+    "Melody Lounge": {
+        "1": {
+            "review": [
+                " until 2am",
+                null,
+                "until",
+                "am"
+            ]
+        },
+        "2": {
+            "review": [
+                " 5-9",
+                null,
+                "-",
+                null
+            ]
+        },
+        "3": {
+            "review": [
+                " 5-9 ",
+                null,
+                "-",
+                null
+            ]
+        },
+        "7": {
+            "review": [
+                " 5pm-9pm",
+                "pm",
+                "-",
+                "pm"
+            ]
+        },
+        "10": {
+            "review": [
+                " 6-8pm",
+                null,
+                "-",
+                "pm"
+            ]
+        }
+    },
+    "BAR Ama": {
+        "7": {
+            "review": [
+                " 30-45 ",
+                null,
+                "-",
+                null
+            ]
+        }
+    },
+    "Jay's Bar": {
+        "0": {
+            "review": [
+                " 2 to 4 ",
+                null,
+                "to",
+                null
+            ]
+        },
+        "8": {
+            "review": [
+                " 4-7 ",
+                null,
+                "-",
+                null
+            ]
+        },
+        "11": {
+            "review": [
+                " is 7 ",
+                null,
+                "is",
+                null
+            ]
+        },
+        "13": {
+            "review": [
+                " 5-7 pm",
+                null,
+                "-",
+                "pm"
+            ]
+        }
+    },
+    "Wolf & Crane Bar": {
+        "14": {
+            "review": [
+                " 5-7",
+                null,
+                "-",
+                null
+            ]
+        },
+        "15": {
+            "review": [
+                " 5pm-7pm",
+                "pm",
+                "-",
+                "pm"
+            ]
+        },
+        "17": {
+            "review": [
+                " until 7pm",
+                null,
+                "until",
+                "pm"
+            ]
+        },
+        "19": {
+            "review": [
+                " 5-7",
+                null,
+                "-",
+                null
+            ]
+        }
+    },
+    "Villains Tavern": {
+        "16": {
+            "review": [
+                " 25-45",
+                null,
+                "-",
+                null
+            ]
+        },
+        "20": {
+            "review": [
+                " 20-25 ",
+                null,
+                "-",
+                null
+            ]
+        },
+        "40": {
+            "review": [
+                " 20-25 ",
+                null,
+                "-",
+                null
+            ]
+        }
+    },
+    "Plan Check Kitchen + Bar": {
+        "4": {
+            "review": [
+                " 4-7 ",
+                null,
+                "-",
+                null
+            ]
+        },
+        "6": {
+            "review": [
+                " is 75",
+                null,
+                "is",
+                null
+            ]
+        },
+        "11": {
+            "review": [
+                " to 7",
+                null,
+                "to",
+                null
+            ]
+        }
+    },
+    "Public School 213": {
+        "1": {
+            "review": [
+                " until 6:30pm",
+                null,
+                "until",
+                "pm"
+            ]
+        }
+    },
+    "Preux & Proper": {
+        "5": {
+            "review": [
+                " is 2 ",
+                null,
+                "is",
+                null
+            ]
+        },
+        "11": {
+            "review": [
+                " 4-6pm",
+                null,
+                "-",
+                "pm"
+            ]
+        },
+        "12": {
+            "review": [
+                " 4-6pm",
+                null,
+                "-",
+                "pm"
+            ]
+        },
+        "20": {
+            "review": [
+                " is 6",
+                null,
+                "is",
+                null
+            ]
+        },
+        "40": {
+            "review": [
+                " is 6",
+                null,
+                "is",
+                null
+            ]
+        },
+        "60": {
+            "review": [
+                " is 6",
+                null,
+                "is",
+                null
+            ]
+        }
+    },
+    "Pour Haus Wine Bar": {
+        "8": {
+            "review": [
+                " and 6 ",
+                null,
+                "and",
+                null
+            ]
+        }
+    },
+    "Thirsty Crow": {
+        "4": {
+            "review": [
+                " until 8pm",
+                null,
+                "until",
+                "pm"
+            ]
+        },
+        "9": {
+            "review": [
+                " until 8pm",
+                null,
+                "until",
+                "pm"
+            ]
+        },
+        "12": {
+            "review": [
+                " 5-8pm",
+                null,
+                "-",
+                "pm"
+            ]
+        },
+        "16": {
+            "review": [
+                " 5-8 ",
+                null,
+                "-",
+                null
+            ]
+        }
+    },
+    "Blue Cow Kitchen & Bar": {},
+    "The Morrison": {}
 }
