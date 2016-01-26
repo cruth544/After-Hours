@@ -3,11 +3,20 @@ var User = require("../models/user");
 
 module.exports = {
 
+
+  users: function (req, res, next) {
+      User.find({}, function (err, users) {
+        res.render('all-users', {users: users})
+      })
+  },
+
   index: function (req, res, next) {
+    // if there is a match for someone in the database, find them and render their profile
     if(req.session && req.session.email){
         User.findOne({ email: req.session.email }).then(function(user){
             res.render('index',{
                 curr_user: user.email,
+                user: req.user,
                 users: null  })
         })
     }
@@ -16,6 +25,7 @@ module.exports = {
             .then( function(users){
                 res.render('index', {
                     curr_user: null,
+                    user: req.user,
                     users: users
                 })
             }).catch()
@@ -50,7 +60,7 @@ module.exports = {
    },
 
    logout: function (req, res, next) {
-      req.session.destroy(function () {
+        req.session.destroy(function () {
         res.redirect(303, '/')
       })
    }
