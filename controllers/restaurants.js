@@ -69,7 +69,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation,  limit: '10', sort: '0'})
+      yelp.search({ term: 'happy hour', location: 90013, limit: '10', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -104,46 +104,40 @@ function yelpParse (data, businessJson, complete) {
       var restaurant = businesses[businessCount]
 
       businessJson[restaurant.name] = {}
-      console.log(businesses)
       // check database if entry exists
-      var dbRestaurant = checkDataBaseFor(restaurant.name, restaurant.location.display_address.join(' '))
-      if (dbRestaurant) {
-        // if entry does exist, add it to the businessJson and continue
-        console.log("\n\n")
-        console.log(dbRestaurant)
-        console.log("Exists in DB")
-        console.log("\n\n")
-        businessJson[restaurant.name] = dbRestaurant
+      checkDataBaseFor(restaurant.location.display_address.join(' '), function (dbRestaurant) {
+        // body...
+        if (dbRestaurant) {
+          console.log("MATCH!\n")
+          // if entry does exist, add it to the businessJson and continue
+          businessJson[restaurant.name] = dbRestaurant
+          complete()
+        } else {
+          console.log("No match\n")
+        // otherwise continue with scraping
+        // grabing yelp api stuff and storing it
+  /////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
+          if (restaurant.location.display_address) {
+            var address = restaurant.location.display_address.join(' ')
+          }
+          businessJson[restaurant.name].contact = {
+            phone  : restaurant.display_phone,
+            address: address,
+            yelpUrl: restaurant.url
+          }
+          businessJson[restaurant.name].image = restaurant.image_url
+          businessJson[restaurant.name].location = {
+            lat: restaurant.location.coordinate.latitude,
+            lng: restaurant.location.coordinate.longitude
+          }
+  /////////////////////////////////END/////////////////////////////////////
 
-        businessCount++
-        callback()
-      }
-
-      // otherwise continue with scraping
-      // grabing yelp api stuff and storing it
-
-/////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
-      if (restaurant.location.display_address) {
-        var address = restaurant.location.display_address.join(" ")
-      }
-      businessJson[restaurant.name].contact = {
-        phone  : restaurant.display_phone,
-        address: address,
-        yelpUrl: restaurant.url
-      }
-      businessJson[restaurant.name].image = restaurant.image_url
-      businessJson[restaurant.name].location = {
-        lat: restaurant.location.coordinate.latitude,
-        lng: restaurant.location.coordinate.longitude
-      }
-/////////////////////////////////END/////////////////////////////////////
-
-
-      // start checking yelp reviews
-      getReviewCount(restaurant.name, restaurant.url, businessJson, function () {
-        complete()
+          // start checking yelp reviews
+          getReviewCount(restaurant.name, restaurant.url, businessJson, function () {
+            complete()
+          })
+        }
       })
-
       // increment counter
       businessCount++
       // you have to call the callback to go to next
@@ -232,9 +226,8 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
 }
 
 
-function checkDataBaseFor (restaurantName, restaurantAddress) {
-  Restaurant.find({name: 'Bar Ama'}, function (err, restaurants) {
-    console.log(restaurants)
+function checkDataBaseFor (restaurantAddress, complete) {
+  Restaurant.find({}, function (err, restaurants) {
     for (var i = 0; i < restaurants.length; i++) {
       var dbAddress = restaurants[i].contact.address
       var dbStreetNumber = dbAddress.match(/^\d*/)[0]
@@ -243,14 +236,11 @@ function checkDataBaseFor (restaurantName, restaurantAddress) {
       var checkZipCode = restaurantAddress.match(/\d{5}$/)[0]
       if (dbZipCode === checkZipCode) {
         if (dbStreetNumber === checkStreetNumber) {
-          console.log("\nMATCHED!!")
-          console.log(restaurantName)
-          console.log("\n")
-          return restaurants[i]
+          return complete(restaurants[i])
         }
       }
     }
-    return false
+    return complete(false)
   })
 }
 
