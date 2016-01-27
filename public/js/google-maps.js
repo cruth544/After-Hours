@@ -1,5 +1,4 @@
 function initMap() {
-<<<<<<< HEAD
 
  var styles = [
     {
