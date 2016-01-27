@@ -52,7 +52,7 @@ switch(app.get('env')){
       mongoose.connect(dbConfig.mongo.dev.conn, dbConfig.mongo.options);
       break;
   case 'production':
-      mongoose.connect(dbConfig.mongo.prod.conn, dbConfig.mongo.options);
+      mongoose.connect('mongodb://washburn.michael@gmail.com:Mike33paul$@ds051665.mongolab.com:51665/heroku_h1907377');
       break;
   default:
       throw new Error('Unknown execution environment: ' + app.get('env'));
