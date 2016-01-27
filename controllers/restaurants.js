@@ -81,8 +81,9 @@ module.exports = {
        })
     })
   },
-
+  // Submit form data via restaurants/new
   create: function (req, res, next) {
+
     var newRestaurant = new Restaurant ({
           name   : req.body.name,
           hours  :{
@@ -144,6 +145,7 @@ module.exports = {
     })
 
   },
+  // Restaurant Form Page
   new: function (req, res, next) {
     res.render('restaurants/new')
   },
