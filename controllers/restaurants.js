@@ -77,7 +77,7 @@ module.exports = {
         console.log(responsesCompleted)
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
-          businessesJson = storeTimes(probableHappyHourTimes(getTimes(businessesJson)))
+          businessesJson = getTimes(businessesJson)
           console.log(businessesJson)
           res.send(businessesJson)
 
@@ -196,185 +196,152 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
 
 
 // restaurantList param here is the passed in json compiled from scrape
-function getTimes (restaurantList) {
-    var sortedHappyHourTimes = {}
-    for (var restaurantName in restaurantList) {
-        var obj = sortedHappyHourTimes[restaurantName] = {}
-        obj.location = restaurantList[restaurantName].location
-        obj.timeFrequency = {}
-        obj.timeStrings = []
-        for (var reviewNumber in restaurantList[restaurantName].reviews) {
-            var reviews = restaurantList[restaurantName].reviews[reviewNumber]
-            for (var i = 0; i < reviews.length; i++) {
-                obj.timeStrings.push(reviews[i])
-                var num = reviews[i].match(/\d{1,2}/g)
-                for (var j = 0; j < num.length; j++) {
-                    if (num[j]) {
-                        if (obj.timeFrequency[num[j]]) {
-                            obj.timeFrequency[num[j]]++
-                        } else {
-                            obj.timeFrequency[num[j]] = 1
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return sortedHappyHourTimes
-}
 
 function getTimes (restaurantList) {
-    var sortedHappyHourTimes = {}
-    for (var restaurantName in restaurantList) {
-        var obj = sortedHappyHourTimes[restaurantName] = {}
-        obj.location = restaurantList[restaurantName].location
-        obj.timeFrequency = {}
-        obj.timeStrings = []
-        for (var reviewNumber in restaurantList[restaurantName].reviews) {
-            var reviews = restaurantList[restaurantName].reviews[reviewNumber]
-            for (var i = 0; i < reviews.length; i++) {
-                obj.timeStrings.push(reviews[i])
-                var num = reviews[i].match(/\d{1,2}/g)
-                for (var j = 0; j < num.length; j++) {
-                    if (num[j]) {
-                        if (obj.timeFrequency[num[j]]) {
-                            obj.timeFrequency[num[j]]++
-                        } else {
-                            obj.timeFrequency[num[j]] = 1
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return sortedHappyHourTimes
-}
-
-function probableHappyHourTimes (happyHourFrequency) {
-    var frequentHappyHourTimes = {}
-    for (var restaurantName in happyHourFrequency) {
-        frequentHappyHourTimes[restaurantName] = {}
-        frequentHappyHourTimes[restaurantName].location = happyHourFrequency[restaurantName].location
-        var frequency = happyHourFrequency[restaurantName].timeFrequency
-        var sortTime = []
-        for (var time in frequency) {
-            sortTime.push([time, frequency[time]])
-        }
-        sortTime.sort(function (a, b) {
-            return b[1] - a[1]
-        })
-        frequentHappyHourTimes[restaurantName].sortedTime = sortTime
-    }
-    return frequentHappyHourTimes
-}
-
-function storeTimes (parsedRestaurantList) {
-    var targetAverage = 6
-    console.log(parsedRestaurantList)
-    var restaurantsHappyHours = {}
-
-    for (var restaurantName in parsedRestaurantList) {
-        var obj = restaurantsHappyHours[restaurantName] = {}
-        obj.location = parsedRestaurantList[restaurantName].location
-        var sortedTime = parsedRestaurantList[restaurantName].sortedTime
-        if (sortedTime.length === 0) {
-          obj.time = {
-            startTime: null,
-            endTime: null
-          }
-          continue
-        }
-        var mostEqualsArray = [sortedTime[sortedTime.length - 1]]
-        var secondEqualsArray = [sortedTime[sortedTime.length - 1]]
-
-        for (var i = sortedTime.length - 2; i >= 0; i--) {
-
-            if (sortedTime[i][1] > mostEqualsArray[0][1]) {
-                secondEqualsArray = mostEqualsArray
-                mostEqualsArray = [sortedTime[i]]
-
-            } else if (sortedTime[i][1] === mostEqualsArray[0][1]) {
-                mostEqualsArray.push(sortedTime[i])
-
+  var sortedHappyHourTimes = {}
+  for (var restaurantName in restaurantList) {
+    var obj = {}
+    obj.timeFrequency = {}
+    obj.timeStrings = []
+    for (var reviewNumber in restaurantList[restaurantName].reviews) {
+      var reviews = restaurantList[restaurantName].reviews[reviewNumber]
+      for (var i = 0; i < reviews.length; i++) {
+        obj.timeStrings.push(reviews[i])
+        var num = reviews[i].match(/\d{1,2}/g)
+        for (var j = 0; j < num.length; j++) {
+          if (num[j]) {
+            if (obj.timeFrequency[num[j]]) {
+              obj.timeFrequency[num[j]]++
             } else {
-                if (sortedTime[i][1] > secondEqualsArray[0][1]) {
-                    secondEqualsArray = [sortedTime[i]]
-
-                } else if (sortedTime[i][1] === secondEqualsArray[0][1]) {
-                    secondEqualsArray.push(sortedTime[i])
-                }
+              obj.timeFrequency[num[j]] = 1
             }
+          }
         }
-
-        if (mostEqualsArray.length === 1 && secondEqualsArray.length === 1) {
-            if (/\d{1,2}/.test(mostEqualsArray[0][0]) && /\d{1,2}/.test(secondEqualsArray[0][0])) {
-                var most = Number(mostEqualsArray[0][0])
-                var second = Number(secondEqualsArray[0][0])
-            }
-        } else if (mostEqualsArray.length === 2 && mostEqualsArray.length > secondEqualsArray.length) {
-            var most = Number(mostEqualsArray[0][0])
-            var second = Number(mostEqualsArray[1][0])
-
-        } else {
-            if (mostEqualsArray.length === 1) {
-                var most = Number(mostEqualsArray[0][0])
-
-                if (secondEqualsArray.length > 1) {
-                    var targetAverage = 6
-                    var second = Number(secondEqualsArray[0][0])
-
-                    for (var i = 0; i < secondEqualsArray.length; i++) {
-                        var current = Number(secondEqualsArray[i][0])
-                        var avg = (most + current) / 2
-
-                        if (Math.abs(targetAverage - current) < Math.abs(targetAverage - second)) {
-                            second = current
-                        }
-                    }
-                }
-
-            } else if (secondEqualsArray.length === 1) {
-                var second = Number(secondEqualsArray[0][0])
-                if (mostEqualsArray.length > 1) {
-                    var targetAverage = 6
-                    var most = Number(mostEqualsArray[0][0])
-
-                    for (var i = 0; i < mostEqualsArray.length; i++) {
-                        var current = Number(mostEqualsArray[i][0])
-                        var avg = (second + current) / 2
-
-                        if (Math.abs(targetAverage - current) < Math.abs(targetAverage - most)) {
-                            most = current
-                        }
-                    }
-                }
-            }
-        }
-        if (most > second) {
-            obj.time = {
-                startTime: second,
-                endTime: most
-            }
-
-        } else if (second > most) {
-            obj.time = {
-                startTime: most,
-                endTime: second
-            }
-
-        } else {
-            obj.time = {
-                startTime: null,
-                endTime: most
-            }
-        }
+      }
     }
-    return restaurantsHappyHours
+    restaurantList[restaurantName].timeStrings = obj.timeStrings
+    restaurantList[restaurantName].timeCalculations = {timeFrequency: obj.timeFrequency}
+  }
+  return probableHappyHourTimes(restaurantList)
 }
 
+function probableHappyHourTimes (restaurantList) {
+  for (var restaurantName in restaurantList) {
+    var obj = {}
+    var frequency = restaurantList[restaurantName].timeCalculations.timeFrequency
+    var sortTime = []
 
-// should be called like this
-// storeTimes(probableHappyHourTimes(getTimes(restaurants)))
+    for (var time in frequency) {
+      sortTime.push([time, frequency[time]])
+    }
+    sortTime.sort(function (a, b) {
+      return b[1] - a[1]
+    })
+    restaurantList[restaurantName].timeCalculations.sortedTime = sortTime
+  }
+  return storeTimes(restaurantList)
+}
+
+function storeTimes (restaurantList) {
+  var targetAverage = 6
+
+  for (var restaurantName in restaurantList) {
+    var obj = {}
+    var sortedTime = restaurantList[restaurantName].timeCalculations.sortedTime
+    if (sortedTime.length === 0) {
+      obj.time = {
+        startTime: null,
+        endTime: null
+      }
+      continue
+    }
+    var mostEqualsArray = [sortedTime[sortedTime.length - 1]]
+    var secondEqualsArray = [sortedTime[sortedTime.length - 1]]
+
+    for (var i = sortedTime.length - 2; i >= 0; i--) {
+      if (sortedTime[i][1] > mostEqualsArray[0][1]) {
+        secondEqualsArray = mostEqualsArray
+        mostEqualsArray = [sortedTime[i]]
+
+      } else if (sortedTime[i][1] === mostEqualsArray[0][1]) {
+        mostEqualsArray.push(sortedTime[i])
+
+      } else {
+        if (sortedTime[i][1] > secondEqualsArray[0][1]) {
+          secondEqualsArray = [sortedTime[i]]
+
+        } else if (sortedTime[i][1] === secondEqualsArray[0][1]) {
+          secondEqualsArray.push(sortedTime[i])
+        }
+      }
+    }
+
+    if (mostEqualsArray.length === 1 && secondEqualsArray.length === 1) {
+      if (/\d{1,2}/.test(mostEqualsArray[0][0]) && /\d{1,2}/.test(secondEqualsArray[0][0])) {
+        var most = Number(mostEqualsArray[0][0])
+        var second = Number(secondEqualsArray[0][0])
+      }
+    } else if (mostEqualsArray.length === 2 && mostEqualsArray.length > secondEqualsArray.length) {
+        var most = Number(mostEqualsArray[0][0])
+        var second = Number(mostEqualsArray[1][0])
+
+    } else {
+      if (mostEqualsArray.length === 1) {
+        var most = Number(mostEqualsArray[0][0])
+
+      if (secondEqualsArray.length > 1) {
+        var targetAverage = 6
+        var second = Number(secondEqualsArray[0][0])
+
+        for (var i = 0; i < secondEqualsArray.length; i++) {
+          var current = Number(secondEqualsArray[i][0])
+          var avg = (most + current) / 2
+
+          if (Math.abs(targetAverage - current) < Math.abs(targetAverage - second)) {
+            second = current
+          }
+        }
+      }
+
+    } else if (secondEqualsArray.length === 1) {
+      var second = Number(secondEqualsArray[0][0])
+      if (mostEqualsArray.length > 1) {
+        var targetAverage = 6
+        var most = Number(mostEqualsArray[0][0])
+
+        for (var i = 0; i < mostEqualsArray.length; i++) {
+          var current = Number(mostEqualsArray[i][0])
+          var avg = (second + current) / 2
+
+          if (Math.abs(targetAverage - current) < Math.abs(targetAverage - most)) {
+              most = current
+            }
+          }
+        }
+      }
+    }
+    if (most > second) {
+      obj.time = {
+        startTime: second,
+        endTime: most
+      }
+
+    } else if (second > most) {
+      obj.time = {
+        startTime: most,
+        endTime: second
+      }
+
+    } else {
+      obj.time = {
+          startTime: null,
+          endTime: most
+      }
+    }
+    restaurantList[restaurantName].time = obj.time
+  }
+  return restaurantList
+}
 
 
 
