@@ -5,42 +5,49 @@ var restaurantSchema = mongoose.Schema({
       image_uri: String,
       hours    :{
               monday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
-              tuesday:{
+              tuesday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               wednesday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               thursday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               friday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               saturday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               sunday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
