@@ -8,8 +8,9 @@ exports.seedRestaurants = function seedRestaurants(){
 
         name: 'Bar Ama',
         image_uri: 'http://bar-ama.com/img/super_nachos_v1.jpg',
-        hours:{
+        hours: {
             monday:{
+                schedule: true,
                 time:[{
                     startTime: 17.5,
                     endTime  : 19.0
@@ -20,6 +21,7 @@ exports.seedRestaurants = function seedRestaurants(){
                 }]
             },
             tuesday:{
+                scheduled: true,
                 time:[{
                     startTime: 12.5,
                     endTime  : 19.0
@@ -30,6 +32,7 @@ exports.seedRestaurants = function seedRestaurants(){
                 }]
             },
             wednesday:{
+                scheduled: true,
                 time:[{
                     startTime: 17.5,
                     endTime  : 19.0
@@ -40,6 +43,7 @@ exports.seedRestaurants = function seedRestaurants(){
                 }]
             },
             thursday:{
+                scheduled: true,
                 time:[{
                     startTime: 17.5,
                     endTime  : 19.0
@@ -50,6 +54,7 @@ exports.seedRestaurants = function seedRestaurants(){
                   }]
             },
             friday:{
+                scheduled: true,
                 time:[{
                     startTime: 17.5,
                     endTime  : 19.0
@@ -60,12 +65,14 @@ exports.seedRestaurants = function seedRestaurants(){
                 }]
             },
             saturday:{
+                scheduled: true,
                 time:[{
                     startTime: 22.0,
                     endTime  : 0.0
                 }]
             },
             sunday:{
+                scheduled: true,
                 time:[{
                     startTime: 15.0,
                     endTime  : 17.5
@@ -87,24 +94,28 @@ exports.seedRestaurants = function seedRestaurants(){
         image_uri: 'http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg',
         hours:{
             monday:{
+                  scheduled: true,
                   time: [{
                         startTime: '2:00',
                         endTime  : '6:00'
                   }]
             },
             tuesday:{
+                  scheduled: true,
                   time: [{
                         startTime: 14.0,
                         endTime  : 18.0
                   }]
             },
             wednesday:{
+                  scheduled: true,
                   time: [{
                         startTime: 14.0,
                         endTime  : 18.0
                   }]
             },
             thursday:{
+                  scheduled: true,
                   time: [{
                         startTime: 14.0,
                         endTime  : 18.0
@@ -112,9 +123,24 @@ exports.seedRestaurants = function seedRestaurants(){
 
             },
             friday:{
+                  scheduled: true,
                   time:[{
                         startTime: 14.0,
                         endTime  : 18.0
+                  }]
+            },
+            saturday:{
+                  scheduled: false,
+                  time:[{
+                        startTime: null,
+                        endTime: null
+                  }]
+            },
+            sunday: {
+                  scheduled: false,
+                  time:[{
+                        startTime: null,
+                        endTime: null
                   }]
             }
         },
@@ -134,6 +160,7 @@ exports.seedRestaurants = function seedRestaurants(){
         image_uri: 'http://www.emcseafood.com/wp-content/uploads/2014/05/emc-front-1024x680.jpg',
         hours: {
             monday:{
+                  scheduled: true,
                   time:[{
                       startTime: 16.0,
                       endTime  : 19.0
@@ -144,6 +171,7 @@ exports.seedRestaurants = function seedRestaurants(){
                   }]
             },
             tuesday:{
+                  scheduled: true,
                   time:[{
                       startTime: 16.0,
                       endTime  : 19.0
@@ -154,6 +182,7 @@ exports.seedRestaurants = function seedRestaurants(){
                   }]
             },
             wednesday:{
+                  scheduled: true,
                   time:[{
                       startTime: 16.0,
                       endTime  : 19.0
@@ -164,6 +193,7 @@ exports.seedRestaurants = function seedRestaurants(){
                   }]
             },
             thursday:{
+                  scheduled: true,
                   time:[{
                       startTime: 16.0,
                       endTime  : 19.0
@@ -174,18 +204,21 @@ exports.seedRestaurants = function seedRestaurants(){
                   }]
             },
             friday:{
+                  schedule: true,
                   time:[{
                       startTime: 16.0,
                       endTime  : 19.0
                   }]
             },
             saturday:{
+                  scheduled: true,
                   time:[{
                       startTime: 16.0,
                       endTime  : 19.0
                   }]
             },
             sunday:{
+                  scheduled: true,
                   time:[{
                       startTime: 16.0,
                       endTime  : 19.0
