@@ -5,12 +5,44 @@
   <% var info = restaurant.contact %>
 
     <strong><%= restaurant.name %></strong>
-    <div><strong>Hours</strong>
-      <li>Monday: <%= changeTime(day.monday.time[0].startTime) %> - <%= changeTime(day.monday.time[0].endTime) %></li>
-      <li>Tuesday: <%= changeTime(day.tuesday.time[0].startTime) %> - <%= changeTime(day.tuesday.time[0].endTime) %></li>
-      <li>Wednesday: <%= changeTime(day.wednesday.time[0].startTime) %> - <%= changeTime(day.wednesday.time[0].endTime) %></li>
-      <li>Thursday: <%= changeTime(day.thursday.time[0].startTime) %> - <%= changeTime(day.thursday.time[0].endTime) %></li>
-      <li>Friday: <%= changeTime(day.friday.time[0].startTime) %> - <%= changeTime(day.friday.time[0].endTime) %></li>
+    <!-- Display Happy Hour Times -->
+    <div><strong>Happy Hour Times:</strong>
+    <br>
+      Monday:
+      <% for (var i = 0; i < day.monday.time.length; i++){ %>
+        <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
+      <% } %>
+
+      Tuesday:
+      <% for (var i = 0; i < day.tuesday.time.length; i++){ %>
+        <li><%= changeTime(day.tuesday.time[i].startTime) %> - <%= changeTime(day.tuesday.time[i].endTime) %></li>
+      <% } %>
+
+      Wednesday:
+      <% for (var i = 0; i < day.wednesday.time.length; i++){ %>
+        <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+      <% } %>
+
+
+      Thursday:
+      <% for (var i = 0; i < day.thursday.time.length; i++){ %>
+        <li><%= changeTime(day.thursday.time[i].startTime) %> - <%= changeTime(day.thursday.time[i].endTime) %></li>
+      <% } %>
+
+      Friday:
+      <% for (var i = 0; i < day.friday.time.length; i++){ %>
+        <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
+      <% } %>
+
+      Saturday:
+      <% for (var i = 0; i < day.saturday.time.length; i++){ %>
+        <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+      <% } %>
+
+      Sunday:
+      <% for (var i = 0; i < day.sunday.time.length; i++){ %>
+        <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
+      <% } %>
 
     </div>
 
