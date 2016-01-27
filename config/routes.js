@@ -1,16 +1,21 @@
 var express = require('express')
 var router  = new express.Router()
 var usersController = require('../controllers/users')
-var passport = require('passport')
-require("./passport")(passport)
 
 var restaurantsController = require('../controllers/restaurants')
-
+ var passport = require('passport')
+  require("./passport")(passport)
 
 // USER ROUTES
 
 router.route('/')
-  .get(usersController.index)
+  .get(restaurantsController.index)
+
+router.route('/restaurants/getAll')
+  .get(restaurantsController.yelp)
+
+router.route('/users')
+  .get(usersController.users)
 
 router.route('/login')
   .post(usersController.login)
@@ -24,8 +29,11 @@ router.route('/logout')
 router.route('/auth/facebook')
   .get(passport.authenticate('facebook', {scope: 'email'}));
 
+<<<<<<< HEAD
 
 // app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'} ));
+=======
+>>>>>>> 5e85bf16f93dad2ac49fcb0a23f65c9dd83f68e6
 
 router.route('/auth/facebook/callback')
   .get(passport.authenticate('facebook', {
@@ -33,14 +41,11 @@ router.route('/auth/facebook/callback')
     failureRedirect: '/'
   }));
 
-// app.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', {
-//     successRedirect: '/',
-//     failureRedirect: '/'
-//   })
-// );
-
-
+// RESTAURANT ROUTES
+router.route('/restaurants/all')
+  .get(restaurantsController.all)
+router.route('/:name' )
+  .get(restaurantsController.show)
 
 // router.get('/welcome', usersController.index);
 module.exports = router;
