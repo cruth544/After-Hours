@@ -4,7 +4,7 @@
 
  <div id = "restaurantShow">
      <h1 id="showName"><%= restaurant.name %></h1>
-     <div id="showImage"><img src=<%- encodeURI(restaurant.image) %>></div>
+     <div id="showImage"><img src="http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg"></div>
      <div id="times">Happy Hour Times:
        <li>Monday: <%= changeTime(restaurant.hours.monday.time[0].startTime) %> - <%= changeTime(restaurant.hours.monday.time[0].endTime) %></li>
        <li>Tuesday: <%= changeTime(restaurant.hours.tuesday.time[0].startTime) %> - <%= changeTime(restaurant.hours.tuesday.time[0].endTime) %></li>
