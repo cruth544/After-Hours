@@ -10,6 +10,9 @@ var restaurantsController = require('../controllers/restaurants')
 router.route('/')
   .get(restaurantsController.index)
 
+router.route('/restaurants/getAll')
+  .get(restaurantsController.yelp)
+
 router.route('/users')
   .get(usersController.users)
 
@@ -37,7 +40,6 @@ router.route('/restaurants/all')
   .get(restaurantsController.all)
 router.route('/:name' )
   .get(restaurantsController.show)
-
 
 // router.get('/welcome', usersController.index);
 module.exports = router;
