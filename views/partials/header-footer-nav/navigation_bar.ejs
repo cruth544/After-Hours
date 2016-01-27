@@ -6,19 +6,22 @@
   <!-- LOGO -->
   <div id = "afterHoursLogo"></div>
   <!-- Search Box -->
-
+  <div id= "searchBar"><input id="pac-input" class="controls" type="text" placeholder="Search Box"></div>
 
   <div id = "rightSideNav">
+  <!-- FACEBOOK LOG IN -->
     <% if(user != undefined){ %>
+
           <% if(user.fb != '{}'){ %>
             <h5>Welcome <%= user.fb.firstName %></h5>
             <div id = "logOut"><a class="btn btn-link" role="button" id= "logOut" href="/logout">LOG OUT </a></div>
           <% } %>
-
+  <!-- OUR LOG IN  -->
     <% } else if( curr_user ){ %>
           <h5>Welcome <%= curr_user %></h5>
           <div id = "logOut"><a class="btn btn-link" role="button" id= "logOut" href="/logout">LOG OUT
           </a></div>
+
 
     <% } else { %>
           <div id = "signUp"><a class="btn btn-link" role="button" id= "signUp" data-toggle="modal" data-target="#mySignupModal">SIGN UP</a></div>
@@ -27,3 +30,4 @@
   </div>
 
 </div>
+<script src="/public/js/google-maps.js" type="text/javascript" charset="utf-8"></script>

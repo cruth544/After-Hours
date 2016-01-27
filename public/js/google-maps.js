@@ -1,13 +1,56 @@
 function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 37.4038824, lng: -122.1162865},
-    zoom: 1
-  })
+
+ var styles = [
+    {
+      stylers: [
+        { hue: "#00a1ff" },
+        { saturation: 1 },
+        { weight: 0.5},
+        { gamma: 0.88},
+        {invert_lightness: true}
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { lightness: -12 },
+        { visibility: "simplified" },
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "on" }
+      ]
+    }
+  ]
+
+  // Create a new StyledMapType object, passing it the array of styles,
+  // as well as the name to be displayed on the map type control.
+  var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
+
+  // Create a map object, and include the MapTypeId to add
+  // to the map type control.
+  var mapOptions = {
+    zoom: 12,
+    center: new google.maps.LatLng(34.031245, -118.266532),
+    mapTypeControlOptions: {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+    }
+  };
+  var map = new google.maps.Map(document.getElementById('map'),
+    mapOptions);
+
+  //Associate the styled map with the MapTypeId and set it to display.
+  map.mapTypes.set('map_style', styledMap);
+  map.setMapTypeId('map_style');
+
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   console.log("from google-map.js")
   console.log(map)
