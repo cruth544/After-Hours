@@ -1,4 +1,4 @@
-<h1>All Restaurants</h1>
+<h1>Participating Restaurants</h1>
 
 <% restaurants.forEach(function (restaurant){ %>
   <% var day = restaurant.hours %>
@@ -33,12 +33,10 @@
       <% for (var i = 0; i < day.friday.time.length; i++){ %>
         <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
       <% } %>
-
       Saturday:
       <% for (var i = 0; i < day.saturday.time.length; i++){ %>
         <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
       <% } %>
-
       Sunday:
       <% for (var i = 0; i < day.sunday.time.length; i++){ %>
         <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>

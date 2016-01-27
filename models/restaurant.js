@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 
 var restaurantSchema = mongoose.Schema({
-      name     : String,
+      name     : { type: String, required: true },
       image_uri: String,
       hours    :{
               monday: {
@@ -57,9 +57,9 @@ var restaurantSchema = mongoose.Schema({
       },
       drinks : Boolean,
       food   : Boolean,
-      contact: { website: String,
-                 phone  : String,
-                 address: String,
+      contact: { phone  : String,
+                 address: { type: String, required: true },
+                 website: String,
                  yelpUrl: String
                 }
 })
