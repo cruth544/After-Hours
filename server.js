@@ -45,7 +45,6 @@ app.get('/yelp/:location/:term', function (req, res) {
 })
 
 
-
 // use db connection string based on whether the environment is development or production
 switch(app.get('env')){
   case 'development':
