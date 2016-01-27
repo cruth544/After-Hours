@@ -1,4 +1,6 @@
 # After-Hours
+http://ga-after-hours.herokuapp.com/
+
 After Hours is an exciting new app that allows users to find Happy Hour information from differing venues relative to their location. 
 
 ### Installation instructions for any dependencies
