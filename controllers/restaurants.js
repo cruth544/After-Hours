@@ -167,7 +167,7 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
         if (!err) {
           var $ = cheerio.load(body)
           var reviews = $('.review-content')
-          var happyHoursRegEx = /((until|up to|till)\s(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?|((1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?((\s(to|through|and|until)\s)|(-))(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?))/g
+          var happyHoursRegEx = /((until|up to|till|til)\s(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?|((1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?((\s(to|through|and|until)\s)|(-))(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?))/g
           async.forEachOf(reviews, function (item, key, forEachCallback) {
             var review = $(item).children().last().text()
             if (happyHoursRegEx.test(review)) {
@@ -195,6 +195,140 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
 
 
 
+
+// restaurantList param here is the passed in json compiled from scrape
+function getTimes (restaurantList) {
+    var sortedHappyHourTimes = {}
+    for (var restaurantName in restaurantList) {
+        var obj = sortedHappyHourTimes[restaurantName] = {}
+        obj.timeFrequency = {}
+        obj.timeStrings = []
+        for (var reviewNumber in restaurantList[restaurantName].reviews) {
+            var reviews = restaurantList[restaurantName].reviews[reviewNumber]
+            for (var i = 0; i < reviews.length; i++) {
+                obj.timeStrings.push(reviews[i])
+                var num = reviews[i].match(/\d{1,2}/g)
+                for (var j = 0; j < num.length; j++) {
+                    if (num[j]) {
+                        if (obj.timeFrequency[num[j]]) {
+                            obj.timeFrequency[num[j]]++
+                        } else {
+                            obj.timeFrequency[num[j]] = 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return sortedHappyHourTimes
+}
+
+function probableHappyHourTimes (happyHourFrequency) {
+    var frequentHappyHourTimes = {}
+    for (var restaurantName in happyHourFrequency) {
+        frequentHappyHourTimes[restaurantName] = {}
+        var frequency = happyHourFrequency[restaurantName].timeFrequency
+        var sortTime = []
+        for (var time in frequency) {
+            sortTime.push([time, frequency[time]])
+        }
+        sortTime.sort(function (a, b) {
+            return b[1] - a[1]
+        })
+        frequentHappyHourTimes[restaurantName].sortedTime = sortTime
+    }
+    return frequentHappyHourTimes
+}
+
+function storeTimes (parsedRestaurantList) {
+    var targetAverage = 6
+    console.log(parsedRestaurantList)
+    var restaurantsHappyHours = {}
+
+    for (var restaurantName in parsedRestaurantList) {
+        var obj = restaurantsHappyHours[restaurantName] = {}
+        var sortedTime = parsedRestaurantList[restaurantName].sortedTime
+        if (sortedTime.length === 0) continue
+        var mostEqualsArray = [sortedTime[sortedTime.length - 1]]
+        var secondEqualsArray = [sortedTime[sortedTime.length - 1]]
+
+        for (var i = sortedTime.length - 2; i >= 0; i--) {
+
+            if (sortedTime[i][1] > mostEqualsArray[0][1]) {
+                secondEqualsArray = mostEqualsArray
+                mostEqualsArray = [sortedTime[i]]
+
+            } else if (sortedTime[i][1] === mostEqualsArray[0][1]) {
+                mostEqualsArray.push(sortedTime[i])
+
+            } else {
+                if (sortedTime[i][1] > secondEqualsArray[0][1]) {
+                    secondEqualsArray = [sortedTime[i]]
+
+                } else if (sortedTime[i][1] === secondEqualsArray[0][1]) {
+                    secondEqualsArray.push(sortedTime[i])
+                }
+            }
+        }
+
+        if (mostEqualsArray.length === 1 && secondEqualsArray.length === 1) {
+            if (/\d{1,2}/.test(mostEqualsArray[0][0]) && /\d{1,2}/.test(secondEqualsArray[0][0])) {
+                var most = Number(mostEqualsArray[0][0])
+                var second = Number(secondEqualsArray[0][0])
+            }
+        } else if (mostEqualsArray.length === 2 && mostEqualsArray.length > secondEqualsArray.length) {
+            var most = Number(mostEqualsArray[0][0])
+            var second = Number(mostEqualsArray[1][0])
+
+        } else {
+            if (mostEqualsArray.length === 1) {
+                var most = Number(mostEqualsArray[0][0])
+
+                if (secondEqualsArray.length > 1) {
+                    var targetAverage = 6
+                    var second = Number(secondEqualsArray[0][0])
+
+                    for (var i = 0; i < secondEqualsArray.length; i++) {
+                        var current = Number(secondEqualsArray[i][0])
+                        var avg = (most + current) / 2
+
+                        if (Math.abs(targetAverage - current) < Math.abs(targetAverage - second)) {
+                            second = current
+                        }
+                    }
+                }
+
+            } else if (secondEqualsArray.length === 1) {
+                var second = Number(secondEqualsArray[0][0])
+                if (mostEqualsArray.length > 1) {
+                    var targetAverage = 6
+                    var most = Number(mostEqualsArray[0][0])
+
+                    for (var i = 0; i < mostEqualsArray.length; i++) {
+                        var current = Number(mostEqualsArray[i][0])
+                        var avg = (second + current) / 2
+
+                        if (Math.abs(targetAverage - current) < Math.abs(targetAverage - most)) {
+                            most = current
+                        }
+                    }
+                }
+            }
+        }
+        if (most > second) {
+            obj.startTime = second
+            obj.endTime = most
+
+        } else if (second > most) {
+            obj.startTime = most
+            obj.endTime = second
+
+        } else {
+            obj.endTime = most
+        }
+    }
+    return restaurantsHappyHours
+}
 
 
 
