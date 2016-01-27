@@ -201,6 +201,34 @@ function getTimes (restaurantList) {
     var sortedHappyHourTimes = {}
     for (var restaurantName in restaurantList) {
         var obj = sortedHappyHourTimes[restaurantName] = {}
+        obj.location = restaurantList[restaurantName].location
+        obj.timeFrequency = {}
+        obj.timeStrings = []
+        for (var reviewNumber in restaurantList[restaurantName].reviews) {
+            var reviews = restaurantList[restaurantName].reviews[reviewNumber]
+            for (var i = 0; i < reviews.length; i++) {
+                obj.timeStrings.push(reviews[i])
+                var num = reviews[i].match(/\d{1,2}/g)
+                for (var j = 0; j < num.length; j++) {
+                    if (num[j]) {
+                        if (obj.timeFrequency[num[j]]) {
+                            obj.timeFrequency[num[j]]++
+                        } else {
+                            obj.timeFrequency[num[j]] = 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return sortedHappyHourTimes
+}
+
+function getTimes (restaurantList) {
+    var sortedHappyHourTimes = {}
+    for (var restaurantName in restaurantList) {
+        var obj = sortedHappyHourTimes[restaurantName] = {}
+        obj.location = restaurantList[restaurantName].location
         obj.timeFrequency = {}
         obj.timeStrings = []
         for (var reviewNumber in restaurantList[restaurantName].reviews) {
@@ -227,6 +255,7 @@ function probableHappyHourTimes (happyHourFrequency) {
     var frequentHappyHourTimes = {}
     for (var restaurantName in happyHourFrequency) {
         frequentHappyHourTimes[restaurantName] = {}
+        frequentHappyHourTimes[restaurantName].location = happyHourFrequency[restaurantName].location
         var frequency = happyHourFrequency[restaurantName].timeFrequency
         var sortTime = []
         for (var time in frequency) {
@@ -247,6 +276,7 @@ function storeTimes (parsedRestaurantList) {
 
     for (var restaurantName in parsedRestaurantList) {
         var obj = restaurantsHappyHours[restaurantName] = {}
+        obj.location = parsedRestaurantList[restaurantName].location
         var sortedTime = parsedRestaurantList[restaurantName].sortedTime
         if (sortedTime.length === 0) continue
         var mostEqualsArray = [sortedTime[sortedTime.length - 1]]
@@ -316,23 +346,30 @@ function storeTimes (parsedRestaurantList) {
             }
         }
         if (most > second) {
-            obj.startTime = second
-            obj.endTime = most
+            obj.time = {
+                startTime: second,
+                endTime: most
+            }
 
         } else if (second > most) {
-            obj.startTime = most
-            obj.endTime = second
+            obj.time = {
+                startTime: most,
+                endTime: second
+            }
 
         } else {
-            obj.endTime = most
+            obj.time = {
+                startTime: null,
+                endTime: most
+            }
         }
     }
     return restaurantsHappyHours
 }
 
 
-
-
+// should be called like this
+// console.log(storeTimes(probableHappyHourTimes(getTimes(restaurants))))
 
 
 
