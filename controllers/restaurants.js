@@ -49,12 +49,96 @@ module.exports = {
        })
     })
   },
-
+  // Submit form data via restaurants/new
   create: function (req, res, next) {
-    var newRestaurant = new Restaurant(req.body)
+
+  function stringTimeToNumber(time) {
+  time = time.split(':')
+  var hours = Number(time[0])
+  var minutes = Number(time[1])
+
+  time = hours + minutes / 60
+  time = (Math.round(time * 4) / 4).toFixed(2);
+
+  return time
+}
+
+    var newRestaurant = new Restaurant ({
+          name   : req.body.name,
+          image_uri : req.body.image,
+          hours  :{
+              monday: { scheduled: req.body.monday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              tuesday:{ scheduled: req.body.tuesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              wednesday: { scheduled: req.body.wednesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              thursday: { scheduled: req.body.thursday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              friday: { scheduled: req.body.friday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              saturday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              sunday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              }
+          },
+          drinks : req.body.drinks,
+          food   : req.body.food,
+          contact: { website: req.body.website,
+                     phone  : req.body.phone,
+                     address: req.body.address,
+                     yelpUrl: req.body.yelpUrl
+                    }
+    })
+
     newRestaurant.save(function (err) {
       if (err) console.log(err)
       else res.send('Restaurant created!')
+    })
+  },
+  // Restaurant Form Page
+  new: function (req, res, next) {
+    res.render('restaurants/new')
+  },
+
+  update: function (req, res, next) {
+    Restaurant.findOneAndUpdate({name: String(req.params.name)}, function (err, restaurant) {
+      if (err) console.log(err)
+      else res.send('Restaurant updated')
+    })
+  },
+
+  delete: function (req, res, next) {
+    Restaurant.findOneAndRemove({name: String(req.params.name)}, function (err, restaurant) {
+      res.send('Restaurant deleted')
     })
   },
 
@@ -390,36 +474,3 @@ function storeTimes (restaurantList) {
   }
   return restaurantList
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
