@@ -12,9 +12,10 @@
 </head>
 
 <body>
-<!-- Sidebar -->
 <!-- NAV BAR -->
 <%- include('partials/header-footer-nav/navigation_bar') %>
+<!-- Sidebar -->
+<%- include('partials/sidebar/sidebar') %>
 
 <%- include('partials/modals/login') %>
 <%- include('partials/modals/sign-up') %>
@@ -27,6 +28,9 @@
 <!-- FOOTER / JS -->
   <%- include('partials/header-footer-nav/footer') %>
 
+
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="sidebar.js"></script>
 </body>
 
 </html>
