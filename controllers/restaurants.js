@@ -157,12 +157,13 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
       return counter < reviewCount
     },
     function (callback) {
-
+      var searchUrl = url
       // console.log(url)
-      url += '?start=' + counter
-      url += '&q=happy%20hour'
-      // console.log(url)
-      request({url: url}, function (err, res, body) {
+      searchUrl += '?start=' + counter
+      searchUrl += '&q=happy%20hour'
+      console.log(searchUrl)
+      console.log("\n")
+      request({url: searchUrl}, function (err, res, body) {
         if (!err) {
           var $ = cheerio.load(body)
           var reviews = $('.review-content')
