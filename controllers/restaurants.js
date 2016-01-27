@@ -42,8 +42,8 @@ module.exports = {
   show: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-          console.log(restaurant)
-          console.log(req.session)
+          // console.log(restaurant)
+          // console.log(req.session)
           res.render('restaurants/show', { restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -78,12 +78,11 @@ module.exports = {
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessesJson = getTimes(businessesJson)
-          console.log(businessesJson)
           res.send(businessesJson)
 
-          fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
-            console.log('File successfully written! - Check your project directory for the output.json file');
-          })
+          // fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
+          //   console.log('File successfully written! - Check your project directory for the output.json file');
+          // })
         }
       })
     }).catch(function (err) {
@@ -103,7 +102,27 @@ function yelpParse (data, businessJson, complete) {
     // function to call every iteration
     function (callback) {
       var restaurant = businesses[businessCount]
+
       businessJson[restaurant.name] = {}
+      console.log(businesses)
+      // check database if entry exists
+      var dbRestaurant = checkDataBaseFor(restaurant.name, restaurant.location.display_address.join(' '))
+      if (dbRestaurant) {
+        // if entry does exist, add it to the businessJson and continue
+        console.log("\n\n")
+        console.log(dbRestaurant)
+        console.log("Exists in DB")
+        console.log("\n\n")
+        businessJson[restaurant.name] = dbRestaurant
+
+        businessCount++
+        callback()
+      }
+
+      // otherwise continue with scraping
+      // grabing yelp api stuff and storing it
+
+/////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
       if (restaurant.location.display_address) {
         var address = restaurant.location.display_address.join(" ")
       }
@@ -112,10 +131,15 @@ function yelpParse (data, businessJson, complete) {
         address: address,
         yelpUrl: restaurant.url
       }
+      businessJson[restaurant.name].image = restaurant.image_url
       businessJson[restaurant.name].location = {
         lat: restaurant.location.coordinate.latitude,
         lng: restaurant.location.coordinate.longitude
       }
+/////////////////////////////////END/////////////////////////////////////
+
+
+      // start checking yelp reviews
       getReviewCount(restaurant.name, restaurant.url, businessJson, function () {
         complete()
       })
@@ -208,7 +232,27 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
 }
 
 
-
+function checkDataBaseFor (restaurantName, restaurantAddress) {
+  Restaurant.find({name: 'Bar Ama'}, function (err, restaurants) {
+    console.log(restaurants)
+    for (var i = 0; i < restaurants.length; i++) {
+      var dbAddress = restaurants[i].contact.address
+      var dbStreetNumber = dbAddress.match(/^\d*/)[0]
+      var dbZipCode = dbAddress.match(/\d{5}$/)[0]
+      var checkStreetNumber = restaurantAddress.match(/^\d*/)[0]
+      var checkZipCode = restaurantAddress.match(/\d{5}$/)[0]
+      if (dbZipCode === checkZipCode) {
+        if (dbStreetNumber === checkStreetNumber) {
+          console.log("\nMATCHED!!")
+          console.log(restaurantName)
+          console.log("\n")
+          return restaurants[i]
+        }
+      }
+    }
+    return false
+  })
+}
 
 
 // restaurantList param here is the passed in json compiled from scrape
