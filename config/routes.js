@@ -29,12 +29,6 @@ router.route('/logout')
 router.route('/auth/facebook')
   .get(passport.authenticate('facebook', {scope: 'email'}));
 
-<<<<<<< HEAD
-
-// app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'} ));
-=======
->>>>>>> 5e85bf16f93dad2ac49fcb0a23f65c9dd83f68e6
-
 router.route('/auth/facebook/callback')
   .get(passport.authenticate('facebook', {
     successRedirect: '/',
