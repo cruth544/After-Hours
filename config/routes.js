@@ -23,7 +23,8 @@ router.route('/logout')
   .get(usersController.logout)
 
 router.route('/users/edit_profile')
-  .post(usersController.update)
+  .put(usersController.update)
+  .delete(usersController.delete)
 
 router.route('/auth/facebook')
   .get(passport.authenticate('facebook', {scope: 'email'}));
