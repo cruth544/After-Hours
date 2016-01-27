@@ -83,15 +83,82 @@ module.exports = {
   },
 
   create: function (req, res, next) {
-    var newRestaurant = new Restaurant(req.body)
+    var newRestaurant = new Restaurant ({
+          name   : req.body.name,
+          hours  :{
+              monday: {
+                        time: [{
+                                startTime: req.body.monday_start,
+                                endTime  : req.body.monday_end
+                        }]
+              },
+              tuesday:{
+                        time: [{
+                                startTime: req.body.tuesday_start,
+                                endTime  : req.body.tuesday_end
+                        }]
+              },
+              wednesday: {
+                        time: [{
+                                startTime: req.body.wednesday_start,
+                                endTime  : req.body.wednesday_end
+                        }]
+              },
+              thursday: {
+                        time: [{
+                                startTime: req.body.thursday_start,
+                                endTime  : req.body.thursday_end
+                        }]
+              },
+              friday: {
+                        time: [{
+                                startTime: req.body.friday_start,
+                                endTime  : req.body.friday_end
+                        }]
+              },
+              saturday: {
+                        time: [{
+                                startTime: req.body.saturday_start,
+                                endTime  : req.body.saturday_end
+                        }]
+              },
+              sunday: {
+                        time: [{
+                                startTime: req.body.sunday_start,
+                                endTime  : req.body.sunday_end
+                        }]
+              }
+          },
+          drinks : Boolean,
+          food   : Boolean,
+          contact: { website: String,
+                     phone  : String,
+                     address: String,
+                     yelpUrl: String
+                    }
+    })
+
     newRestaurant.save(function (err) {
       if (err) console.log(err)
       else res.send('Restaurant created!')
     })
-  },
 
+  },
   new: function (req, res, next) {
     res.render('restaurants/new')
+  },
+
+  update: function (req, res, next) {
+    Restaurant.findOneAndUpdate({name: String(req.params.name)}, function (err, restaurant) {
+      if (err) console.log(err)
+      else res.send('Restaurant updated')
+    })
+  },
+
+  delete: function (req, res, next) {
+    Restaurant.findOneAndRemove({name: String(req.params.name)}, function (err, restaurant) {
+      res.send('Restaurant deleted')
+    })
   }
 
 }
@@ -210,53 +277,5 @@ module.exports = {
 //     }
 //   )
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -37,10 +37,12 @@ router.route('/restaurants/all')
   .get(restaurantsController.all)
 
 router.route('/restaurants/create')
-  .post(restaurantsController)
+  .post(restaurantsController.create)
 
 router.route('/:name' )
   .get(restaurantsController.show)
+  .put(restaurantsController.update)
+  .delete(restaurantsController.delete)
 
 router.route('/restaurants/new')
   .get(restaurantsController.new)
