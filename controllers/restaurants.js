@@ -77,6 +77,8 @@ module.exports = {
         console.log(responsesCompleted)
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
+          businessesJson = storeTimes(probableHappyHourTimes(getTimes(businessesJson)))
+          console.log(businessesJson)
           res.send(businessesJson)
 
           fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
@@ -158,11 +160,8 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
     },
     function (callback) {
       var searchUrl = url
-      // console.log(url)
       searchUrl += '?start=' + counter
       searchUrl += '&q=happy%20hour'
-      console.log(searchUrl)
-      console.log("\n")
       request({url: searchUrl}, function (err, res, body) {
         if (!err) {
           var $ = cheerio.load(body)
@@ -278,7 +277,13 @@ function storeTimes (parsedRestaurantList) {
         var obj = restaurantsHappyHours[restaurantName] = {}
         obj.location = parsedRestaurantList[restaurantName].location
         var sortedTime = parsedRestaurantList[restaurantName].sortedTime
-        if (sortedTime.length === 0) continue
+        if (sortedTime.length === 0) {
+          obj.time = {
+            startTime: null,
+            endTime: null
+          }
+          continue
+        }
         var mostEqualsArray = [sortedTime[sortedTime.length - 1]]
         var secondEqualsArray = [sortedTime[sortedTime.length - 1]]
 
@@ -369,7 +374,7 @@ function storeTimes (parsedRestaurantList) {
 
 
 // should be called like this
-// console.log(storeTimes(probableHappyHourTimes(getTimes(restaurants))))
+// storeTimes(probableHappyHourTimes(getTimes(restaurants)))
 
 
 

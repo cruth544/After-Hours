@@ -34,6 +34,7 @@ function ajaxCall (zip, geo) {
     data: {zipCode: zip, geoLocation: geoString}
   })
   .done(function(data) {
+    console.log(data)
     var restaurantArray = sortByDistance(geo, addObjectsToArray(data))
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
@@ -63,7 +64,6 @@ function ajaxCall (zip, geo) {
 }
 
 function sortByDistance (position, restaurantArray) {
-  console.log(position)
   // console.log(restaurantArray)
   function distance (coordinates) {
     // console.log(coordinates)
