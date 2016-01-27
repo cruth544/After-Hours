@@ -47,13 +47,6 @@ a#logOut:hover {
                0 0 0.6em #fff, !important;
 }
 
-body {
-  color: white;
-  background-image: url("http://www.ambientestones.ch/data/uploads/gallery/bricks/msd-280-wandpaneel-steinoptik-ladrillo-loft-dark-red-3.30-x-1.28-m.jpg");
-  background-color: black;
-  background-size: cover;
-  color: black;
-}
 
 #afterHoursLogo {
   height: 90px;
@@ -89,18 +82,4 @@ body {
 /*  border: 1px solid white;*/
   position: relative;
   display: flex;
-}
-
-#main {
-  height: 70%;
-  width: 100%;
-  position: relative;
-  text-align: center;
-}
-
-iframe {
-/*  border: 1px dotted rgba(255, 255, 255, 0.5);*/
-  box-shadow: 0 0 0.1em #fff,
-              0 0 0.5em #fff;
-  margin-top: 40px;
 }
