@@ -7,7 +7,7 @@ exports.seedRestaurants = function seedRestaurants(){
     if (collection.length === 0) {
       Restaurant.create({
 
-        name: 'Bar',
+        name: 'Bar Ama',
         image: 'http://bar-ama.com/img/super_nachos_v1.jpg',
         hours: {
             monday:{
