@@ -16,5 +16,17 @@ module.exports = {
     minutes = Math.floor(minutes * 60)
     minutes = minutes > 10 ? minutes : "0" + minutes
     return "" + number + ":" + minutes + amOrPm
-  }
+  },
+
+
+  stringTimeToNumber: function (time) {
+  time = time.split(':')
+  var hours = Number(time[0])
+  var minutes = Number(time[1])
+
+  time = hours + minutes / 60
+  time = (Math.round(time * 4) / 4).toFixed(2);
+
+  return time
+ }
 }

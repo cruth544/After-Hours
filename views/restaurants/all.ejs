@@ -2,6 +2,7 @@
 
 <% restaurants.forEach(function (restaurant){ %>
   <% var day = restaurant.hours %>
+    <% var scheduled = restaurant.hours.scheduled %>
   <% var info = restaurant.contact %>
 
     <strong><%= restaurant.name %></strong>
@@ -62,8 +63,6 @@
       <% } else if (day.sunday.scheduled === null) { %>
            <%= %>
       <% } %>
-
-
 
     </div>
 
