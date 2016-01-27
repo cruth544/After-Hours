@@ -7,6 +7,7 @@ exports.seedRestaurants = function seedRestaurants(){
       Restaurant.create({
 
         name: 'Bar Ama',
+        image: 'http://bar-ama.com/img/super_nachos_v1.jpg',
         hours:{
             monday:{
                 time:[{
@@ -83,6 +84,7 @@ exports.seedRestaurants = function seedRestaurants(){
 
       Restaurant.create({
         name: 'Izakaya Fu-ga',
+        image: 'http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg',
         hours:{
             monday:{
                   time: [{
@@ -129,6 +131,7 @@ exports.seedRestaurants = function seedRestaurants(){
 
       Restaurant.create({
         name: 'EMC Seafood',
+        image: 'http://www.emcseafood.com/wp-content/uploads/2014/05/emc-front-1024x680.jpg',
         hours: {
             monday:{
                   time:[{
