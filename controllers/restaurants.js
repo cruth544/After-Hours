@@ -188,8 +188,8 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
       console.log(name)
       businessJson[name].reviews = restaurantJson
       complete()
-    }
-  )
+    })
+}
 
 
 

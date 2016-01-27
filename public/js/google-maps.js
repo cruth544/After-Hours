@@ -9,9 +9,6 @@ function initMap() {
   var searchBox = new google.maps.places.SearchBox(input)
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input)
 
-  console.log("from google-map.js")
-  console.log(map)
-
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
 
@@ -97,9 +94,7 @@ function initMap() {
   } else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter())
-  };
-
-
+  }
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
