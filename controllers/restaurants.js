@@ -69,7 +69,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: 90013, limit: '10', sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -116,21 +116,21 @@ function yelpParse (data, businessJson, complete) {
           console.log("No match\n")
         // otherwise continue with scraping
         // grabing yelp api stuff and storing it
-  /////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
+/////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
           if (restaurant.location.display_address) {
             var address = restaurant.location.display_address.join(' ')
           }
           businessJson[restaurant.name].contact = {
             phone  : restaurant.display_phone,
             address: address,
+            coordinates: {
+              lat: restaurant.location.coordinate.latitude,
+              lng: restaurant.location.coordinate.longitude
+            },
             yelpUrl: restaurant.url
           }
           businessJson[restaurant.name].image = restaurant.image_url
-          businessJson[restaurant.name].location = {
-            lat: restaurant.location.coordinate.latitude,
-            lng: restaurant.location.coordinate.longitude
-          }
-  /////////////////////////////////END/////////////////////////////////////
+///////////////////////////////////END///////////////////////////////////
 
           // start checking yelp reviews
           getReviewCount(restaurant.name, restaurant.url, businessJson, function () {

@@ -34,7 +34,6 @@ function ajaxCall (zip, geo) {
     data: {zipCode: zip, geoLocation: geoString}
   })
   .done(function(data) {
-    console.log(data)
     var restaurantArray = sortByDistance(geo, addObjectsToArray(data))
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
@@ -48,7 +47,7 @@ function ajaxCall (zip, geo) {
         }
       }
       var marker = new google.maps.Marker({
-        position: restaurantArray[i].location,
+        position: restaurantArray[i].contact.coordinates,
         label: labels[labelIndex++ % labels.length],
         map: map,
         animation: google.maps.Animation.DROP
@@ -64,14 +63,16 @@ function ajaxCall (zip, geo) {
 }
 
 function sortByDistance (position, restaurantArray) {
-  // console.log(restaurantArray)
   function distance (coordinates) {
-    // console.log(coordinates)
-    return (coordinates.lat - position.lat) * (coordinates.lat - position.lat) +
-    (coordinates.lng - position.lng) * (coordinates.lng - position.lng)
+    if (coordinates) {
+      return (coordinates.lat - position.lat) * (coordinates.lat - position.lat) +
+      (coordinates.lng - position.lng) * (coordinates.lng - position.lng)
+    } else {
+      return -1
+    }
   }
   restaurantArray.sort(function (location1, location2) {
-    return distance(location1.location) - distance(location2.location)
+    return distance(location1.contact.coordinates) - distance(location2.contact.coordinates)
   })
   // console.log(restaurantArray)
   return restaurantArray
