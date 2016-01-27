@@ -3,25 +3,11 @@ var User = require("../models/user");
 
 module.exports = {
 
-  index: function (req, res, next) {
-    if(req.session && req.session.email){
-        User.findOne({ email: req.session.email }).then(function(user){
-            res.render('index',{
-                curr_user: user.email,
-                users: null  })
-        })
-    }
-    else{
-        User.findAsync({})
-            .then( function(users){
-                res.render('index', {
-                    curr_user: null,
-                    users: users
-                })
-            }).catch()
-    }
-    // Check to see if current user exists
-    // If current user exits, show index page
+
+  users: function (req, res, next) {
+      User.find({}, function (err, users) {
+        res.render('all-users', {users: users})
+      })
   },
 
   create: function (req, res, next) {
@@ -50,7 +36,7 @@ module.exports = {
    },
 
    logout: function (req, res, next) {
-      req.session.destroy(function () {
+        req.session.destroy(function () {
         res.redirect(303, '/')
       })
    }

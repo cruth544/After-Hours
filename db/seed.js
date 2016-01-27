@@ -86,8 +86,8 @@ exports.seedRestaurants = function seedRestaurants(){
         hours:{
             monday:{
                   time: [{
-                        startTime: 14.0,
-                        endTime  : 18.0
+                        startTime: '2:00',
+                        endTime  : '6:00'
                   }]
             },
             tuesday:{

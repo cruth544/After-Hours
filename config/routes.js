@@ -2,16 +2,16 @@ var express = require('express')
 var router  = new express.Router()
 var usersController = require('../controllers/users')
 var restaurantsController = require('../controllers/restaurants')
-
-var restaurantsController = require('../controllers/restaurants')
-
-
-// USER ROUTES
-var restaurantsController = require('../controllers/restaurants')
+ var passport = require('passport')
+  require("./passport")(passport)
 
 // USER ROUTES
+
 router.route('/')
   .get(restaurantsController.index)
+
+router.route('/users')
+  .get(usersController.users)
 
 router.route('/login')
   .post(usersController.login)
@@ -21,6 +21,16 @@ router.route('/signUp')
 
 router.route('/logout')
   .get(usersController.logout)
+
+router.route('/auth/facebook')
+  .get(passport.authenticate('facebook', {scope: 'email'}));
+
+
+router.route('/auth/facebook/callback')
+  .get(passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  }));
 
 // RESTAURANT ROUTES
 router.route('/restaurants/all')
@@ -36,5 +46,5 @@ router.route('/restaurants/new')
   .get(restaurantsController.new)
 
 
-// router.get('/welcome', usersController.index);
+
 module.exports = router;
