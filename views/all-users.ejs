@@ -1,0 +1,10 @@
+ALL USERS LIST
+<% users.forEach(function (user) { %>
+  <li>
+    <%= user.email %>
+    <%= user.password %>
+    <%= user.name.first %>
+    <%= user.name.last %>
+    <%= user.fb %>
+  </li>
+<% }); %>

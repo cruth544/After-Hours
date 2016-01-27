@@ -6,12 +6,12 @@ var bcrypt = Promise.promisifyAll(require('../node_modules/bcrypt'));
 
 var userSchema = Schema({
       fb: {
-            id: String,
-            access_token: String,
-            firstName: String,
-            lastName: String,
-            email: String
-          },
+        id: String,
+        access_token: String,
+        firstName: String,
+        lastName: String,
+        email: String
+      },
 
       name                : { first : String,
                               last  : String
