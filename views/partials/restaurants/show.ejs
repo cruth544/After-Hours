@@ -3,18 +3,19 @@
 </head>
 
  <div id = "restaurantShow">
-     <strong><%= restaurant.name %></strong>
-     <div>Hours
-       <li>Monday: <%= restaurant.hours.monday.time[0].startTime %></li>
-       <li>Tuesday: <%= restaurant.hours.tuesday.time %></li>
-       <li>Wednesday: <%= restaurant.hours.wednesday.time %></li>
-       <li>Thursday: <%= restaurant.hours.thursday.time %></li>
-       <li>Friday: <%= restaurant.hours.friday.time %></li>
-       <li>Saturday: <%= restaurant.hours.saturday.time %></li>
-       <li>Sunday: <%= restaurant.hours.sunday.time %></li>
+     <h1 id="showName"><%= restaurant.name %></h1>
+     <div id="showImage"><img src="http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg"></div>
+     <div id="times">Happy Hour Times:
+       <li>Monday: <%= changeTime(restaurant.hours.monday.time[0].startTime) %> - <%= changeTime(restaurant.hours.monday.time[0].endTime) %></li>
+       <li>Tuesday: <%= changeTime(restaurant.hours.tuesday.time[0].startTime) %> - <%= changeTime(restaurant.hours.tuesday.time[0].endTime) %></li>
+       <li>Wednesday: <%= changeTime(restaurant.hours.wednesday.time[0].startTime) %> - <%= changeTime(restaurant.hours.wednesday.time[0].endTime) %></li>
+       <li>Thursday: <%= changeTime(restaurant.hours.thursday.time[0].startTime) %> - <%= changeTime(restaurant.hours.thursday.time[0].endTime) %></li>
+       <li>Friday: <%= changeTime(restaurant.hours.friday.time[0].startTime) %> - <%= changeTime(restaurant.hours.friday.time[0].endTime) %></li>
+       <li>Saturday: <%= changeTime(restaurant.hours.saturday.time[0].startTime) %> - <%= changeTime(restaurant.hours.saturday.time[0].endTime) %></li>
+       <li>Sunday: <%= changeTime(restaurant.hours.sunday.time[0].startTime) %> - <%= changeTime(restaurant.hours.sunday.time[0].endTime) %></li>
      </div>
 
-    <div>Drinks: <%= restaurant.drinks %></div>
+    <div id="showInfo">Drinks: <%= restaurant.drinks %></div>
      <div>Food: <%= restaurant.food %></div>
      <div>Contact:
        <li>Phone: <%= restaurant.contact.phone%></li>
