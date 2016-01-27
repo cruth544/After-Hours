@@ -4,6 +4,7 @@ var restaurantsController = require('../controllers/restaurants')
 
 exports.seedRestaurants = function seedRestaurants(){
   Restaurant.find({}).exec(function (err, collection) {
+    console.log(collection.length)
     if (collection.length === 0) {
       Restaurant.create({
 

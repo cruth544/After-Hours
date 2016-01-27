@@ -96,7 +96,7 @@ module.exports = {
 
     var newRestaurant = new Restaurant ({
           name   : req.body.name,
-          image_uri : req.body.image,
+          image  : req.body.image,
           hours  :{
               monday: { scheduled: req.body.monday,
                         time: [{
