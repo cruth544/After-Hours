@@ -58,6 +58,10 @@ module.exports = {
       if (err) console.log(err)
       else res.send('Restaurant created!')
     })
+  },
+
+  new: function (req, res, next) {
+    res.render('restaurants/new')
   }
 
 }

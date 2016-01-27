@@ -27,6 +27,8 @@ router.route('/restaurants/all')
   .get(restaurantsController.all)
 router.route('/:name' )
   .get(restaurantsController.show)
+router.route('/restaurants/new')
+  .get(restaurantsController.new)
 
 // router.get('/welcome', usersController.index);
 module.exports = router;
