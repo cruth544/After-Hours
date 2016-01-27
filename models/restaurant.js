@@ -2,8 +2,8 @@ var mongoose = require('mongoose')
 
 var restaurantSchema = mongoose.Schema({
       name     : { type: String, required: true },
-      image_uri: String,
-      hours    :{
+      image    : String,
+      hours    : {
               monday: {
                         scheduled: Boolean,
                         time: [{

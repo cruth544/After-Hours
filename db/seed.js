@@ -1,6 +1,7 @@
 var Restaurant = require('../models/restaurant');
 var restaurantsController = require('../controllers/restaurants')
 
+
 exports.seedRestaurants = function seedRestaurants(){
   Restaurant.find({}).exec(function (err, collection) {
     if (collection.length === 0) {
@@ -96,8 +97,8 @@ exports.seedRestaurants = function seedRestaurants(){
             monday:{
                   scheduled: true,
                   time: [{
-                        startTime: '2:00',
-                        endTime  : '6:00'
+                        startTime: 14.0,
+                        endTime  : 18.0
                   }]
             },
             tuesday:{
