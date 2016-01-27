@@ -1,12 +1,3 @@
-/*html {
-    min-height: 100%;
-}
-
-body {
-    margin: 0;
-    min-height: inherit;
-}
-*/
 [data-sidebar] {
     display: none;
     position: fixed;
@@ -15,25 +6,11 @@ body {
     color: white;
 }
 
-/*[data-sidebar-overlay] {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    width: 100%;
-    min-height: inherit;
-}*/
-
 /* Additional styles */
 
 aside {
     background-color: rgba(0,0,0,0.7);
 }
-
-/*.overlay {
-    background-color: #777;
-}*/
 
 .padding {
     padding: 2em;
