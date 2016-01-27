@@ -44,18 +44,11 @@ module.exports = function(passport){
           newUser.fb.firstName    = profile.name.givenName;
           newUser.fb.lastName     = profile.name.familyName;
           newUser.fb.email        = profile.emails[0].value;
-          // newUser.id           = profile.id;
-          // newUser.email        = profile.emails[0].value;
-          // newUser.password     = access_token;
-          // newUser.name.first    = profile.name.givenName;
-          // newUser.name.last     = profile.name.familyName;
-
-
+          
           newUser.save(function(err) {
             if (err)
               throw err;
               return done(null, newUser);
-
           });
         }
       });

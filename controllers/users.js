@@ -10,30 +10,6 @@ module.exports = {
       })
   },
 
-  // index: function (req, res, next) {
-  //   // if there is a match for someone in the database, find them and render their profile
-  //   if(req.session && req.session.email){
-  //       User.findOne({ email: req.session.email }).then(function(user){
-  //           res.render('index',{
-  //               curr_user: user.email,
-  //               user: req.user,
-  //               users: null  })
-  //       })
-  //   }
-  //   else{
-  //       User.findAsync({})
-  //           .then( function(users){
-  //               res.render('index', {
-  //                   curr_user: null,
-  //                   user: req.user,
-  //                   users: users
-  //               })
-  //           }).catch()
-  //   }
-  //   // Check to see if current user exists
-  //   // If current user exits, show index page
-  // },
-
   create: function (req, res, next) {
     var newUser = new User()
     var keys = Object.keys(req.body)
