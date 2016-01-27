@@ -104,7 +104,14 @@ function yelpParse (data, businessJson, complete) {
     function (callback) {
       var restaurant = businesses[businessCount]
       businessJson[restaurant.name] = {}
-      businessJson[restaurant.name].location = {}
+      if (restaurant.location.display_address) {
+        var address = restaurant.location.display_address.join(" ")
+      }
+      businessJson[restaurant.name].contact = {
+        phone  : restaurant.display_phone,
+        address: address,
+        yelpUrl: restaurant.url
+      }
       businessJson[restaurant.name].location = {
         lat: restaurant.location.coordinate.latitude,
         lng: restaurant.location.coordinate.longitude
@@ -132,6 +139,15 @@ function getReviewCount (name, url, businessJson, complete) {
     if (!err) {
       // user cheerio to load html webpage
       var $ = cheerio.load(body)
+      // first going to grab website url and store it
+      var websiteAddress = $('.biz-website').children().last().attr('href')
+      if (websiteAddress) {
+        var http = websiteAddress.match(/http.*?&/)[0]
+          .replace(/%2F/g, '/')
+          .replace(/%3A/g, ':')
+          .replace(/&/g, '')
+      }
+      businessJson[name].contact.website = http
       // make regex to get number
       var reviewCountRegEx = /\d+\b/
       // grab node where the review count is
