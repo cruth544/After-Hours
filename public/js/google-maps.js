@@ -24,7 +24,7 @@ function initMap() {
         title: 'You!'
       })
       map.setCenter(pos)
-      map.setZoom(12)
+      map.setZoom(14)
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter())
     })

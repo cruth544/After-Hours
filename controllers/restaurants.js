@@ -11,7 +11,6 @@ module.exports = {
   },
 
   yelp: function (req, res, next) {
-    console.log(req)
     var businessesJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -20,7 +19,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: 'Los Angeles', limit: '10'})
+      yelp.search({ term: 'happy hour', cll: '34.0309344, -118.2688299',  limit: '10', sort: '1'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {

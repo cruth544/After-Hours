@@ -4,9 +4,11 @@ $.ajax({
   // data: {param1: 'value1'},
 })
 .done(function(data) {
+  var restaurantArray = sortByDistance(getMyPosition(), addObjectsToArray(data))
   var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   var labelIndex = 0
-  for (var restaurantsList in data) {
+  for (var i = 0; i < restaurantArray.length; i++) {
+    restaurantArray[i]
     function toggleBounce() {
       if (marker.getAnimation() !== null) {
         marker.setAnimation(null)
@@ -15,7 +17,7 @@ $.ajax({
       }
     }
     var marker = new google.maps.Marker({
-      position: data[restaurantsList].location,
+      position: restaurantArray[i].location,
       label: labels[labelIndex++ % labels.length],
       map: map,
       animation: google.maps.Animation.DROP
@@ -29,11 +31,26 @@ $.ajax({
   console.log("complete")
 })
 
+function sortByDistance (position, restaurantArray) {
+  console.log(restaurantArray)
+  function distance (coordinates) {
+    return (coordinates.lat - position.lat) * (coordinates.lat - position.lat) +
+    (coordinates.lng - position.lng) * (coordinates.lng - position.lng)
+  }
+  restaurantArray.sort(function (location1, location2) {
+    return distance(location1) - distance(location2)
+  })
+  console.log(restaurantArray)
+  return restaurantArray
+}
+
 function addObjectsToArray (object) {
   var array = []
-  for (var key in object) {
-    // add to array
-  }
+  Object.keys(object).map(function(val) {
+    object[val].name = val
+    array.push(object[val])
+  })
+  return array
 }
 
 function getMyPosition (defaultPosition) {
@@ -41,8 +58,8 @@ function getMyPosition (defaultPosition) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
       pos = {
-        lat: position.coordinate.latitude,
-        lng: position.coordinate.longitude
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
       }
     })
   } else {
@@ -58,9 +75,6 @@ function getMyPosition (defaultPosition) {
   return pos
 }
 
-function sortByDistance (restaurantArray) {
-
-}
 
 
 
