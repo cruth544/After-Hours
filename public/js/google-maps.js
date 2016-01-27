@@ -1,4 +1,5 @@
 function initMap() {
+<<<<<<< HEAD
 
  var styles = [
     {
@@ -33,13 +34,13 @@ function initMap() {
   // Create a map object, and include the MapTypeId to add
   // to the map type control.
   var mapOptions = {
-    zoom: 12,
+    zoom: 10,
     center: new google.maps.LatLng(34.031245, -118.266532),
     mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
     }
-  };
-  var map = new google.maps.Map(document.getElementById('map'),
+  }
+  map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
 
   //Associate the styled map with the MapTypeId and set it to display.
@@ -51,9 +52,6 @@ function initMap() {
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
   // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-  console.log("from google-map.js")
-  console.log(map)
 
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
@@ -77,15 +75,14 @@ function initMap() {
         position: pos,
         map: map,
         animation: google.maps.Animation.DROP,
-        title: 'Hello World!'
+        title: 'You!'
       })
       map.setCenter(pos)
-      map.setZoom(12)
-
+      map.setZoom(13)
     //change center point based on search box entry
 
       map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
+        searchBox.setBounds(map.getBounds())
       });
 
       var markers = [];
@@ -99,10 +96,17 @@ function initMap() {
         }
 
         // Clear out the old markers.
-        // markers.forEach(function(marker) {
-          marker.setMap(null);
-        // });
-        markers = [];
+// <<<<<<< HEAD
+//         // markers.forEach(function(marker) {
+//           marker.setMap(null);
+//         // });
+//         markers = [];
+// =======
+//         markers.forEach(function(marker) {
+//           marker.setMap(null)
+//         });
+//         markers = []
+// >>>>>>> development
 
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();
@@ -121,17 +125,17 @@ function initMap() {
             icon: icon,
             title: place.name,
             position: place.geometry.location
-          }));
+          }))
 
           if (place.geometry.viewport) {
             // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
+            bounds.union(place.geometry.viewport)
           } else {
-            bounds.extend(place.geometry.location);
+            bounds.extend(place.geometry.location)
           }
-        });
-        map.fitBounds(bounds);
-      });
+        })
+        map.fitBounds(bounds)
+      })
 
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter())
@@ -141,9 +145,7 @@ function initMap() {
   } else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter())
-  };
-
-
+  }
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
