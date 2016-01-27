@@ -166,7 +166,7 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
         if (!err) {
           var $ = cheerio.load(body)
           var reviews = $('.review-content')
-          var happyHoursRegEx = /((until|up to|till)\s(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?|((1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?((\s(to|through|and|until)\s)|(-))(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?))/
+          var happyHoursRegEx = /((until|up to|till)\s(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?|((1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?((\s(to|through|and|until)\s)|(-))(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?))/g
           async.forEachOf(reviews, function (item, key, forEachCallback) {
             var review = $(item).children().last().text()
             if (happyHoursRegEx.test(review)) {
