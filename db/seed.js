@@ -82,9 +82,9 @@ exports.seedRestaurants = function seedRestaurants(){
         drinks : true,
         food   : true,
         contact:{
-                  website: 'http://bar-ama.com/media/snh.pdf',
                   phone  : '(213) 687-7000',
                   address: '118 W. 4th St Los Angeles, CA 90013',
+                  website: 'http://bar-ama.com/media/snh.pdf',
                   yelpUrl: 'http://www.yelp.com/biz/bar-ama-los-angeles'
                 }
       })
@@ -146,9 +146,9 @@ exports.seedRestaurants = function seedRestaurants(){
         drinks : true,
         food   : true,
         contact:{
-                  website: 'http://www.izakayafu-ga.com/menus.php',
                   phone  : '(213) 625-1722',
                   address: '111 S San Pedro St Los Angeles, CA 90012',
+                  website: 'http://www.izakayafu-ga.com/menus.php',
                   yelpUrl: 'http://www.yelp.com/biz/izakaya-fu-ga-los-angeles'
                 }
 
@@ -230,9 +230,10 @@ exports.seedRestaurants = function seedRestaurants(){
         },
         drinks : true,
         food   : true,
-        contact:{ website     : 'http://www.emcseafood.com',
+        contact:{
                   phone       : '(213) 351-9988',
                   address     : '3500 W 6th St #101 Los Angeles, CA 90020',
+                  website     : 'http://www.emcseafood.com',
                   yelpUrl     : 'http://www.yelp.com/biz/emc-seafood-and-raw-bar-los-angeles'
                 }
       })
