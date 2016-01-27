@@ -69,7 +69,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', cll: '34.0309344, -118.2688299',  limit: '10', sort: '1'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation,  limit: '10', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -166,7 +166,7 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
         if (!err) {
           var $ = cheerio.load(body)
           var reviews = $('.review-content')
-          var happyHoursRegEx = /(from)?\s[^$]1?\d?:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?\s?(is|to|through|until|and|-)\s?\d{1,2}:?\d{0,2}\s?([AaPp]\.?[mM]\.?)?/
+          var happyHoursRegEx = /((until|up to|till)\s(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?|((1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?((\s(to|through|and|until)\s)|(-))(1[012]|[1-9])(:[0-6]\d)?\s?([AaPp]\.?[mM]\.?)?))/
           async.forEachOf(reviews, function (item, key, forEachCallback) {
             var review = $(item).children().last().text()
             if (happyHoursRegEx.test(review)) {

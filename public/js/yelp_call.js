@@ -2,50 +2,39 @@ function getCityByPosition (position) {
   var geocoder = new google.maps.Geocoder()
   geocoder.geocode({ location: position }, function (results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
-      console.log(results)
+      for (var i = 0; i < results.length; i++) {
+        if (results[i].types[0] === 'postal_code') {
+          var generalLocationArray = results[i].address_components
+          var zipCodeRegEx = /\d{5}/
+          for (var j = 0; j < generalLocationArray.length; j++) {
+            if (zipCodeRegEx.test(generalLocationArray[j].long_name)) {
+              ajaxCall(generalLocationArray[j].long_name, position)
+              break
+            }
+          }
+          break
+        }
+      }
     } else {
       alert('Geocoder failed due to: ' + status)
     }
   })
 }
-var getPosition = getMyPosition()
-setTimeout(function () {
-  getCityByPosition(getPosition)
-}, 1000)
 
+getMyPosition(null, function (position) {
+  getCityByPosition(position)
+})
 
+function ajaxCall (zip, geo) {
+  var geoString = geo.lat + "," + geo.lng
 
-// function getCityByPosition (position) {
-
-//   var googleUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
-//   googleUrl += position.lat + ','
-//   googleUrl += position.lng
-//   googleUrl += '&key=AIzaSyDZYqdGCiP3a1xbvJsYYbAt5ZEoe896axU'
-//   $.ajax({
-//     url: googleUrl,
-//     type: 'GET'
-//   })
-//   .done(function(data) {
-//     console.log("success")
-//     ajaxCall(data)
-//   })
-//   .fail(function(err) {
-//     console.log("error")
-//   })
-//   .always(function() {
-//     console.log("complete")
-//   })
-// }
-
-function ajaxCall (data) {
-  console.log(data)
   $.ajax({
     url: '/restaurants/getAll',
     type: 'GET',
-    data: {currentPosition: data},
+    data: {zipCode: zip, geoLocation: geoString}
   })
   .done(function(data) {
-    var restaurantArray = sortByDistance(getMyPosition(), addObjectsToArray(data))
+    var restaurantArray = sortByDistance(geo, addObjectsToArray(data))
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
     for (var i = 0; i < restaurantArray.length; i++) {
@@ -74,15 +63,17 @@ function ajaxCall (data) {
 }
 
 function sortByDistance (position, restaurantArray) {
-  console.log(restaurantArray)
+  console.log(position)
+  // console.log(restaurantArray)
   function distance (coordinates) {
+    // console.log(coordinates)
     return (coordinates.lat - position.lat) * (coordinates.lat - position.lat) +
     (coordinates.lng - position.lng) * (coordinates.lng - position.lng)
   }
   restaurantArray.sort(function (location1, location2) {
-    return distance(location1) - distance(location2)
+    return distance(location1.location) - distance(location2.location)
   })
-  console.log(restaurantArray)
+  // console.log(restaurantArray)
   return restaurantArray
 }
 
@@ -95,7 +86,7 @@ function addObjectsToArray (object) {
   return array
 }
 
-function getMyPosition (defaultPosition) {
+function getMyPosition (defaultPosition, completeCallback) {
   var pos = {}
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -103,6 +94,10 @@ function getMyPosition (defaultPosition) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
+      if (completeCallback) {
+        completeCallback(pos)
+      }
+      return pos
     })
   } else {
     if (defaultPosition) {
@@ -113,8 +108,8 @@ function getMyPosition (defaultPosition) {
         lng: -118.2688299
       }
     }
+    return pos
   }
-  return pos
 }
 
 
