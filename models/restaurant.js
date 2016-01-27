@@ -4,7 +4,7 @@ var restaurantSchema = mongoose.Schema({
       name     : String,
       image_uri: String,
       hours    :{
-              monday: {
+              monday: { monday: String,
                         scheduled: Boolean,
                         time: [{
                                 startTime: Number,

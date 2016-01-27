@@ -2,16 +2,21 @@
 
 <% restaurants.forEach(function (restaurant){ %>
   <% var day = restaurant.hours %>
+    <% var scheduled = restaurant.hours.scheduled %>
   <% var info = restaurant.contact %>
 
     <strong><%= restaurant.name %></strong>
-    <div><strong>Hours</strong>
+
+    <%= restaurant %>
+        SCHEDULED: <%= scheduled %>
+      <%=  %>
+
+        <strong>Hours</strong>
       <li>Monday: <%= changeTime(day.monday.time[0].startTime) %> - <%= changeTime(day.monday.time[0].endTime) %></li>
       <li>Tuesday: <%= changeTime(day.tuesday.time[0].startTime) %> - <%= changeTime(day.tuesday.time[0].endTime) %></li>
       <li>Wednesday: <%= changeTime(day.wednesday.time[0].startTime) %> - <%= changeTime(day.wednesday.time[0].endTime) %></li>
       <li>Thursday: <%= changeTime(day.thursday.time[0].startTime) %> - <%= changeTime(day.thursday.time[0].endTime) %></li>
       <li>Friday: <%= changeTime(day.friday.time[0].startTime) %> - <%= changeTime(day.friday.time[0].endTime) %></li>
-
     </div>
 
     <div>Drinks: <%= restaurant.drinks %></div>

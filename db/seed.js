@@ -6,11 +6,11 @@ exports.seedRestaurants = function seedRestaurants(){
     if (collection.length === 0) {
       Restaurant.create({
 
-        name: 'Bar Ama',
+        name: 'Bar',
         image_uri: 'http://bar-ama.com/img/super_nachos_v1.jpg',
         hours: {
             monday:{
-                schedule: true,
+                scheduled: true,
                 time:[{
                     startTime: 17.5,
                     endTime  : 19.0
@@ -120,7 +120,6 @@ exports.seedRestaurants = function seedRestaurants(){
                         startTime: 14.0,
                         endTime  : 18.0
                   }]
-
             },
             friday:{
                   scheduled: true,
