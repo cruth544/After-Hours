@@ -199,6 +199,7 @@ function yelpParse (data, businessJson, complete) {
         // otherwise continue with scraping
         // grabing yelp api stuff and storing it
 /////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
+          businessJson.name = restaurant.name
           if (restaurant.location.display_address) {
             var address = restaurant.location.display_address.join(' ')
           }
@@ -299,9 +300,7 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
       })
     },
     function (err) {
-      // console.log(restaurantJson)
-      // console.log("stopped extractHappyHourTime")
-      console.log(name)
+      // save to database
       businessJson[name].reviews = restaurantJson
       complete()
     })
@@ -471,6 +470,63 @@ function storeTimes (restaurantList) {
       }
     }
     restaurantList[restaurantName].time = obj.time
+    console.log("RESTAURANT!\n")
+    console.log(restaurantList[restaurantName])
+    console.log("\n")
+
   }
   return restaurantList
 }
+
+function saveRestaurantToDB (restaurant) {
+  var newRestaurant = new Restaurant()
+  var yelpKeys = Object.keys(restaurant)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
