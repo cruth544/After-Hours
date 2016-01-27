@@ -8,39 +8,62 @@
     <!-- Display Happy Hour Times -->
     <div><strong>Happy Hour Times:</strong>
     <br>
+    <!-- MONDAY -->
+     Scheduled:<%= day.monday.scheduled %>
+     <%= day %>
+      <% if (day.monday.scheduled == true) { %>
       Monday:
       <% for (var i = 0; i < day.monday.time.length; i++){ %>
         <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
       <% } %>
-
+      <% } else if (day.monday.scheduled === false) { %>
+           <%= %>
+      <% } %>
+    <!-- TUESDAY -->
+      <% if (day.tuesday.scheduled == true) { %>
       Tuesday:
       <% for (var i = 0; i < day.tuesday.time.length; i++){ %>
         <li><%= changeTime(day.tuesday.time[i].startTime) %> - <%= changeTime(day.tuesday.time[i].endTime) %></li>
       <% } %>
-
+      <% } %>
+    <!-- WEDNESDAY -->
+      <% if (day.wednesday.scheduled == true) { %>
       Wednesday:
       <% for (var i = 0; i < day.wednesday.time.length; i++){ %>
         <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
       <% } %>
-
-
+      <% } %>
+    <!-- THURSDAY -->
+      <% if (day.thursday.scheduled == true) { %>
       Thursday:
       <% for (var i = 0; i < day.thursday.time.length; i++){ %>
         <li><%= changeTime(day.thursday.time[i].startTime) %> - <%= changeTime(day.thursday.time[i].endTime) %></li>
       <% } %>
-
+      <% } %>
+    <!-- FRIDAY -->
+      <% if (day.friday.scheduled == true) { %>
       Friday:
       <% for (var i = 0; i < day.friday.time.length; i++){ %>
         <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
       <% } %>
+      <% } %>
+    <!-- SATURDAY -->
       Saturday:
       <% for (var i = 0; i < day.saturday.time.length; i++){ %>
         <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
       <% } %>
+
+    <!-- SUNDAY -->
+      <% if (day.sunday.scheduled == true) { %>
       Sunday:
       <% for (var i = 0; i < day.sunday.time.length; i++){ %>
         <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
+        <% } %>
+      <% } else if (day.sunday.scheduled === null) { %>
+           <%= %>
       <% } %>
+
+
 
     </div>
 

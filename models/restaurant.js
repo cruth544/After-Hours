@@ -58,7 +58,11 @@ var restaurantSchema = mongoose.Schema({
       drinks : Boolean,
       food   : Boolean,
       contact: { phone  : String,
-                 address: { type: String, required: true },
+                 address: String,
+                 coordinates: {
+                              lat: Number,
+                              lng: Number
+                 },
                  website: String,
                  yelpUrl: String
                 }
