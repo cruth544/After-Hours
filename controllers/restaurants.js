@@ -1,13 +1,63 @@
 var Restaurant  = require("../models/restaurant")
+var User        = require("../models/user")
 var Yelp        = require('yelp')
 var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
 
+var mongoose = require('mongoose')
+require('../db/seed.js').seedRestaurants()
+
 module.exports = {
   index: function (req, res, next) {
-    res.render('index', {/*data: data,*/ curr_user: null})
+
+    // if there is a match for someone in the database, find them and render their profile
+    if(req.session && req.session.email){
+        User.findOne({ email: req.session.email }).then(function(user){
+            res.render('index',{
+                curr_user: user.email,
+                user: req.user,
+                users: null  })
+        })
+    }
+    else{
+        User.findAsync({})
+            .then( function(users){
+                res.render('index', {
+                    curr_user: null,
+                    user: req.user,
+                    users: users
+                })
+            }).catch()
+        }
+  },
+
+  all: function (req, res, next) {
+    Restaurant.find({}, function (err, restaurants) {
+      res.render('restaurants/all', { restaurants: restaurants })
+    })
+  },
+
+  show: function (req, res, next) {
+    Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
+      User.findOne({ email: req.session.email }).then(function(user){
+          console.log(restaurant)
+          console.log(req.session)
+          res.render('restaurants/show', { restaurant: restaurant,
+                                           curr_user: user.email,
+                                           user: req.user,
+                                           users: null })
+       })
+    })
+  },
+
+  create: function (req, res, next) {
+    var newRestaurant = new Restaurant(req.body)
+    newRestaurant.save(function (err) {
+      if (err) console.log(err)
+      else res.send('Restaurant created!')
+    })
   },
 
   yelp: function (req, res, next) {
@@ -104,10 +154,6 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
   var restaurantJson = {}
   async.whilst(
     function () {
-      // console.log("Counter: " + counter)
-      // console.log("is less than")
-      // console.log("ReviewCount: " + reviewCount)
-      // console.log(counter < reviewCount)
       return counter < reviewCount
     },
     function (callback) {
@@ -144,16 +190,6 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
       complete()
     }
   )
-}
-
-
-
-
-
-
-
-
-
 
 
 

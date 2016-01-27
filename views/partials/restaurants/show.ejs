@@ -1,0 +1,25 @@
+ <head>
+    <link rel="stylesheet" type="text/css" href="/public/css/restaurant_show.css">
+</head>
+
+ <div id = "restaurantShow">
+     <strong><%= restaurant.name %></strong>
+     <div>Hours
+       <li>Monday: <%= restaurant.hours.monday.time[0].startTime %></li>
+       <li>Tuesday: <%= restaurant.hours.tuesday.time %></li>
+       <li>Wednesday: <%= restaurant.hours.wednesday.time %></li>
+       <li>Thursday: <%= restaurant.hours.thursday.time %></li>
+       <li>Friday: <%= restaurant.hours.friday.time %></li>
+       <li>Saturday: <%= restaurant.hours.saturday.time %></li>
+       <li>Sunday: <%= restaurant.hours.sunday.time %></li>
+     </div>
+
+    <div>Drinks: <%= restaurant.drinks %></div>
+     <div>Food: <%= restaurant.food %></div>
+     <div>Contact:
+       <li>Phone: <%= restaurant.contact.phone%></li>
+       <li>Address: <%= restaurant.contact.address %></li>
+       <li>Website: <%= restaurant.contact.website %></li>
+     </div>
+
+ </div>
