@@ -1,6 +1,6 @@
-<!-- ADD A NEW RESTAURANT/HAPPY HOUR FORM -->
 <!-- LANDING PAGE BEFORE LOG IN -->
-<!--  -->
+<!DOCTYPE html>
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,14 +11,24 @@
     <link href='https://fonts.googleapis.com/css?family=Poiret+One|Dosis:500,600|Asap|Josefin+Sans:400,700,600,600italic' rel='stylesheet' type='text/css'>
 </head>
 
+<body>
+  <!-- NAV BAR -->
+  <%- include('../partials/header-footer-nav/navigation_bar') %>
+  <!-- Sidebar -->
 
+  <%- include('../partials/modals/login') %>
+  <%- include('../partials/modals/sign-up') %>
+<div id = "main">
   <!-- GOOGLE MAP -->
   <%- include('../partials/sidebar/sidebar') %>
   <!-- call out restaurant map AND restaurant list in the same partial -->
-<!-- FORM TO ADD RESTAURANT -->
-
+  <%- include('../partials/maps/map') %>
+</div>
   <!-- FOOTER / JS -->
+  <%- include('../partials/header-footer-nav/footer') %>
 
+</body>
 
+</html>
 
 
