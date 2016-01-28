@@ -1,9 +1,7 @@
 body {
-  color: white;
   background-image: url('../assets/brick_wall.jpg');
   background-color: black;
   background-size: cover;
-  color: black;
 }
 
 #searchBox {
@@ -17,3 +15,15 @@ body {
   position: relative;
 /*  text-align: center;*/
 }
+
+label, h4 {
+  color: black;
+}
+
+#facebookLogin {
+  height: 39px;
+  width: 157px;
+  margin-left: 18px;
+}
+
+/*Search Bar CSS*/
