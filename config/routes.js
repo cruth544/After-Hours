@@ -31,6 +31,11 @@ router.route('/signUp')
 router.route('/logout')
   .get(usersController.logout)
 
+router.route('/editProfile')
+  .get(usersController.show)
+  .put(usersController.update)
+  .delete(usersController.delete)
+
 router.route('/auth/facebook')
   .get(passport.authenticate('facebook', {scope: 'email'}));
 
