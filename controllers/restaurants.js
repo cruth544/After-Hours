@@ -199,7 +199,7 @@ function yelpParse (data, businessJson, complete) {
         // otherwise continue with scraping
         // grabing yelp api stuff and storing it
 /////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
-          businessJson.name = restaurant.name
+          businessJson[restaurant.name].name = restaurant.name
           if (restaurant.location.display_address) {
             var address = restaurant.location.display_address.join(' ')
           }
@@ -359,6 +359,9 @@ function getTimes (restaurantList) {
 function probableHappyHourTimes (restaurantList) {
   for (var restaurantName in restaurantList) {
     var obj = {}
+    console.log("\nrestaurantList")
+    console.log(restaurantList)
+    console.log(restaurantName)
     var frequency = restaurantList[restaurantName].timeCalculations.timeFrequency
     var sortTime = []
 
