@@ -249,7 +249,10 @@ module.exports = {
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessesJson = getTimes(businessesJson)
-          res.send(businessesJson)
+          onlyShowHappyHourNow(businessJson, function (currentHappyHourJson) {
+            res.send(currentHappyHourJson)
+          })
+          // res.send(businessesJson)
 
           // fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
           //   console.log('File successfully written! - Check your project directory for the output.json file');
@@ -260,6 +263,10 @@ module.exports = {
       console.log(err)
     })
   }
+}
+
+function onlyShowHappyHourNow (businessJson, complete) {
+  businessJson
 }
 
 function yelpParse (data, businessJson, complete) {
