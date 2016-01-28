@@ -151,7 +151,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '1', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -360,9 +360,6 @@ function getTimes (restaurantList) {
 function probableHappyHourTimes (restaurantList) {
   for (var restaurantName in restaurantList) {
     var obj = {}
-    console.log("\nrestaurantList")
-    console.log(restaurantList)
-    console.log(restaurantName)
     var frequency = restaurantList[restaurantName].timeCalculations.timeFrequency
     var sortTime = []
 
@@ -474,17 +471,39 @@ function storeTimes (restaurantList) {
       }
     }
     restaurantList[restaurantName].time = obj.time
-    console.log("RESTAURANT!\n")
-    console.log(restaurantList[restaurantName])
-    console.log("\n")
-
+    restaurantList[restaurantName].drinks = true
+    saveRestaurantToDB(restaurantList[restaurantName])
   }
   return restaurantList
 }
 
 function saveRestaurantToDB (restaurant) {
+  // console.log("\n\nin saveRestaurantToDB")
+  // console.log(restaurant)
   var newRestaurant = new Restaurant()
+  var hourObj = {}
+  var restaurantKeys = Object.keys(Restaurant.schema.paths)
+  var dayOfWeekRegEx = /(monday|tuesday|wednesday|thursday|friday|saturday|sunday)/
+  for (var i = 0; i < restaurantKeys.length; i++) {
+    if (dayOfWeekRegEx.test(restaurantKeys[i])) {
+      var day = restaurantKeys[i].match(dayOfWeekRegEx)
+      if (day) {
+        day = day[0]
+        if (!hourObj[day]) {
+          hourObj[day] = {time: []}
+          hourObj[day].time.push(restaurant.time)
+        }
+      }
+    }
+  }
   var yelpKeys = Object.keys(restaurant)
+  for (var i = 0; i < yelpKeys.length; i++) {
+    newRestaurant[yelpKeys[i]] = restaurant[yelpKeys[i]]
+  }
+  newRestaurant.hours = hourObj
+  console.log("\nNEW:")
+  console.log(newRestaurant.hours)
+  console.log("\n\n")
 }
 
 
