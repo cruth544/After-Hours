@@ -240,7 +240,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '20', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -400,7 +400,7 @@ function checkDataBaseFor (restaurantAddress, complete) {
       var dbAddress = restaurants[i].contact.address
       var dbStreetNumber = dbAddress.match(/^\d*/)
       var dbZipCode = dbAddress.match(/\d{5}$/)
-      if (!dbStreetNumber && !dbZipCode) return complete(false)
+      if (!dbStreetNumber || !dbZipCode) return complete(false)
       dbStreetNumber = dbStreetNumber[0]
       dbZipCode = dbZipCode[0]
       var checkStreetNumber = restaurantAddress.match(/^\d*/)[0]
