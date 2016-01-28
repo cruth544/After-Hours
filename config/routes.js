@@ -44,6 +44,10 @@ router.route('/:name' )
   .put(restaurantsController.update)
   .delete(restaurantsController.delete)
 
+router.route('/:name/edit')
+  .get(restaurantsController.edit)
+
+
 router.route('/restaurants/new')
   .get(restaurantsController.new)
 

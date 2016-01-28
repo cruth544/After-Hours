@@ -161,6 +161,19 @@ module.exports = {
     res.render('restaurants/new')
   },
 
+  edit: function (req, res, next) {
+    Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
+      User.findOne({ email: req.session.email }).then(function(user){
+          console.log(restaurant)
+          console.log(req.session)
+          res.render('restaurants/edit', {restaurant: restaurant,
+                               curr_user: user.email,
+                               user: req.user,
+                               users: null })
+    })
+   })
+  },
+
   update: function (req, res, next) {
     Restaurant.findOneAndUpdate({name: String(req.params.name)}, function (err, restaurant) {
       if (err) console.log(err)
