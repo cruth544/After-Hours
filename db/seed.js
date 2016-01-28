@@ -1,18 +1,21 @@
 var Restaurant = require('../models/restaurant');
 var User = require('../models/user');
 var restaurantsController = require('../controllers/restaurants')
+var usersController = require('../controllers/users')
 
 exports.seedUsers = function seedUsers(){
   User.find({}).exec(function (err,collection){
     console.log(collection.length)
-    if(collection.length === 9){
+
+    if(collection.length === 0){
+
       User.create({
 
       name                : { first : 'After',
                               last  : 'Hours'
                             },
       username            : 'afterhours',
-      email               : 'afterhours@gmail.com',
+      email               : 'admin@afterhours.com',
       password            : 'password',
       admin               : true
       })
