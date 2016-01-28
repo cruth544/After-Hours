@@ -13,18 +13,20 @@
 
 <body>
   <!-- NAV BAR -->
-  <%- include('partials/header-footer-nav/navigation_bar') %>
+  <%- include('../partials/header-footer-nav/navigation_bar') %>
   <!-- Sidebar -->
 
-
-  <%- include('partials/modals/login') %>
-  <%- include('partials/modals/sign-up') %>
-
+  <%- include('../partials/modals/login') %>
+  <%- include('../partials/modals/sign-up') %>
+<div id = "main">
   <!-- GOOGLE MAP -->
-  <%- include('partials/maps/map') %>
-  <%- include('partials/sidebar/sidebar') %>
+  <%- include('../partials/sidebar/sidebar') %>
+  <!-- call out restaurant map AND restaurant list in the same partial -->
+  <%- include('../partials/maps/map') %>
+</div>
   <!-- FOOTER / JS -->
-  <%- include('partials/header-footer-nav/footer-on') %>
+  <%- include('../partials/header-footer-nav/footer') %>
+
 </body>
 
 </html>

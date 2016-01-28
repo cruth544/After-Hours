@@ -15,7 +15,7 @@ module.exports = {
     // if there is a match for someone in the database, find them and render their profile
     if(req.session && req.session.email){
         User.findOne({ email: req.session.email }).then(function(user){
-            res.render('index',{
+            res.render('restaurants/index',{
                 curr_user: user.email,
                 user: req.user,
                 users: null  })
@@ -24,7 +24,7 @@ module.exports = {
     else{
         User.findAsync({})
             .then( function(users){
-                res.render('index', {
+                res.render('restaurants/index', {
                     curr_user: null,
                     user: req.user,
                     users: users
@@ -125,8 +125,28 @@ module.exports = {
     })
   },
   // Restaurant Form Page
+
   new: function (req, res, next) {
-    res.render('restaurants/new')
+
+    // if there is a match for someone in the database, find them and render their profile
+    if(req.session && req.session.email){
+        User.findOne({ email: req.session.email }).then(function(user){
+            res.render('restaurants/new',{
+                curr_user: user.email,
+                user: req.user,
+                users: null  })
+        })
+    }
+    else{
+        User.findAsync({})
+            .then( function(users){
+                res.render('restaurants/new', {
+                    curr_user: null,
+                    user: req.user,
+                    users: users
+                })
+            }).catch()
+        }
   },
 
   edit: function (req, res, next) {
