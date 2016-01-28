@@ -22,10 +22,8 @@ var helper = require('./helper.js')
 app.locals = helper
 
 var credentials = require('./config/credentials.js')
-app.use( require('cookie-parser')(credentials.cookieSecret))
-app.use( expressSession ({
-  resave: false, saveUnitialized: false,
-  secret: credentials.cookieSecret }))
+
+
 
 // Set View Engine to EJS
 app.set('view engine', 'ejs')
@@ -37,9 +35,13 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(cookieParser())
 app.use('/public', express.static('public'));
-app.use(expressSession({secret: 'my secret'}))
+// app.use(expressSession({secret: 'my secret'}))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use( require('cookie-parser')(credentials.cookieSecret))
+app.use( require('express-session')({
+  resave: false, saveUnitialized: false,
+  secret: credentials.cookieSecret }))
 
 var routes = require('./config/routes')
 app.use('/', routes)
