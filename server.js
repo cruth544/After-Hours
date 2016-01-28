@@ -2,8 +2,8 @@
 
 require('dotenv').load()
 
-var express = require('express'),
-    SessionStore = require('session-mongoose')(express)
+var express = require('express')
+    // SessionStore = require('session-mongoose')(express)
 var app = express()
 // var helpers = require('express-helpers')()
 // app = helpers.all(app);
