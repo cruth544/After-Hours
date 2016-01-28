@@ -42,7 +42,6 @@ module.exports = {
   show: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-        console.log(restaurant)
           res.render('restaurants/show', { restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -342,7 +341,6 @@ function getReviewCount (name, url, businessJson, complete) {
       // grab node where the review count is
       var reviewCount = $('.feed_search-results').first().text()
       // use regex to extract number from node
-      console.log(yelpSearchUrl)
       reviewCount = reviewCount.match(reviewCountRegEx)[0]
       reviewCount = reviewCount > 100 ? 100 : reviewCount
       extractHappyHourTime(name, businessJson, reviewCount, url, function () {
@@ -397,14 +395,12 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
 
 
 function checkDataBaseFor (restaurantAddress, complete) {
-  console.log('checking....')
   Restaurant.find({}, function (err, restaurants) {
     for (var i = 0; i < restaurants.length; i++) {
       var dbAddress = restaurants[i].contact.address
       var dbStreetNumber = dbAddress.match(/^\d*/)
       var dbZipCode = dbAddress.match(/\d{5}$/)
-      console.log(dbAddress)
-      if (!dbStreetNumber || !dbZipCode) {console.log('no');return complete(false)}
+      if (!dbStreetNumber || !dbZipCode) return complete(false)
       dbStreetNumber = dbStreetNumber[0]
       dbZipCode = dbZipCode[0]
       var checkStreetNumber = restaurantAddress.match(/^\d*/)[0]
@@ -571,8 +567,6 @@ function storeTimes (restaurantList) {
 }
 
 function saveRestaurantToDB (restaurant) {
-  // console.log("\n\nin saveRestaurantToDB")
-  // console.log(restaurant)
   var newRestaurant = new Restaurant()
   var hourObj = {}
   var restaurantKeys = Object.keys(Restaurant.schema.paths)
@@ -594,9 +588,6 @@ function saveRestaurantToDB (restaurant) {
     newRestaurant[yelpKeys[i]] = restaurant[yelpKeys[i]]
   }
   newRestaurant.hours = hourObj
-  // console.log("\nNEW:")
-  // console.log(newRestaurant)
-  // console.log("\n\n")
   newRestaurant.save(function (err) {
     if (err) console.log(err)
   })
