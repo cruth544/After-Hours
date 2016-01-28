@@ -56,9 +56,11 @@ app.get('/yelp/:location/:term', function (req, res) {
 switch(app.get('env')){
   case 'development':
       mongoose.connect(dbConfig.mongo.dev.conn, dbConfig.mongo.options);
+      console.log('connecting to mongo dev.')
       break;
   case 'production':
       mongoose.connect(dbConfig.mongo.prod.conn, dbConfig.mongo.options);
+      console.log('connecting to mongo prod.')
       break;
   default:
       throw new Error('Unknown execution environment: ' + app.get('env'));
