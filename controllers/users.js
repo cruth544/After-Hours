@@ -1,5 +1,15 @@
 var User = require("../models/user");
 
+var Restaurant  = require("../models/restaurant")
+var Yelp        = require('yelp')
+var cheerio     = require('cheerio')
+var async       = require('async')
+var fs          = require('fs')
+var request     = require('request')
+
+var mongoose = require('mongoose')
+
+
 
 module.exports = {
 
