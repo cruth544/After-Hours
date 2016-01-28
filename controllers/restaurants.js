@@ -232,7 +232,7 @@ module.exports = {
   },
 
   yelp: function (req, res, next) {
-    var businessesJson = {}
+    var businessJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
       consumer_key: 'ppGF7cs331hgnbdAMFtrKQ',
@@ -243,18 +243,19 @@ module.exports = {
       yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '20', sort: '0'})
     .then(function (data) {
 
-      yelpParse(data, businessesJson, function () {
+      yelpParse(data, businessJson, function () {
         responsesCompleted++
         console.log(responsesCompleted)
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
-          businessesJson = getTimes(businessesJson)
-          onlyShowHappyHourNow(businessJson, function (currentHappyHourJson) {
-            res.send(currentHappyHourJson)
+          businessJson = getTimes(businessJson)
+          console.log(businessJson)
+          onlyShowHappyHourNow(businessJson, new Date(), function (currentHappyHourJson) {
+            // res.send(currentHappyHourJson)
           })
-          // res.send(businessesJson)
+          res.send(businessJson)
 
-          // fs.writeFile('output.json', JSON.stringify(businessesJson, null, 2), function(err){
+          // fs.writeFile('output.json', JSON.stringify(businessJson, null, 2), function(err){
           //   console.log('File successfully written! - Check your project directory for the output.json file');
           // })
         }
@@ -265,8 +266,39 @@ module.exports = {
   }
 }
 
-function onlyShowHappyHourNow (businessJson, complete) {
-  businessJson
+function onlyShowHappyHourNow (businessJson, time, complete) {
+  var daysOfTheWeekReference = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+  var dayOfWeek   = time.getDay()
+  var currentTime = time.getHours() + time.getMinutes() / 60
+
+  function checkTime (restaurant) {
+    var day             = daysOfTheWeekReference[dayOfWeek]
+    console.log(restaurant.hours)
+    var restaurantTimes = restaurant.hours[day].time
+    for (var i = 0; i < restaurantTimes.length; i++) {
+      if (restaurantTimes[i]) {
+        if (currentTime < restaurantTimes[i].endTime) {
+          if (restaurantTimes[i].startTime) {
+            if (currentTime >= restaurantTimes[i].startTime) {
+              return true
+            }
+          } else {
+            return true
+          }
+        }
+      }
+    }
+    return false
+  }
+
+  for (var restaurantName in businessJson) {
+    console.log("checking " + restaurantName)
+    if (checkTime(businessJson[restaurantName])) {
+      console.log("No happy hour... Deleteing...")
+      businessJson.delete(restaurantName)
+    }
+  }
+  return complete(businessJson)
 }
 
 function yelpParse (data, businessJson, complete) {
@@ -485,6 +517,7 @@ function storeTimes (restaurantList) {
         startTime: null,
         endTime: null
       }
+      saveRestaurantToDB(restaurantList[restaurantName])
       continue
     }
     var mostEqualsArray = [sortedTime[sortedTime.length - 1]]
@@ -572,8 +605,8 @@ function storeTimes (restaurantList) {
     }
     restaurantList[restaurantName].time = obj.time
     restaurantList[restaurantName].drinks = true
-    saveRestaurantToDB(restaurantList[restaurantName])
   }
+  console.log(restaurantList)
   return restaurantList
 }
 
@@ -602,6 +635,7 @@ function saveRestaurantToDB (restaurant) {
   newRestaurant.save(function (err) {
     if (err) console.log(err)
   })
+  return newRestaurant
 }
 
 
