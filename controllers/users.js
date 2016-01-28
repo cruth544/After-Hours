@@ -27,6 +27,15 @@ module.exports = {
       })
     },
 
+  show: function (req, res, next) {
+      User.findOne({ name: req.session.name }).then(function(user){
+          res.render('users/edit_profile_show', { user: user,
+                                           curr_user: user.email,
+                                           user: req.user,
+                                           users: null })
+       })
+    },
+
   update: function (req, res, next) {
     User.findOneAndUpdate({ _id: Number(req.params.id)}, req.body,
       function (err) {
