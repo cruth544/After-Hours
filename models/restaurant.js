@@ -55,6 +55,7 @@ var restaurantSchema = mongoose.Schema({
               }
 
       },
+      timeStrings: [ String ],
       drinks : Boolean,
       food   : Boolean,
       contact: { phone  : String,
