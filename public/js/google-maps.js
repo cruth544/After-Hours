@@ -76,7 +76,7 @@ function initMap() {
         animation: google.maps.Animation.DROP,
         title: 'You!'
       })
-      map.setCenter(pos)
+      map.panTo(pos)
       map.setZoom(13)
     //change center point based on search box entry
 

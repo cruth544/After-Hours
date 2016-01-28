@@ -39,7 +39,7 @@ function ajaxCall (zip, geo) {
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
     for (var i = 0; i < restaurantArray.length; i++) {
-      restaurantArray[i]
+      console.log(restaurantArray[i])
       function toggleBounce() {
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null)
@@ -47,12 +47,40 @@ function ajaxCall (zip, geo) {
           marker.setAnimation(google.maps.Animation.BOUNCE)
         }
       }
-      var marker = new google.maps.Marker({
-        position: restaurantArray[i].contact.coordinates,
-        label: labels[labelIndex++ % labels.length],
-        map: map,
-        animation: google.maps.Animation.DROP
-      })
+      var request = {
+        location: restaurantArray[i].contact.coordinates,
+        radius: '500',
+        query: restaurantArray[i].name
+      }
+      var service = new google.maps.places.PlacesService(map)
+      service.textSearch(request, callback)
+
+      function callback (results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          console.log(results[0])
+          var marker = new google.maps.Marker({
+            map: map,
+            place: {
+              placeId: results[0].place_id,
+              location: results[0].geometry.location
+            },
+            icon: {
+              url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+              scaledSize: new google.maps.Size(25, 25)
+            }
+          })
+          marker.addListener('click', function () {
+            map.panTo(marker.internalPosition)
+            map.setZoom(17)
+          })
+          marker.addListener('mouseover', function () {
+            console.log('MOUSE OVER')
+          })
+          marker.addListener('mouseout', function () {
+            console.log('MOUSE OUT')
+          })
+        }
+      }
     }
   })
   .fail(function() {
