@@ -40,7 +40,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use( require('cookie-parser')(credentials.cookieSecret))
 app.use( require('express-session')({
-  resave: false, saveUnitialized: false,
+  resave: true, saveUnitialized: true,
   secret: credentials.cookieSecret }))
 
 var routes = require('./config/routes')
@@ -68,7 +68,6 @@ switch(app.get('env')){
 //     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 //   })
 app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);});
 console.log("Server starting...go to localhost:3000")
-exports = module.exports = session;
+
