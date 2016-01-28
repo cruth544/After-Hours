@@ -4,7 +4,7 @@ module.exports = {
             conn: process.env.DEV_CONN_STRING
         },
         prod: {
-            conn: process.env.MONGOLAB_URI
+            conn: "mongodb://washburn.michael@gmail.com:abc123@ds051665.mongolab.com:51665/heroku_h1907377"
         },
         options:{
             server: {

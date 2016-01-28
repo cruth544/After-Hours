@@ -57,12 +57,15 @@ switch(app.get('env')){
   case 'development':
       mongoose.connect(dbConfig.mongo.dev.conn, dbConfig.mongo.options);
       console.log('connecting to mongo dev.')
+      console.log(dbConfig.mongo.dev.conn)
       break;
   case 'production':
       mongoose.connect(dbConfig.mongo.prod.conn, dbConfig.mongo.options);
       console.log('connecting to mongo prod.')
+      console.log(dbConfig.mongo.prod.conn)
       break;
   default:
+      console.log('connecting nowhere')
       throw new Error('Unknown execution environment: ' + app.get('env'));
 }
 
