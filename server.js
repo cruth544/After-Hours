@@ -23,7 +23,7 @@ app.locals = helper
 
 var credentials = require('./config/credentials.js')
 app.use( require('cookie-parser')(credentials.cookieSecret))
-app.use( require('express-session')({
+app.use( expressSession ({
   resave: false, saveUnitialized: false,
   secret: credentials.cookieSecret }))
 
