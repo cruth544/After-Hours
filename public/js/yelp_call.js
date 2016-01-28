@@ -38,6 +38,9 @@ function ajaxCall (zip, geo) {
     var restaurantArray = sortByDistance(geo, addObjectsToArray(data))
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
+    var infowindow = new google.maps.InfoWindow({
+      content: "Hello there"
+    })
     for (var i = 0; i < restaurantArray.length; i++) {
       console.log(restaurantArray[i])
       function toggleBounce() {
@@ -57,7 +60,6 @@ function ajaxCall (zip, geo) {
 
       function callback (results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          console.log(results[0])
           var marker = new google.maps.Marker({
             map: map,
             place: {
@@ -69,16 +71,34 @@ function ajaxCall (zip, geo) {
               scaledSize: new google.maps.Size(25, 25)
             }
           })
+          // the smooth zoom function
+          function smoothZoom (map, max, cnt) {
+            if (cnt > max) {
+              infowindow.open(map, marker)
+              return
+            } else {
+              z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+                google.maps.event.removeListener(z)
+                smoothZoom(map, max, cnt + 1)
+              })
+              setTimeout(function(){map.setZoom(cnt)}, 80) // 80ms is what I found to work well on my system -- it might not work well on all systems
+            }
+          }
           marker.addListener('click', function () {
-            map.panTo(marker.internalPosition)
-            map.setZoom(17)
+            map.panTo(marker.internalPosition) // set map center to marker position
+            smoothZoom(map, 16, map.getZoom()) // call smoothZoom, parameters map, final zoomLevel, and starting zoom level
           })
-          marker.addListener('mouseover', function () {
-            console.log('MOUSE OVER')
+          map.addListener('center_changed', function () {
+            infowindow.close()
           })
-          marker.addListener('mouseout', function () {
-            console.log('MOUSE OUT')
-          })
+          // marker.addListener('mouseover', function () {
+          //   infowindow.open(map, marker)
+          //   console.log('MOUSE OVER')
+          // })
+          // marker.addListener('mouseout', function () {
+          //   infowindow.close()
+          //   console.log(marker)
+          // })
         }
       }
     }
@@ -103,7 +123,6 @@ function sortByDistance (position, restaurantArray) {
   restaurantArray.sort(function (location1, location2) {
     return distance(location1.contact.coordinates) - distance(location2.contact.coordinates)
   })
-  // console.log(restaurantArray)
   return restaurantArray
 }
 
