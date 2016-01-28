@@ -1,34 +1,50 @@
 function initMap() {
 
- var styles = [
-    {
-      stylers: [
-        { hue: "#00a1ff" },
-        { saturation: 1 },
-        { weight: 0.5},
-        { gamma: 0.88},
-        {invert_lightness: true}
-      ]
-    },{
-      featureType: "road",
-      elementType: "geometry",
-      stylers: [
-        { lightness: -12 },
-        { visibility: "simplified" },
-      ]
-    },{
-      featureType: "road",
-      elementType: "labels",
-      stylers: [
-        { visibility: "on" }
-      ]
-    }
-  ]
-
+ var styles =
+//old map
+ // [
+ //    {
+ //      stylers: [
+ //        { hue: "#00a1ff" },
+ //        { saturation: 1 },
+ //        { weight: 0.5},
+ //        { gamma: 0.88},
+ //        {invert_lightness: true}
+ //      ]
+ //    },{
+ //      featureType: "road",
+ //      elementType: "geometry",
+ //      stylers: [
+ //        { lightness: -12 },
+ //        { visibility: "simplified" },
+ //      ]
+ //    },{
+ //      featureType: "road",
+ //      elementType: "labels",
+ //      stylers: [
+ //        { visibility: "on" }
+ //      ]
+ //    }
+ //  ]
+//new map
+[
+  {
+    "elementType": "geometry",
+    "stylers": [
+      { "invert_lightness": true },
+      { "lightness": -7 },
+      { "weight": 0.6 },
+      { "hue": "#1900ff" },
+      { "saturation": 8 },
+      { "gamma": 0.89 }
+    ]
+  }
+]
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
   var styledMap = new google.maps.StyledMapType(styles,
-    {name: "Styled Map"});
+    {name: "CURRENT LOCATION"}
+    );
 
   // Create a map object, and include the MapTypeId to add
   // to the map type control.
@@ -36,7 +52,7 @@ function initMap() {
     zoom: 10,
     center: new google.maps.LatLng(34.031245, -118.266532),
     mapTypeControlOptions: {
-      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+      mapTypeIds: ['map_style']
     }
   }
   map = new google.maps.Map(document.getElementById('map'),
@@ -45,7 +61,6 @@ function initMap() {
   //Associate the styled map with the MapTypeId and set it to display.
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
-
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
@@ -74,7 +89,13 @@ function initMap() {
         position: pos,
         map: map,
         animation: google.maps.Animation.DROP,
-        title: 'You!'
+        title: 'You!',
+        icon: {
+               url: "/public/assets/logo-animate/you-are-here-icon.png",
+               scaledSize: new google.maps.Size(80, 80)
+        },
+        optimized: false,
+        zIndex:99999999
       })
       map.panTo(pos)
       map.setZoom(13)

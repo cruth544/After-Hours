@@ -341,7 +341,10 @@ function getReviewCount (name, url, businessJson, complete) {
       // grab node where the review count is
       var reviewCount = $('.feed_search-results').first().text()
       // use regex to extract number from node
-      reviewCount = reviewCount.match(reviewCountRegEx)[0]
+
+      reviewCount = reviewCount.match(reviewCountRegEx)
+      if (!reviewCount) return complete()
+      reviewCount = reviewCount[0]
       reviewCount = reviewCount > 100 ? 100 : reviewCount
       extractHappyHourTime(name, businessJson, reviewCount, url, function () {
         complete()
@@ -398,6 +401,7 @@ function checkDataBaseFor (restaurantAddress, complete) {
   Restaurant.find({}, function (err, restaurants) {
     for (var i = 0; i < restaurants.length; i++) {
       var dbAddress = restaurants[i].contact.address
+
       var dbStreetNumber = dbAddress.match(/^\d*/)
       var dbZipCode = dbAddress.match(/\d{5}$/)
       if (!dbStreetNumber || !dbZipCode) return complete(false)
@@ -569,8 +573,6 @@ function storeTimes (restaurantList) {
 }
 
 function saveRestaurantToDB (restaurant) {
-  // console.log("\n\nin saveRestaurantToDB")
-  // console.log(restaurant)
   var newRestaurant = new Restaurant()
   var hourObj = {}
   var restaurantKeys = Object.keys(Restaurant.schema.paths)
