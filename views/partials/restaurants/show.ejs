@@ -21,7 +21,8 @@
      <div>Contact:
        <li>Phone: <%= restaurant.contact.phone%></li>
        <li>Address: <%= restaurant.contact.address %></li>
-       <li>Website: <%= restaurant.contact.website %></li>
+       <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
+      <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
      </div>
     </div>
  </div>
