@@ -126,8 +126,19 @@ module.exports = {
   },
   // Restaurant Form Page
   new: function (req, res, next) {
+
     res.render('restaurants/new')
+
   },
+  //  User.findOne({ email: req.session.email }).then(function(user){
+  //         console.log(restaurant)
+  //         console.log(req.session)
+  //         res.render('restaurants/new', {
+  //                                          curr_user: user.email,
+  //                                          user: req.user,
+  //                                          users: null })
+  //   })
+  // },
 
   edit: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
