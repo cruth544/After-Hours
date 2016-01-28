@@ -65,7 +65,7 @@ module.exports = {
 
     var newRestaurant = new Restaurant ({
           name   : req.body.name,
-          image_uri : req.body.image,
+          image  : req.body.image,
           hours  :{
               monday: { scheduled: req.body.monday,
                         time: [{
@@ -129,12 +129,101 @@ module.exports = {
     res.render('restaurants/new')
   },
 
-  update: function (req, res, next) {
-    Restaurant.findOneAndUpdate({name: String(req.params.name)}, function (err, restaurant) {
-      if (err) console.log(err)
-      else res.send('Restaurant updated')
+  edit: function (req, res, next) {
+    Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
+      User.findOne({ email: req.session.email }).then(function(user){
+          console.log(restaurant)
+          console.log(req.session)
+          res.render('restaurants/edit', {restaurant: restaurant,
+                                           curr_user: user.email,
+                                           user: req.user,
+                                           users: null })
     })
+   })
   },
+
+  update: function (req, res, next) {
+
+      function stringTimeToNumber(time) {
+        time = time.split(':')
+        var hours = Number(time[0])
+        var minutes = Number(time[1])
+
+        time = hours + minutes / 60
+        time = (Math.round(time * 4) / 4).toFixed(2);
+
+        return time
+      }
+    Restaurant.findOneAndUpdate({name: String(req.params.name)}, {
+          name   : req.body.name,
+          image  : req.body.image,
+          hours  :{
+              monday: { scheduled: req.body.monday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              tuesday:{ scheduled: req.body.tuesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              wednesday: { scheduled: req.body.wednesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              thursday: { scheduled: req.body.thursday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              friday: { scheduled: req.body.friday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              saturday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              sunday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              }
+          },
+          drinks : req.body.drinks,
+          food   : req.body.food,
+          contact: { website: req.body.website,
+                     phone  : req.body.phone,
+                     address: req.body.address,
+                     yelpUrl: req.body.yelpUrl
+                    }
+    }, function (err) {
+     if (err) console.log(err)
+     // else res.send("Restaurant updated");
+     else Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
+      User.findOne({ email: req.session.email }).then(function(user){
+          console.log(restaurant)
+          console.log(req.session)
+          res.render('restaurants/show', { restaurant: restaurant,
+                                           curr_user: user.email,
+                                           user: req.user,
+                                           users: null })
+     })
+   })
+
+  })
+},
 
   delete: function (req, res, next) {
     Restaurant.findOneAndRemove({name: String(req.params.name)}, function (err, restaurant) {
@@ -188,17 +277,16 @@ function yelpParse (data, businessJson, complete) {
       businessJson[restaurant.name] = {}
       // check database if entry exists
       checkDataBaseFor(restaurant.location.display_address.join(' '), function (dbRestaurant) {
-        // body...
         if (dbRestaurant) {
           console.log("MATCH!\n")
           // if entry does exist, add it to the businessJson and continue
           businessJson[restaurant.name] = dbRestaurant
           complete()
         } else {
-          console.log("No match\n")
         // otherwise continue with scraping
         // grabing yelp api stuff and storing it
 /////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
+          businessJson[restaurant.name].name = restaurant.name
           if (restaurant.location.display_address) {
             var address = restaurant.location.display_address.join(' ')
           }
@@ -299,8 +387,6 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
       })
     },
     function (err) {
-      // console.log(restaurantJson)
-      // console.log("stopped extractHappyHourTime")
       console.log(name)
       businessJson[name].reviews = restaurantJson
       complete()
@@ -312,9 +398,12 @@ function checkDataBaseFor (restaurantAddress, complete) {
   Restaurant.find({}, function (err, restaurants) {
     for (var i = 0; i < restaurants.length; i++) {
       var dbAddress = restaurants[i].contact.address
-      console.log(restaurants[i].name)
-      var dbStreetNumber = dbAddress.match(/^\d*/)[0]
-      var dbZipCode = dbAddress.match(/\d{5}$/)[0]
+
+      var dbStreetNumber = dbAddress.match(/^\d*/)
+      var dbZipCode = dbAddress.match(/\d{5}$/)
+      if (!dbStreetNumber && !dbZipCode) return complete(false)
+      dbStreetNumber = dbStreetNumber[0]
+      dbZipCode = dbZipCode[0]
       var checkStreetNumber = restaurantAddress.match(/^\d*/)[0]
       var checkZipCode = restaurantAddress.match(/\d{5}$/)[0]
       if (dbZipCode === checkZipCode) {
@@ -455,23 +544,105 @@ function storeTimes (restaurantList) {
     }
     if (most > second) {
       obj.time = {
-        startTime: second,
-        endTime: most
+        startTime: second + 12,
+        endTime: most + 12
       }
 
     } else if (second > most) {
       obj.time = {
-        startTime: most,
-        endTime: second
+        startTime: most + 12,
+        endTime: second + 12
       }
 
     } else {
       obj.time = {
           startTime: null,
-          endTime: most
+          endTime: most + 12
       }
     }
     restaurantList[restaurantName].time = obj.time
+    restaurantList[restaurantName].drinks = true
+    saveRestaurantToDB(restaurantList[restaurantName])
   }
   return restaurantList
 }
+
+function saveRestaurantToDB (restaurant) {
+  // console.log("\n\nin saveRestaurantToDB")
+  // console.log(restaurant)
+  var newRestaurant = new Restaurant()
+  var hourObj = {}
+  var restaurantKeys = Object.keys(Restaurant.schema.paths)
+  var dayOfWeekRegEx = /(monday|tuesday|wednesday|thursday|friday|saturday|sunday)/
+  for (var i = 0; i < restaurantKeys.length; i++) {
+    if (dayOfWeekRegEx.test(restaurantKeys[i])) {
+      var day = restaurantKeys[i].match(dayOfWeekRegEx)
+      if (day) {
+        day = day[0]
+        if (!hourObj[day]) {
+          hourObj[day] = {time: []}
+          hourObj[day].time.push(restaurant.time)
+        }
+      }
+    }
+  }
+  var yelpKeys = Object.keys(restaurant)
+  for (var i = 0; i < yelpKeys.length; i++) {
+    newRestaurant[yelpKeys[i]] = restaurant[yelpKeys[i]]
+  }
+  newRestaurant.hours = hourObj
+  console.log("\nNEW:")
+  console.log(newRestaurant)
+  console.log("\n\n")
+  newRestaurant.save(function (err) {
+    if (err) console.log(err)
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
