@@ -44,7 +44,7 @@ app.get('/yelp/:location/:term', function (req, res) {
   console.log("Made yelp api call")
 })
 
-
+require('./db/seed.js').seedUsers()
 
 // use db connection string based on whether the environment is development or production
 switch(app.get('env')){
