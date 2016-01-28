@@ -1,0 +1,67 @@
+.footer {
+  width: 100%;
+  height: 70px;
+  margin-top: 50px;
+}
+
+#icons {
+/*  margin: 0 auto;*/
+  width: 456px;
+  display: flex;
+  margin: 0 auto;
+}
+
+.footer-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+#facebook-icon {
+  background-image: url('../assets/facebook_icon.png');
+  background-size: cover;
+}
+
+#facebook-icon:hover {
+  background-image: url('../assets/facebook_icon_glow.png');
+  background-size: cover;
+}
+
+#twitter-icon {
+  background-image: url('../assets/twitter_icon.png');
+  background-size: cover;
+}
+
+#twitter-icon:hover {
+  background-image: url('../assets/twitter_icon_glow.png');
+  background-size: cover;
+}
+
+#instagram-icon {
+  background-image: url('../assets/instagram_icon.png');
+  background-size: cover;
+}
+
+#instagram-icon:hover {
+  background-image: url('../assets/instagram_icon_glow.png');
+  background-size: cover;
+}
+
+#instagram:hover {
+  background-image: url('../assets/instagram_icon_glow.png');
+  background-size: cover;
+}
+
+#pinterest-icon {
+  background-image: url('../assets/pinterest_icon.png');
+  background-size: cover;
+}
+
+#pinterest-icon:hover {
+  background-image: url('../assets/pinterest_icon_glow.png');
+  background-size: cover;
+}
+
+a.icon {
+  margin: 0 auto;
+}
