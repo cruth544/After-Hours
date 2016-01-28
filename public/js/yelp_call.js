@@ -49,11 +49,16 @@ function ajaxCall (zip, geo) {
       }
       var marker = new google.maps.Marker({
         position: restaurantArray[i].contact.coordinates,
+        title: restaurantArray[i].name,
         label: {
           text: labels[labelIndex++ % labels.length],
           color: 'yellow'
         },
         map: map,
+        attribution: {
+          source: 'After Hours',
+          webUrl: restaurantArray[i].contact.website
+        },
         animation: google.maps.Animation.DROP,
         icon: {
                url: "/public/assets/logo-animate/map-marker-logo-red.png",

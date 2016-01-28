@@ -341,7 +341,10 @@ function getReviewCount (name, url, businessJson, complete) {
       // grab node where the review count is
       var reviewCount = $('.feed_search-results').first().text()
       // use regex to extract number from node
-      reviewCount = reviewCount.match(reviewCountRegEx)[0]
+
+      reviewCount = reviewCount.match(reviewCountRegEx)
+      if (!reviewCount) return complete()
+      reviewCount = reviewCount[0]
       reviewCount = reviewCount > 100 ? 100 : reviewCount
       extractHappyHourTime(name, businessJson, reviewCount, url, function () {
         complete()
