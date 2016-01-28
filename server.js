@@ -55,7 +55,12 @@ app.get('/yelp/:location/:term', function (req, res) {
 // use db connection string based on whether the environment is development or production
 switch(app.get('env')){
   case 'development':
-      mongoose.connect(dbConfig.mongo.dev.conn, dbConfig.mongo.options);
+      // mongoose.connect(dbConfig.mongo.dev.conn, dbConfig.mongo.options);
+      mongoose.connect(dbConfig.mongo.dev.conn, function (err) {
+          if (err) console.log(err)
+          else
+            console.log("Connected to MongoDB!")
+      })
       console.log('connecting to mongo dev.')
       console.log(dbConfig.mongo.dev.conn)
       break;
