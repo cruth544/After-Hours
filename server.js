@@ -40,7 +40,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use( require('cookie-parser')(credentials.cookieSecret))
 app.use( require('express-session')({
-  resave: falsen, saveUnitialized: false,
+  resave: false, saveUnitialized: false,
   secret: credentials.cookieSecret }))
 
 var routes = require('./config/routes')
