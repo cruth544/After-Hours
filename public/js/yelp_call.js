@@ -31,7 +31,7 @@ function ajaxCall (zip, geo) {
   $.ajax({
     url: '/restaurants/getAll',
     type: 'GET',
-    data: {zipCode: zip, geoLocation: geoString}
+    data: {zipCode: zip, geoLocation: geoString, offset: 0}
   })
   .done(function(data) {
     console.log(data)
@@ -68,6 +68,7 @@ function ajaxCall (zip, geo) {
             }
       })
     }
+    populateRestaurantList(restaurantArray)
   })
   .fail(function() {
     console.log("error")
@@ -129,7 +130,10 @@ function getMyPosition (defaultPosition, completeCallback) {
   }
 }
 
-
+function populateRestaurantList (restaurantArray) {
+  var restaurantHtml = '<div class="restaurant"'
+  $('#restaunt-list')
+}
 
 
 
