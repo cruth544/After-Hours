@@ -132,8 +132,8 @@ module.exports = {
   edit: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-          console.log(restaurant)
-          console.log(req.session)
+          // console.log(restaurant)
+          // console.log(req.session)
           res.render('restaurants/edit', {restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -213,8 +213,8 @@ module.exports = {
      // else res.send("Restaurant updated");
      else Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-          console.log(restaurant)
-          console.log(req.session)
+          // console.log(restaurant)
+          // console.log(req.session)
           res.render('restaurants/show', { restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -240,7 +240,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '20', sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessJson, function () {
@@ -249,11 +249,11 @@ module.exports = {
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessJson = getTimes(businessJson)
-          console.log(businessJson)
+          // console.log(businessJson)
           onlyShowHappyHourNow(businessJson, new Date(), function (currentHappyHourJson) {
-            // res.send(currentHappyHourJson)
+            res.send(currentHappyHourJson)
           })
-          res.send(businessJson)
+          // res.send(businessJson)
 
           // fs.writeFile('output.json', JSON.stringify(businessJson, null, 2), function(err){
           //   console.log('File successfully written! - Check your project directory for the output.json file');
@@ -271,15 +271,30 @@ function onlyShowHappyHourNow (businessJson, time, complete) {
   var dayOfWeek   = time.getDay()
   var currentTime = time.getHours() + time.getMinutes() / 60
 
-  function checkTime (restaurant) {
-    var day             = daysOfTheWeekReference[dayOfWeek]
-    console.log(restaurant.hours)
-    var restaurantTimes = restaurant.hours[day].time
-    for (var i = 0; i < restaurantTimes.length; i++) {
-      if (restaurantTimes[i]) {
-        if (currentTime < restaurantTimes[i].endTime) {
-          if (restaurantTimes[i].startTime) {
-            if (currentTime >= restaurantTimes[i].startTime) {
+  function currentlyHavingHappyHour (restaurant) {
+    if (restaurant.hours) {
+      var day = daysOfTheWeekReference[dayOfWeek]
+      // console.log(restaurant.hours)
+      var restaurantTimes = restaurant.hours[day].time
+      for (var i = 0; i < restaurantTimes.length; i++) {
+        if (restaurantTimes[i]) {
+          if (currentTime < restaurantTimes[i].endTime) {
+            if (restaurantTimes[i].startTime) {
+              if (currentTime >= restaurantTimes[i].startTime) {
+                return true
+              }
+            } else {
+              return true
+            }
+          }
+        }
+      }
+    } else {
+      var time = restaurant.time
+      if (time) {
+        if (currentTime < time.endTime) {
+          if (time.startTime) {
+            if (currentTime >= time.startTime) {
               return true
             }
           } else {
@@ -293,10 +308,10 @@ function onlyShowHappyHourNow (businessJson, time, complete) {
 
   for (var restaurantName in businessJson) {
     console.log("checking " + restaurantName)
-    if (checkTime(businessJson[restaurantName])) {
-      console.log("No happy hour... Deleteing...")
-      businessJson.delete(restaurantName)
-    }
+    if (!currentlyHavingHappyHour(businessJson[restaurantName])) {
+      console.log("No happy hour... Removing...")
+      delete businessJson[restaurantName]
+    } else console.log("Happy Hour!")
   }
   return complete(businessJson)
 }
@@ -359,6 +374,7 @@ function yelpParse (data, businessJson, complete) {
 }
 
 function getReviewCount (name, url, businessJson, complete) {
+  console.log("checking review count...")
   url = url.split('?')[0]
   var yelpSearchUrl = url
   yelpSearchUrl += '?q=happy%20hour'
@@ -382,7 +398,14 @@ function getReviewCount (name, url, businessJson, complete) {
       // use regex to extract number from node
 
       reviewCount = reviewCount.match(reviewCountRegEx)
-      if (!reviewCount) return complete()
+      // console.log(body)
+      if (!reviewCount) {
+        console.log("no review count")
+        console.log($('h2').text())
+        businessJson.delete(name)
+        return complete()
+      }
+      console.log("there are reviews")
       reviewCount = reviewCount[0]
       reviewCount = reviewCount > 100 ? 100 : reviewCount
       extractHappyHourTime(name, businessJson, reviewCount, url, function () {
@@ -423,7 +446,6 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
             }
           })
           counter += 20
-          // console.log("incrementing... " + counter)
           callback()
         }
       })
@@ -605,8 +627,8 @@ function storeTimes (restaurantList) {
     }
     restaurantList[restaurantName].time = obj.time
     restaurantList[restaurantName].drinks = true
+    saveRestaurantToDB(restaurantList[restaurantName])
   }
-  console.log(restaurantList)
   return restaurantList
 }
 
@@ -632,6 +654,7 @@ function saveRestaurantToDB (restaurant) {
     newRestaurant[yelpKeys[i]] = restaurant[yelpKeys[i]]
   }
   newRestaurant.hours = hourObj
+  console.log("saving... " + newRestaurant.name)
   newRestaurant.save(function (err) {
     if (err) console.log(err)
   })
