@@ -312,6 +312,7 @@ function checkDataBaseFor (restaurantAddress, complete) {
   Restaurant.find({}, function (err, restaurants) {
     for (var i = 0; i < restaurants.length; i++) {
       var dbAddress = restaurants[i].contact.address
+      console.log(restaurants[i].name)
       var dbStreetNumber = dbAddress.match(/^\d*/)[0]
       var dbZipCode = dbAddress.match(/\d{5}$/)[0]
       var checkStreetNumber = restaurantAddress.match(/^\d*/)[0]
