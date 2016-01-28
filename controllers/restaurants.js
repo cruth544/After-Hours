@@ -188,14 +188,12 @@ function yelpParse (data, businessJson, complete) {
       businessJson[restaurant.name] = {}
       // check database if entry exists
       checkDataBaseFor(restaurant.location.display_address.join(' '), function (dbRestaurant) {
-        // body...
         if (dbRestaurant) {
           console.log("MATCH!\n")
           // if entry does exist, add it to the businessJson and continue
           businessJson[restaurant.name] = dbRestaurant
           complete()
         } else {
-          console.log("No match\n")
         // otherwise continue with scraping
         // grabing yelp api stuff and storing it
 /////////////////////// ADD STUFF FROM YELP HERE/////////////////////////
@@ -300,7 +298,7 @@ function extractHappyHourTime (name, businessJson, reviewCount, url, complete) {
       })
     },
     function (err) {
-      // save to database
+      console.log(name)
       businessJson[name].reviews = restaurantJson
       complete()
     })
@@ -311,8 +309,11 @@ function checkDataBaseFor (restaurantAddress, complete) {
   Restaurant.find({}, function (err, restaurants) {
     for (var i = 0; i < restaurants.length; i++) {
       var dbAddress = restaurants[i].contact.address
-      var dbStreetNumber = dbAddress.match(/^\d*/)[0]
-      var dbZipCode = dbAddress.match(/\d{5}$/)[0]
+      var dbStreetNumber = dbAddress.match(/^\d*/)
+      var dbZipCode = dbAddress.match(/\d{5}$/)
+      if (!dbStreetNumber && !dbZipCode) return complete(false)
+      dbStreetNumber = dbStreetNumber[0]
+      dbZipCode = dbZipCode[0]
       var checkStreetNumber = restaurantAddress.match(/^\d*/)[0]
       var checkZipCode = restaurantAddress.match(/\d{5}$/)[0]
       if (dbZipCode === checkZipCode) {
