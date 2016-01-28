@@ -2,7 +2,8 @@
 
 require('dotenv').load()
 
-var express = require('express')
+var express = require('express'),
+    SessionStore = require('session-mongoose')(express)
 var app = express()
 // var helpers = require('express-helpers')()
 // app = helpers.all(app);
@@ -36,7 +37,15 @@ app.use(bodyParser.urlencoded({ extended: true}))
 app.use(cookieParser())
 app.use('/public', express.static('public'));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(
+ express.session({
+   store: new SessionStore({
+   url: 'mongodb://mongolab.com:51665/heroku_h1907377/session',
+   interval: 1200000
+ }),
+ cookie: { maxAge: 1200000 },
+ secret: 'my secret'
+}))
 var routes = require('./config/routes')
 app.use('/', routes)
 
