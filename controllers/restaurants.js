@@ -11,6 +11,7 @@ require('../db/seed.js').seedRestaurants()
 
 
 module.exports = {
+
   index: function (req, res, next) {
 
     // if there is a match for someone in the database, find them and render their profile
