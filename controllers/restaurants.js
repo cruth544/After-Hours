@@ -151,7 +151,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '1', sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -454,20 +454,20 @@ function storeTimes (restaurantList) {
     }
     if (most > second) {
       obj.time = {
-        startTime: second,
-        endTime: most
+        startTime: second + 12,
+        endTime: most + 12
       }
 
     } else if (second > most) {
       obj.time = {
-        startTime: most,
-        endTime: second
+        startTime: most + 12,
+        endTime: second + 12
       }
 
     } else {
       obj.time = {
           startTime: null,
-          endTime: most
+          endTime: most + 12
       }
     }
     restaurantList[restaurantName].time = obj.time
@@ -502,8 +502,11 @@ function saveRestaurantToDB (restaurant) {
   }
   newRestaurant.hours = hourObj
   console.log("\nNEW:")
-  console.log(newRestaurant.hours)
+  console.log(newRestaurant)
   console.log("\n\n")
+  newRestaurant.save(function (err) {
+    if (err) console.log(err)
+  })
 }
 
 
