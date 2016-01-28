@@ -4,7 +4,7 @@ module.exports = {
             conn: process.env.DEV_CONN_STRING
         },
         prod: {
-            conn: process.env.PROD_CONN_STRING
+            conn: MONGOLAB_URI
         },
         options:{
             server: {
