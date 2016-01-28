@@ -6,7 +6,12 @@ var restaurantsController = require('../controllers/restaurants')
  var passport = require('passport')
   require("./passport")(passport)
 
+// // DELETE
+// router.route('/deleteAllUsers')
+//   .get(restaurantsController.reseed)
 
+// router.route('/deleteAllRestaurants')
+//   .get(restaurantsController.reseed)
 // entry page for After Hours
 router.route('/welcome')
   .get(usersController.enter)
@@ -39,6 +44,7 @@ router.route('/auth/facebook/callback')
     successRedirect: '/',
     failureRedirect: '/'
   }));
+
 
 // RESTAURANT ROUTES
 router.route('/restaurants/all')
