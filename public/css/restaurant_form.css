@@ -1,0 +1,16 @@
+#restaurantForm {
+  height: 600px;
+  width: 500px;
+  background-color: maroon;
+  font-family: Arial;
+  color: white;
+}
+
+input {
+  border-radius: 4px;
+}
+
+submit {
+  color: white;
+  border-radius: 4px;
+}

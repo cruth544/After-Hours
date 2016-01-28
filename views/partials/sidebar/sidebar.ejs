@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Sliding Sidebar</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="/public/css/sidebar.css">
+    </head>
+    <body>
+
+        <aside data-sidebar>
+            <div  class="padding">
+                <a href="#" data-sidebar-button>Hide Sidebar</a>
+                <br>
+                <br>
+                <br>
+                <a href="/restaurants/all">Write a review</a>
+                <br>
+                <a href="/restaurants/all">Edit Profile</a>
+                <br>
+                <a href="/restaurants/all">Add a Happy Hour</a>
+                <br>
+                <a href="/restaurants/all">Messenger</a>
+            </div>
+        </aside>
+
+        <main>
+            <div class="padding">
+                <a href="#" data-sidebar-button>Show Sidebar</a>
+            </div>
+            <!-- "overlay" is linked to the closing 'hide sidebar'. if commented out, sidebar will not close. -->
+            <div class="overlay" data-sidebar-overlay></div>
+        </main>
+
+        <script src="public/js/sidebar.js"></script>
+    </body>
+</html>
