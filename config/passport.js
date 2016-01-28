@@ -16,7 +16,7 @@ module.exports = function(passport){
   passport.use('facebook', new FacebookStrategy({
     clientID        : "211605595851273",
     clientSecret    : "16036851e83f19820752cb80450b4caf",
-    callbackURL     : 'http://localhost:3000/auth/facebook/callback',
+    callbackURL     : 'http://ga-after-hours.herokuapp.com/auth/facebook/callback',
     enableProof     : true,
     profileFields   : ['name', 'emails']
   }, function(access_token, refresh_token, profile, done) {
@@ -44,7 +44,7 @@ module.exports = function(passport){
           newUser.fb.firstName    = profile.name.givenName;
           newUser.fb.lastName     = profile.name.familyName;
           newUser.fb.email        = profile.emails[0].value;
-          
+
           newUser.save(function(err) {
             if (err)
               throw err;
