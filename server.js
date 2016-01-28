@@ -58,6 +58,10 @@ switch(app.get('env')){
       throw new Error('Unknown execution environment: ' + app.get('env'));
 }
 
-
-app.listen(process.env.PORT || 3000)
+var server = http.createServer(app).listen( process.env.PORT || 3000, function () {
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  })
+// app.listen(process.env.PORT || 3000, function(){
+//   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+// });
 console.log("Server starting...go to localhost:3000")
