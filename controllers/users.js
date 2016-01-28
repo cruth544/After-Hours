@@ -25,7 +25,7 @@ module.exports = {
     },
 
   update: function (req, res, next) {
-    User.findOneAndUpdate({ id: Number(req.params.id)}, req.body,
+    User.findOneAndUpdate({ _id: Number(req.params.id)}, req.body,
       function (err) {
       if (err) console.log(err);
       else res.send("Profile updated!")

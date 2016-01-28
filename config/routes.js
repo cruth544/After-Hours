@@ -26,7 +26,7 @@ router.route('/signUp')
 router.route('/logout')
   .get(usersController.logout)
 
-router.route('/users/edit_profile')
+router.route('/:id/edit_profile')
   .put(usersController.update)
   .delete(usersController.delete)
 
