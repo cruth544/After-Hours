@@ -8,12 +8,12 @@ var restaurantsController = require('../controllers/restaurants')
 
 
 // entry page for After Hours
-router.route('/')
+router.route('/welcome')
   .get(usersController.enter)
 
 // USER ROUTES
 
-router.route('/welcome')
+router.route('/')
   .get(restaurantsController.index)
 
 router.route('/restaurants/getAll')

@@ -571,8 +571,6 @@ function storeTimes (restaurantList) {
 }
 
 function saveRestaurantToDB (restaurant) {
-  // console.log("\n\nin saveRestaurantToDB")
-  // console.log(restaurant)
   var newRestaurant = new Restaurant()
   var hourObj = {}
   var restaurantKeys = Object.keys(Restaurant.schema.paths)
@@ -594,9 +592,6 @@ function saveRestaurantToDB (restaurant) {
     newRestaurant[yelpKeys[i]] = restaurant[yelpKeys[i]]
   }
   newRestaurant.hours = hourObj
-  console.log("\nNEW:")
-  console.log(newRestaurant)
-  console.log("\n\n")
   newRestaurant.save(function (err) {
     if (err) console.log(err)
   })
