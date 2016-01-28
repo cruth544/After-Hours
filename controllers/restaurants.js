@@ -240,7 +240,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '20', sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessesJson, function () {
@@ -341,7 +341,10 @@ function getReviewCount (name, url, businessJson, complete) {
       // grab node where the review count is
       var reviewCount = $('.feed_search-results').first().text()
       // use regex to extract number from node
-      reviewCount = reviewCount.match(reviewCountRegEx)[0]
+
+      reviewCount = reviewCount.match(reviewCountRegEx)
+      if (!reviewCount) return complete()
+      reviewCount = reviewCount[0]
       reviewCount = reviewCount > 100 ? 100 : reviewCount
       extractHappyHourTime(name, businessJson, reviewCount, url, function () {
         complete()
