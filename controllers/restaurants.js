@@ -62,64 +62,7 @@ module.exports = {
 
   return time
 }
-
-    var newRestaurant = new Restaurant ({
-          name   : req.body.name,
-          image  : req.body.image,
-          hours  :{
-              monday: { scheduled: req.body.monday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              tuesday:{ scheduled: req.body.tuesday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              wednesday: { scheduled: req.body.wednesday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              thursday: { scheduled: req.body.thursday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              friday: { scheduled: req.body.friday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              saturday: { scheduled: req.body.saturday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              sunday: { scheduled: req.body.saturday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              }
-          },
-          drinks : req.body.drinks,
-          food   : req.body.food,
-          contact: { website: req.body.website,
-                     phone  : req.body.phone,
-                     address: req.body.address,
-                     yelpUrl: req.body.yelpUrl
-                    }
-    })
-
-    newRestaurant.save(function (err) {
+    saveRestaurant(req.body).save(function (err) {
       if (err) console.log(err)
       else res.send('Restaurant created!')
     })
@@ -231,6 +174,25 @@ module.exports = {
     })
   },
 
+
+  // API STUFF
+  showApi: function(req, res, next) {
+    Restaurant.find({}, function (err, restaurants) {
+      res.json(restaurants)
+    })
+  },
+
+  showOneApi: function(req, res, next) {
+    Restaurant.findOne({name: req.params.name}, function (err, restaurants) {
+      res.json(restaurants)
+    })
+  },
+
+
+
+
+
+  //YELP STUFF
   yelp: function (req, res, next) {
     var businessesJson = {}
     var responsesCompleted = 0
@@ -600,47 +562,63 @@ function saveRestaurantToDB (restaurant) {
 
 
 
+function saveRestaurant( data ){
+  var newRestaurant = new Restaurant ({
+          name   : req.body.name,
+          image  : req.body.image,
+          hours  :{
+              monday: { scheduled: req.body.monday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              tuesday:{ scheduled: req.body.tuesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              wednesday: { scheduled: req.body.wednesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              thursday: { scheduled: req.body.thursday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              friday: { scheduled: req.body.friday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              saturday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              sunday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              }
+          },
+          drinks : req.body.drinks,
+          food   : req.body.food,
+          contact: { website: req.body.website,
+                     phone  : req.body.phone,
+                     address: req.body.address,
+                     yelpUrl: req.body.yelpUrl
+                    }
+    })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  return newRestaurant
+}
 

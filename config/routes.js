@@ -50,8 +50,19 @@ router.route('/:name/edit')
   .get(restaurantsController.edit)
   .post(restaurantsController.update)
 
-
 router.route('/restaurants/new')
   .get(restaurantsController.new)
+
+// API ROUTE (RESTAURANTS)
+router.route('/restaurants/api')
+  .get(restaurantsController.showApi)
+  .post(restaurantsController.create)
+router.route('/restaurants/api/:name')
+  .get(restaurantsController.showOneApi)
+  .post(restaurantsController.update)
+  .delete(restaurantsController.delete)
+
+
+
 
 module.exports = router;
