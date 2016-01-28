@@ -3,6 +3,9 @@ var User = require("../models/user");
 
 module.exports = {
 
+  enter: function (req, res, next) {
+        res.render('enter')
+  },
 
   users: function (req, res, next) {
     User.find({}, function (err, users) {

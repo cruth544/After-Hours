@@ -6,9 +6,14 @@ var restaurantsController = require('../controllers/restaurants')
  var passport = require('passport')
   require("./passport")(passport)
 
+
+// entry page for After Hours
+router.route('/')
+  .get(usersController.enter)
+
 // USER ROUTES
 
-router.route('/')
+router.route('/welcome')
   .get(restaurantsController.index)
 
 router.route('/restaurants/getAll')
