@@ -9,6 +9,7 @@ var request     = require('request')
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants()
 
+
 module.exports = {
   index: function (req, res, next) {
 
@@ -86,6 +87,7 @@ module.exports = {
   },
 
   update: function (req, res, next) {
+    // if(user.admin){
 
       function stringTimeToNumber(time) {
         time = time.split(':')
@@ -166,12 +168,15 @@ module.exports = {
    })
 
   })
+// }
 },
 
   delete: function (req, res, next) {
+    if(user.admin){
     Restaurant.findOneAndRemove({name: String(req.params.name)}, function (err, restaurant) {
       res.send('Restaurant deleted')
     })
+  }
   },
 
 
