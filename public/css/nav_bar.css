@@ -1,15 +1,18 @@
 a {
   text-decoration: none !important;
-  color: white !important;
+/*  color: white !important;
   text-shadow: 0 0 0.1em #fff,
                0 0 0.3em #fff,
-               0 0 0.6em #fff, !important;
+               0 0 0.6em #fff, !important;*/
+  color: #999999 !important;
+  text-shadow: 0 0 0.1em #000,
+               0 0 0.2em #000, !important;
 }
 
 a#signUp:hover {
+  color: white !important;
   text-shadow: 0 0 0.1em #fff,
                0 0 0.2em #fff,
-               0 0 0.3em #fff,
                0 0 0.4em #77f,
                0 0 0.6em #00f,
                0 0 0.8em #00f,
@@ -18,9 +21,9 @@ a#signUp:hover {
 }
 
 a#logIn:hover {
+  color: white !important;
   text-shadow: 0 0 0.1em #fff,
                0 0 0.2em #fff,
-               0 0 0.3em #fff,
                0 0 0.4em #77f,
                0 0 0.6em #f00,
                0 0 0.8em #f00,
@@ -29,6 +32,7 @@ a#logIn:hover {
 }
 
 a#logOut {
+  color: white !important;
   text-shadow: 0 0 1.2em #f00,
                0 0 1.0em #f00,
                0 0 0.8em #f00,
@@ -41,10 +45,9 @@ a#logOut {
 
 a#logOut:hover {
   text-decoration: none !important;
-  color: white !important;
-  text-shadow: 0 0 0.1em #fff,
-               0 0 0.3em #fff,
-               0 0 0.6em #fff, !important;
+  color: #999999 !important;
+  text-shadow: 0 0 0.1em #000,
+               0 0 0.2em #000, !important;
 }
 
 

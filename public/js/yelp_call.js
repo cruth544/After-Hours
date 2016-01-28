@@ -49,9 +49,18 @@ function ajaxCall (zip, geo) {
       }
       var marker = new google.maps.Marker({
         position: restaurantArray[i].contact.coordinates,
-        label: labels[labelIndex++ % labels.length],
+        label: {
+          text: labels[labelIndex++ % labels.length],
+          color: 'yellow'
+        },
         map: map,
-        animation: google.maps.Animation.DROP
+        animation: google.maps.Animation.DROP,
+        icon: {
+               url: "/public/assets/logo-animate/map-marker-logo-red.png",
+               scaledSize: new google.maps.Size(30, 30),
+               origin: new google.maps.Point(0,0),
+               anchor: new google.maps.Point(32, 32)
+            }
       })
     }
   })
