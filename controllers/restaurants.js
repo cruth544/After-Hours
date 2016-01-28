@@ -401,7 +401,7 @@ function checkDataBaseFor (restaurantAddress, complete) {
 
       var dbStreetNumber = dbAddress.match(/^\d*/)
       var dbZipCode = dbAddress.match(/\d{5}$/)
-      if (!dbStreetNumber && !dbZipCode) return complete(false)
+      if (!dbStreetNumber || !dbZipCode) return complete(false)
       dbStreetNumber = dbStreetNumber[0]
       dbZipCode = dbZipCode[0]
       var checkStreetNumber = restaurantAddress.match(/^\d*/)[0]
