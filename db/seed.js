@@ -1,13 +1,15 @@
 var Restaurant = require('../models/restaurant');
 var restaurantsController = require('../controllers/restaurants')
 
+
 exports.seedRestaurants = function seedRestaurants(){
   Restaurant.find({}).exec(function (err, collection) {
+    console.log(collection.length)
     if (collection.length === 0) {
       Restaurant.create({
 
-        name: 'Bar',
-        image_uri: 'http://bar-ama.com/img/super_nachos_v1.jpg',
+        name: 'Bar Ama',
+        image: 'http://bar-ama.com/img/super_nachos_v1.jpg',
         hours: {
             monday:{
                 scheduled: true,
@@ -91,13 +93,13 @@ exports.seedRestaurants = function seedRestaurants(){
 
       Restaurant.create({
         name: 'Izakaya Fu-ga',
-        image_uri: 'http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg',
+        image: 'http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg',
         hours:{
             monday:{
                   scheduled: true,
                   time: [{
-                        startTime: '2:00',
-                        endTime  : '6:00'
+                        startTime: 14.0,
+                        endTime  : 18.0
                   }]
             },
             tuesday:{
@@ -156,7 +158,7 @@ exports.seedRestaurants = function seedRestaurants(){
 
       Restaurant.create({
         name: 'EMC Seafood',
-        image_uri: 'http://www.emcseafood.com/wp-content/uploads/2014/05/emc-front-1024x680.jpg',
+        image: 'http://www.emcseafood.com/wp-content/uploads/2014/05/emc-front-1024x680.jpg',
         hours: {
             monday:{
                   scheduled: true,
