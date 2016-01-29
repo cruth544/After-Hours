@@ -261,8 +261,8 @@ function populateRestaurantList (restaurantArray, origin) {
     restaurantHtml += '<div class="restaurant-picture-container">'
     restaurantHtml += '<img class="restaurant-picture" src="'
     restaurantHtml += restaurant.image +'"></div>'
-    restaurantHtml += '<div class="restaurant-name">'
-    restaurantHtml += restaurant.name + '</div>'
+    restaurantHtml += '<div class="restaurant-name"><a href="/'
+    restaurantHtml += restaurant.name + '">' + restaurant.name + '</a></div>'
     restaurantHtml += '<div class="time-left"><div id="time-number">'
     restaurantHtml += showTimeLeft(timeLeft)
     // restaurantHtml += ' of Happy Hour left!</div>'

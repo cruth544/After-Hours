@@ -4,20 +4,54 @@
     height: 100%;
     z-index: 100;
     color: white;
-    border: 1px solid blue;
 }
 
 /* Additional styles */
 
 aside {
     background-color: rgba(0,0,0,0.7);
-    border-radius: 4px;
+    border-radius: 5px;
     width: 250px;
     margin-top: 20px;
-    border: 1px solid blue;
+    height: 100px
 }
 
-.padding {
-    padding: 2em;
+
+.sideBarIcon {
+  height: 30px;
+  width: 30px;
+  padding: 3px;
+}
+
+#collapse {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 9px;
+  right: -6px;
+}
+
+.navBarTab {
+  border-bottom: 1px solid white;
+  height: 32px;
+  position: relative;
+  width: 198px;
+  left: 24px;
+  margin-bottom: 5px;
+}
+
+#sidebar-pull{
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: 100px;
+  top: 47px;
+}
+
+#navButton {
+  padding: 0px;
+}
+#add, #pencil {
+  margin-bottom: 10px;
 }
 

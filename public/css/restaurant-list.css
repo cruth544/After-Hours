@@ -1,3 +1,12 @@
+#myHappyHours {
+  height: 58px;
+  font-size: 40px;
+  text-align: center;
+  font-family: 'Josefin Sans', sans-serif;
+  border-bottom: 1px solid white;
+  margin-bottom: 12px;
+}
+
 .restaurant {
   height: 100px;
   width: 600px;
@@ -24,7 +33,7 @@
 .restaurant-picture {
   height:97px;
   width: 100px;
-  border-right: 1px solid whites;
+  border-right: 1px solid white;
 }
 
 .time-left {
@@ -72,8 +81,7 @@
   width: 600px;
   border: 1px solid white;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 15px;
   border: none;
   border-top: 1px solid white;
-
 }
