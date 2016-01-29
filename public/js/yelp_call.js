@@ -23,7 +23,6 @@ var userData = function () {
       return location
     },
     setLocation: function (newLocation) {
-      console.log(newLocation)
       return location = newLocation
     },
     getOffset: function () {
@@ -127,7 +126,6 @@ function ajaxCall (zip, geo) {
     data: {zipCode: zip, geoLocation: geoString, offset: userData.getOffset, time: userData.getTime(), day: userData.getDay()}
   })
   .done(function(data) {
-    console.log(data)
     var restaurantArray = sortByDistance(geo, addObjectsToArray(data))
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
@@ -184,7 +182,6 @@ function sortByDistance (position, restaurantArray) {
   restaurantArray.sort(function (location1, location2) {
     return getDistance(position, location1.contact.coordinates) - getDistance(position, location2.contact.coordinates)
   })
-  // console.log(restaurantArray)
   return restaurantArray
 }
 
@@ -244,13 +241,11 @@ function getDistance (origin, destination) {
 }
 
 function populateRestaurantList (restaurantArray, origin) {
-  console.log(restaurantArray)
   for (var i = 0; i < restaurantArray.length; i++) {
     var restaurant = restaurantArray[i]
     var distance = getDistance(origin, restaurant.contact.coordinates)
     var timesArray = restaurant.hours[userData.getDay()].time
     if (timesArray.length > 0) {
-      console.log(timesArray)
       for (var j = 0; j < timesArray.length; j++) {
         var t = timesArray[j]
         var userTime = 18//userData.getTime()
