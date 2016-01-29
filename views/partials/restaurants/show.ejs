@@ -7,14 +7,59 @@
      <img id= "showImage" src="<%= restaurant.image %>">
      <div id = "description"></div>
      <div id="times">Happy Hour Times:
-       <li>Monday: <%= changeTime(restaurant.hours.monday.time[0].startTime) %> - <%= changeTime(restaurant.hours.monday.time[0].endTime) %></li>
-       <li>Tuesday: <%= changeTime(restaurant.hours.tuesday.time[0].startTime) %> - <%= changeTime(restaurant.hours.tuesday.time[0].endTime) %></li>
-       <li>Wednesday: <%= changeTime(restaurant.hours.wednesday.time[0].startTime) %> - <%= changeTime(restaurant.hours.wednesday.time[0].endTime) %></li>
-       <li>Thursday: <%= changeTime(restaurant.hours.thursday.time[0].startTime) %> - <%= changeTime(restaurant.hours.thursday.time[0].endTime) %></li>
-       <li>Friday: <%= changeTime(restaurant.hours.friday.time[0].startTime) %> - <%= changeTime(restaurant.hours.friday.time[0].endTime) %></li>
-       <li>Saturday: <%= changeTime(restaurant.hours.saturday.time[0].startTime) %> - <%= changeTime(restaurant.hours.saturday.time[0].endTime) %></li>
-       <li>Sunday: <%= changeTime(restaurant.hours.sunday.time[0].startTime) %> - <%= changeTime(restaurant.hours.sunday.time[0].endTime) %></li>
-     </div>
+      <% var day = restaurant.hours %>
+      <% var scheduled = restaurant.hours.scheduled %>
+           <!-- MONDAY -->
+      <% if (day.monday.scheduled === true) { %>
+      Monday:
+      <% for (var i = 0; i < day.monday.time.length; i++){ %>
+        <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+
+    <!-- TUESDAY -->
+      <% if (day.tuesday.scheduled == true) { %>
+      Tuesday:
+      <% for (var i = 0; i < day.tuesday.time.length; i++){ %>
+        <li><%= changeTime(day.tuesday.time[i].startTime) %> - <%= changeTime(day.tuesday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- WEDNESDAY -->
+      <% if (day.wednesday.scheduled == true) { %>
+      Wednesday:
+      <% for (var i = 0; i < day.wednesday.time.length; i++){ %>
+        <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- THURSDAY -->
+      <% if (day.thursday.scheduled == true) { %>
+      Thursday:
+      <% for (var i = 0; i < day.thursday.time.length; i++){ %>
+        <li><%= changeTime(day.thursday.time[i].startTime) %> - <%= changeTime(day.thursday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- FRIDAY -->
+      <% if (day.friday.scheduled == true) { %>
+      Friday:
+      <% for (var i = 0; i < day.friday.time.length; i++){ %>
+        <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- SATURDAY -->
+      <% if (day.saturday.scheduled == true) { %>
+      Saturday:
+      <% for (var i = 0; i < day.saturday.time.length; i++){ %>
+        <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- SUNDAY -->
+      <% if (day.sunday.scheduled == true) { %>
+      Sunday:
+      <% for (var i = 0; i < day.sunday.time.length; i++){ %>
+        <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
+        <% } %>
+      <% } %>
+    </div>
 
     <div id="showInfo">Drinks: <%= restaurant.drinks %>
        <div>Food: <%= restaurant.food %></div>
