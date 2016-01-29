@@ -29,7 +29,7 @@ body {
 }
 
 #times{
-  width: 200px;
+  width: 45%;
   height: 570px;
   margin: 0 auto;
   border: 1px solid white;
@@ -42,6 +42,7 @@ li{
 
 #info-container {
   float: right;
+  width: 50%;
 }
 
 #showImage{
@@ -73,7 +74,10 @@ li{
 
 #venueMap {
   border: 1px solid white;
-
+}
+#venueMap img {
+  height: 250px;
+  width: 350px;
 }
 
 

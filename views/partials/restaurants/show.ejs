@@ -10,71 +10,71 @@
     </div>
 
     <div id="show-container">
-        <div id="times">
-            Happy Hour Times: <br>
-              <% var day = restaurant.hours %>
-              <% var scheduled = restaurant.hours.scheduled %>
+      <div id="times">
+          Happy Hour Times: <br>
+            <% var day = restaurant.hours %>
+            <% var scheduled = restaurant.hours.scheduled %>
 
 
-            <!-- MONDAY -->
-              <% if (day.monday.scheduled === true) { %>
-              <ul>Monday:
-              <% for (var i = 0; i < day.monday.time.length; i++){ %>
-                <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
-              <% } %>
-              </ul>
-              <% } %>
+          <!-- MONDAY -->
+            <% if (day.monday.scheduled === true) { %>
+            <ul>Monday:
+            <% for (var i = 0; i < day.monday.time.length; i++){ %>
+              <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
 
-            <!-- TUESDAY -->
-              <% if (day.tuesday.scheduled == true) { %>
-              <ul>Tuesday:
-              <% for (var i = 0; i < day.tuesday.time.length; i++){ %>
-                <li><%= changeTime(day.tuesday.time[i].startTime) %> - <%= changeTime(day.tuesday.time[i].endTime) %></li>
-              <% } %>
-              </ul>
-              <% } %>
-            <!-- WEDNESDAY -->
-              <% if (day.wednesday.scheduled == true) { %>
-              <ul>Wednesday:
-              <% for (var i = 0; i < day.wednesday.time.length; i++){ %>
-                <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
-              <% } %>
-              </ul>
-              <% } %>
-            <!-- THURSDAY -->
-              <% if (day.thursday.scheduled == true) { %>
-              <ul>Thursday:
-              <% for (var i = 0; i < day.thursday.time.length; i++){ %>
-                <li><%= changeTime(day.thursday.time[i].startTime) %> - <%= changeTime(day.thursday.time[i].endTime) %></li>
-              <% } %>
-              </ul>
-              <% } %>
-            <!-- FRIDAY -->
-              <% if (day.friday.scheduled == true) { %>
-              <ul>Friday:
-              <% for (var i = 0; i < day.friday.time.length; i++){ %>
-                <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
-              <% } %>
-              </ul>
-              <% } %>
-            <!-- SATURDAY -->
-              <% if (day.saturday.scheduled == true) { %>
-              <ul>Saturday:
-              <% for (var i = 0; i < day.saturday.time.length; i++){ %>
-                <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
-              <% } %>
-              </ul>
-              <% } %>
-            <!-- SUNDAY -->
-              <% if (day.sunday.scheduled == true) { %>
-              <ul>Sunday:
-              <% for (var i = 0; i < day.sunday.time.length; i++){ %>
-                <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
-              <% } %>
-              </ul>
-              <% } %>
-        </div>
+          <!-- TUESDAY -->
+            <% if (day.tuesday.scheduled == true) { %>
+            <ul>Tuesday:
+            <% for (var i = 0; i < day.tuesday.time.length; i++){ %>
+              <li><%= changeTime(day.tuesday.time[i].startTime) %> - <%= changeTime(day.tuesday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- WEDNESDAY -->
+            <% if (day.wednesday.scheduled == true) { %>
+            <ul>Wednesday:
+            <% for (var i = 0; i < day.wednesday.time.length; i++){ %>
+              <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- THURSDAY -->
+            <% if (day.thursday.scheduled == true) { %>
+            <ul>Thursday:
+            <% for (var i = 0; i < day.thursday.time.length; i++){ %>
+              <li><%= changeTime(day.thursday.time[i].startTime) %> - <%= changeTime(day.thursday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- FRIDAY -->
+            <% if (day.friday.scheduled == true) { %>
+            <ul>Friday:
+            <% for (var i = 0; i < day.friday.time.length; i++){ %>
+              <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- SATURDAY -->
+            <% if (day.saturday.scheduled == true) { %>
+            <ul>Saturday:
+            <% for (var i = 0; i < day.saturday.time.length; i++){ %>
+              <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- SUNDAY -->
+            <% if (day.sunday.scheduled == true) { %>
+            <ul>Sunday:
+            <% for (var i = 0; i < day.sunday.time.length; i++){ %>
+              <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
       </div>
+
       <div id="info-container">
         <div id ="description"><%= restaurant.body%></div>
         <div id="foodDrinks">
@@ -88,7 +88,9 @@
               <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
               <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
         </div>
-        <div id="venueMap">Map</div>
+        <div id="venueMap">
+          <img src="../../public/assets/EMCSeafood.png">
+        </div>
       </div>
     </div>
 </div>
