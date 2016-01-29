@@ -1,5 +1,5 @@
-#search-bar{
-  /*height: 35px;*/
+#search-bar #search-time #search-bar.form-control{
+  width: 460px !important;
 }
 .stylish-input-group .input-group-addon{
     background: rgba(0,0,0,0.7) !important;

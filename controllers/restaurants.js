@@ -377,7 +377,7 @@ module.exports = {
     var searchParams = {
       term: 'happy hour',
       location: req.query.location,
-      limit: '10',
+      limit: '1',
       offset: req.query.offset,
       sort: '0'
     }

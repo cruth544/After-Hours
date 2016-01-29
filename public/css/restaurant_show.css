@@ -1,6 +1,6 @@
 body {
   color: white;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
   font-size: 16px;
   margin: 0 auto;
 }
@@ -11,16 +11,15 @@ body {
   height: 900px;
   margin: 0 auto;
   margin-top: 90px;
-  border: 1px solid red;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 #showName {
   width: 100%;
   height: 8%;
-  font-family: 'Delius Unicase', cursive;
+  font-family: 'Josefin Sans', sans-serif;
   font-size: 50px;
   margin: 0 auto;
-  border: 1px solid white;
   text-align: center;
 }
 
@@ -32,12 +31,12 @@ body {
   width: 45%;
   height: 570px;
   margin: 0 auto;
-  border: 1px solid white;
   float: left;
 }
 
 li{
   list-style: none;
+  font-size: 20px;
 }
 
 #info-container {
@@ -49,32 +48,25 @@ li{
   width: 400px;
   height: 250px;
   margin: 0 auto;
-  border: 1px solid blue;
 }
 
 #description {
   height: 100px;
   width: 500px;
-  border: 1px solid yellow;
   margin: 0 auto;
   text-align: center;
 }
 
 #foodDrinks {
-  border: 1px solid purple;
 }
 
 /*Address etc*/
 #venueInfo {
-  border: 1px solid white;
   width: 100%;
   height: 200px;
   margin: 0 auto;
 }
 
-#venueMap {
-  border: 1px solid white;
-}
 #venueMap img {
   height: 250px;
   width: 350px;
@@ -91,44 +83,3 @@ li{
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
-
-#pac-input {
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white !important;
-  font-family: Roboto;
-  font-size: 28px;
-  font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 360px;
-  height: 60px;
-  border-radius: 6px;
-/*  text-shadow: 0 0 0.1em #fff,
-               0 0 0.3em blue, !important;*/
-}
-
-/*#pac-input:focus {
-  border-color: #4d90fe;
-}*/
-
-.pac-container, .pac-item-bold, .pac-item, .pac-item-selected, .pac-item-location, .pac-matched,
-.pac-item-query {
-  font-family: Roboto;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-
-}
-
-#type-selector {
-  color: #fff;
-  background-color: red;
-}
-
-#type-selector label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
-
-

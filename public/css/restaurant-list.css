@@ -11,7 +11,7 @@
   height: 100px;
   width: 600px;
   border: 1px solid white;
-  display: inline-flex;
+  display: inline-flex !important;
   background-color: rgba(0,0,0,0.5);
   margin: 3px;
   margin-bottom: 6px;
