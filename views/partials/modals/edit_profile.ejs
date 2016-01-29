@@ -1,6 +1,5 @@
 
-<div class="Update">
-
+<div id="updateContainer">
 
 <!-- Modal Update -->
   <div id="updateModal" class="modal fade" role="dialog">
@@ -10,13 +9,21 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update</h4>
+          <h4 class="modal-title">Update Your Profile</h4>
         </div>
         <div class="modal-body">
           <form role="form" action='#' method='post'>
               <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+              <label for="fName">First Name:</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name">
+            </div>
+            <div class="form-group">
+              <label for="lName">Last Name:</label>
+              <input type="text" class="form-control" id="firstName" name="lastName" placeholder="Enter last name">
+            </div>
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter new username">
             </div>
             <div class="form-group">
               <label for="email">Email:</label>
@@ -26,7 +33,10 @@
               <label for="pwd">Password:</label>
               <input type="password" class="form-control" id="email" name="password" placeholder="Enter Password">
              </div>
-
+             <div class="form-group">
+              <label for="image">Image:</label>
+              <input type="text" class="form-control" id="image" name="profile_image" placeholder="Upload new image">
+             </div>
               <button type="submit" class="btn btn-default">Save</button>
           </form>
         </div>
