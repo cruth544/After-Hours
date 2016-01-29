@@ -267,7 +267,9 @@ function populateRestaurantList (restaurantArray, origin) {
     restaurantHtml += showTimeLeft(timeLeft)
     restaurantHtml += ' of Happy Hour left!</div>'
     restaurantHtml += '<div class="distance">'
-    restaurantHtml += distance.toFixed(1) + ' mi.</div>'
+    restaurantHtml += distance.toFixed(1) + ' mile'
+    restaurantHtml += distance !== 1 ? 's' : ''
+    restaurantHtml += ' away</div>'
     restaurantHtml += '</div>'
     $('#my_restaurant_list').append(restaurantHtml)
   }
