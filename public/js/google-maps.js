@@ -64,9 +64,6 @@ function initMap() {
       })
       map.setCenter(pos)
       map.setZoom(13)
-<<<<<<< HEAD
-=======
-    //change center point based on search box entry
 
       map.addListener('bounds_changed', function() {
         searchBox.setBounds(map.getBounds())
