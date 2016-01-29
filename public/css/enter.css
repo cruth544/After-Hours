@@ -1,7 +1,6 @@
 #welcomeLogo {
   height: 620px;
   width: 760px;
-  margin-top: 50px;
   margin-left: 33px;
   background-image: url('../assets/logo-animate/after-hours-off.png');
   background-size: cover;
@@ -10,6 +9,7 @@
   -o-animation: logo_animate 7s ease-out infinite;
   animation: logo_animate 7s ease-out infinite;
   margin: 0 auto;
+  margin-top: 85px;
 }
 
 
@@ -39,3 +39,16 @@ body {
   margin: 0 auto;
 }
 
+#enter {
+  height: 180px;
+  width: 360px;
+  background-image: url('../assets/enter-logo-off.png');
+  position: relative;
+  background-size: cover;
+  top: 375px;
+  left: 15px;
+}
+
+#enter:hover {
+  background-image: url('../assets/enter-logo-glow.png');
+}
