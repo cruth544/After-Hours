@@ -1,45 +1,19 @@
 function initMap() {
 
- var styles =
-//old map
- // [
- //    {
- //      stylers: [
- //        { hue: "#00a1ff" },
- //        { saturation: 1 },
- //        { weight: 0.5},
- //        { gamma: 0.88},
- //        {invert_lightness: true}
- //      ]
- //    },{
- //      featureType: "road",
- //      elementType: "geometry",
- //      stylers: [
- //        { lightness: -12 },
- //        { visibility: "simplified" },
- //      ]
- //    },{
- //      featureType: "road",
- //      elementType: "labels",
- //      stylers: [
- //        { visibility: "on" }
- //      ]
- //    }
- //  ]
-//new map
-[
-  {
-    "elementType": "geometry",
-    "stylers": [
-      { "invert_lightness": true },
-      { "lightness": -7 },
-      { "weight": 0.6 },
-      { "hue": "#1900ff" },
-      { "saturation": 8 },
-      { "gamma": 0.89 }
+  var styles =
+    [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          { "invert_lightness": true },
+          { "lightness": -7 },
+          { "weight": 0.6 },
+          { "hue": "#1900ff" },
+          { "saturation": 8 },
+          { "gamma": 0.89 }
+        ]
+      }
     ]
-  }
-]
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
   var styledMap = new google.maps.StyledMapType(styles,
@@ -61,11 +35,6 @@ function initMap() {
   //Associate the styled map with the MapTypeId and set it to display.
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
-
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
-  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
@@ -92,75 +61,14 @@ function initMap() {
         title: 'You!',
         icon: {
                url: "/public/assets/logo-animate/you-are-here-icon.png",
-               scaledSize: new google.maps.Size(80, 80)
+               scaledSize: new google.maps.Size(40, 40)
         },
         optimized: false,
-        zIndex:99999999
+        zIndex: 99999999
       })
       map.setCenter(pos)
       map.setZoom(13)
-    //change center point based on search box entry
-
-      map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds())
-      });
-
-      var markers = [];
-      // Listen for the event fired when the user selects a prediction and retrieve
-      // more details for that place.
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
-
-        if (places.length == 0) {
-          return;
-        }
-
-        // Clear out the old markers.
-// <<<<<<< HEAD
-//         // markers.forEach(function(marker) {
-//           marker.setMap(null);
-//         // });
-//         markers = [];
-// =======
-//         markers.forEach(function(marker) {
-//           marker.setMap(null)
-//         });
-//         markers = []
-// >>>>>>> development
-
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
-          var icon = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-          };
-
-          // Create a marker for each place.
-          markers.push(new google.maps.Marker({
-            map: map,
-            icon: icon,
-            title: place.name,
-            position: place.geometry.location
-          }))
-
-          if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport)
-          } else {
-            bounds.extend(place.geometry.location)
-          }
-        })
-        map.fitBounds(bounds)
-      })
-
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter())
     })
-
 
   } else {
     // Browser doesn't support Geolocation
@@ -174,3 +82,4 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
 }
+

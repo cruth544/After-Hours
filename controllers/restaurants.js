@@ -232,6 +232,7 @@ module.exports = {
   },
 
   yelp: function (req, res, next) {
+    // CHECK FOR CURRENT USER
     var businessJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -240,7 +241,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', offset: req.query.offset sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '5', offset: req.query.offset, sort: '0'})
     .then(function (data) {
 
       yelpParse(data, businessJson, function () {
@@ -251,6 +252,7 @@ module.exports = {
           businessJson = getTimes(businessJson)
           // console.log(businessJson)
           onlyShowHappyHourNow(businessJson, new Date(), function (currentHappyHourJson) {
+            currentHappyHourJson.origin = req.query.geolocation
             res.send(currentHappyHourJson)
           })
           // res.send(businessJson)
@@ -270,6 +272,7 @@ function onlyShowHappyHourNow (businessJson, time, complete) {
   var daysOfTheWeekReference = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
   var dayOfWeek   = time.getDay()
   var currentTime = time.getHours() + time.getMinutes() / 60
+  currentTime     = 18
 
   function currentlyHavingHappyHour (restaurant) {
     if (restaurant.hours) {
@@ -486,6 +489,7 @@ function checkDataBaseFor (restaurantAddress, complete) {
 function getTimes (restaurantList) {
   var sortedHappyHourTimes = {}
   for (var restaurantName in restaurantList) {
+    if (restaurantList[restaurantName].hours) continue
     var obj = {}
     obj.timeFrequency = {}
     obj.timeStrings = []
@@ -513,6 +517,7 @@ function getTimes (restaurantList) {
 
 function probableHappyHourTimes (restaurantList) {
   for (var restaurantName in restaurantList) {
+    if (restaurantList[restaurantName].hours) continue
     var obj = {}
     var frequency = restaurantList[restaurantName].timeCalculations.timeFrequency
     var sortTime = []
@@ -532,6 +537,7 @@ function storeTimes (restaurantList) {
   var targetAverage = 6
 
   for (var restaurantName in restaurantList) {
+    if (restaurantList[restaurantName].hours) continue
     var obj = {}
     var sortedTime = restaurantList[restaurantName].timeCalculations.sortedTime
     if (sortedTime.length === 0) {
@@ -628,6 +634,7 @@ function storeTimes (restaurantList) {
     restaurantList[restaurantName].time = obj.time
     restaurantList[restaurantName].drinks = true
     saveRestaurantToDB(restaurantList[restaurantName])
+
   }
   return restaurantList
 }

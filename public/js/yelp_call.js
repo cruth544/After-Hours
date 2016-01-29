@@ -68,7 +68,7 @@ function ajaxCall (zip, geo) {
             }
       })
     }
-    populateRestaurantList(restaurantArray)
+    // populateRestaurantList(restaurantArray)
   })
   .fail(function() {
     console.log("error")
@@ -130,9 +130,23 @@ function getMyPosition (defaultPosition, completeCallback) {
   }
 }
 
-function populateRestaurantList (restaurantArray) {
-  var restaurantHtml = '<div class="restaurant"'
-  $('#restaunt-list')
+function getDistance (orign, destination) {
+  var googleHTML = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
+
+}
+
+function populateRestaurantList (restaurantArray, origin) {
+  for (var i = 0; i < restaurantArray.length; i++) {
+    var restaurant = restaurantArray[i]
+    var restaurantHtml = '
+    <div class="restaurant">
+      <div class="restaurant-picture"></div>
+      <div class="restaurant-name">' + restaurant.name + '</div>
+      <div class="time-left"></div>
+      <div class="distance"></div>
+    </div>'
+    $('#my_restaurant_list').append(restaurantHtml)
+  }
 }
 
 
