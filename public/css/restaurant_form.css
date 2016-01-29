@@ -1,8 +1,10 @@
 #restaurantForm {
   width: 600px;
-  background-color: maroon;
   font-family: Arial;
   color: white;
+  border: 1px solid blue;
+  background-image: url('../assets/chalkboard.png');
+  background-size: cover;
 }
 .form-control{
   width: 70%;
