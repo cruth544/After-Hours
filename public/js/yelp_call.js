@@ -12,8 +12,17 @@ var userData = function () {
   var time = dateObject.getHours() + dateObject.getMinutes() / 60
   var day = dateObject.getDay()
   var displayedRestaurants = []
+  var fetchingData = false
 
   return {
+    fetchingData: function () {
+      return fetchingData
+    },
+    setFetchingData: function (bool) {
+      if (!!bool === bool) {
+        return fetchingData = bool
+      }
+    },
     getCoordinates: function () {
       return coordinates
     },
@@ -280,8 +289,19 @@ getMyPosition(null, function (position) {
   currentTime -= minutes
   minutes = Math.round(minutes * 60)
   if (currentTime < 10) currentTime = '0' + currentTime
+  if (minutes < 10) minutes = '0' + minutes
   document.getElementById('search-time').value = currentTime + ':' + minutes
 })()
+
+window.onscroll = function () {
+  if (document.getElementById('my_restaurant_list')) {
+    var screenBottomPosition = window.scrollY + window.innerHeight
+    if (screenBottomPosition >= document.body.scrollHeight - 100) {
+      console.log('more')
+      moreResults()
+    }
+  }
+}
 
 //////////////////////////////////CODE//////////////////////////////////
 
@@ -330,6 +350,9 @@ function getPositionByCity (city, startSearch, fail) {
 }
 
 function ajaxCall () {
+  if (userData.fetchingData()) return
+  userData.setFetchingData(true)
+  $('.spinner').show()
   var searchParams = {
     location: userData.getLocation(),
     offset: userData.getOffset(),
@@ -345,6 +368,7 @@ function ajaxCall () {
     data: searchParams
   })
   .done(function(data) {
+    $('#spinner').hide()
     console.log(data.restaurants)
     setUserData(data.settings)
     var restaurantArray = sortByDistance(userData.getCoordinates(), addObjectsToArray(data.restaurants))
@@ -397,6 +421,7 @@ function ajaxCall () {
   .always(function() {
     console.log("complete")
     $('.more-results').prop('disabled', false)
+    userData.setFetchingData(false)
   })
 }
 
@@ -505,7 +530,6 @@ function searchYelp () {
 }
 
 function moreResults () {
-  console.log("MORE!!")
   $('.more-results').prop('disabled', true)
   userData.incrementOffset()
   ajaxCall()
