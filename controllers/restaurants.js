@@ -9,6 +9,101 @@ var request     = require('request')
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants()
 
+var userData = (function () {
+  var dateObject = new Date()
+  var daysOfTheWeekReference = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+  // accessible variables
+  var coordinates = {
+    lat: 34.031245,
+    lng: -118.266532
+  }
+  var location = ""
+  var offset = 0
+  var time = dateObject.getHours() + dateObject.getMinutes() / 60
+  var day = dateObject.getDay()
+
+  return {
+    getCoordinates: function () {
+      return coordinates
+    },
+    setCoordinates: function (newCoordinates) {
+      if (newCoordinates) {
+        return coordinates = newCoordinates
+      }
+    },
+    getLocation: function () {
+      return location
+    },
+    setLocation: function (newLocation) {
+      if (newLocation) {
+        return location = newLocation
+      }
+    },
+    getOffset: function () {
+      return offset
+    },
+    incrementOffset: function () {
+      offset += 20
+      return offset
+    },
+    getTime: function () {
+      return time
+    },
+    setTime: function (newTime) {
+      if (newTime) {
+        return time = newTime
+      }
+    },
+    getDay: function () {
+      return daysOfTheWeekReference[day] // returns string of day
+    },
+    setDay: function (newDay) {
+      if (typeof newDay === 'string') {
+        newDay = newDay.toLowerCase()
+        if (daysOfTheWeekReference.indexOf(newDay) > -1) {
+          day = daysOfTheWeekReference.indexOf(newDay)
+        } else {
+          throw "Day needs to be a day of the week"
+        }
+      } else if (typeof newDay === 'number') {
+        if (newDay >= 0 && newDay < 7) {
+          day = newDay
+        } else {
+          throw "Day needs to be a number 0 - 6"
+        }
+      } else {
+        throw "Day needs to be a number 0 - 6 or a day of the week"
+      }
+      day = newDay
+      return day // returns string of day
+    }
+  }
+})()
+function setUserData (data, complete) {
+  for (var setting in data) {
+    for (var method in userData) {
+      if (method.includes('set')) {
+        console.log(setting, method)
+        if (method.toLowerCase().includes(setting)) {
+          userData[method](data[setting])
+          break
+        }
+      }
+    }
+  }
+  complete()
+}
+function getUserData () {
+  var data = {}
+  for (var method in userData) {
+    if (method.includes('get')) {
+      data[method.slice(3).toLowerCase()] = userData[method]()
+    }
+  }
+  return data
+}
+
 
 module.exports = {
 
@@ -210,13 +305,10 @@ module.exports = {
     })
   },
 
-
-
-
-
   //YELP STUFF
   yelp: function (req, res, next) {
     // CHECK FOR CURRENT USER
+    console.log(req.query)
     var businessJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -225,7 +317,20 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', offset: req.query.offset, sort: '0'})
+    setUserData(req.query, function () {
+      console.log(getUserData())
+    })
+
+    var searchParams = {
+      term: 'happy hour',
+      location: req.query.location,
+      limit: '10',
+      offset: req.query.offset,
+      sort: '0'
+    }
+    if (req.query.coordinates) searchParams.cll = req.query.coordinates
+
+    yelp.search(searchParams)
     .then(function (data) {
       yelpParse(data, businessJson, function () {
         responsesCompleted++

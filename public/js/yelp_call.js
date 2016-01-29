@@ -17,13 +17,17 @@ var userData = function () {
       return coordinates
     },
     setCoordinates: function (newCoordinates) {
-      return coordinates = newCoordinates
+      if (newCoordinates) {
+        return coordinates = newCoordinates
+      }
     },
     getLocation: function () {
       return location
     },
     setLocation: function (newLocation) {
-      return location = newLocation
+      if (newLocation) {
+        return location = newLocation
+      }
     },
     getOffset: function () {
       return offset
@@ -36,7 +40,9 @@ var userData = function () {
       return time
     },
     setTime: function (newTime) {
-      return time = newTime
+      if (newTime) {
+        return time = newTime
+      }
     },
     getDay: function () {
       return daysOfTheWeekReference[day] // returns string of day
@@ -89,6 +95,7 @@ function showTimeLeft (number) {
 
 
 function getCityByPosition (position) {
+  console.log(position)
   var geocoder = new google.maps.Geocoder()
   geocoder.geocode({ location: position }, function (results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
@@ -110,20 +117,39 @@ function getCityByPosition (position) {
     }
   })
 }
+function getPositionByCity (city) {
+  var geocoder = new google.maps.Geocoder()
+  geocoder.geocode({ address: city }, function (results, status) {
+    if (results.length === 1) {
+      console.log("SEARCHING")
+      ajaxCall(results[0])
+    } else {
+      alert("please specify further")
+    }
+  })
+}
 
-getMyPosition(null, function () {
+getMyPosition(null, function (position) {
   getCityByPosition(userData.getCoordinates())
 })
 
-
-
-function ajaxCall (zip, geo) {
-  var geoString = geo.lat + "," + geo.lng
+function ajaxCall (location, geo) {
+  console.log(location, geo)
+  var searchParams = {
+    location: location,
+    offset: userData.getOffset(),
+    time: userData.getTime(),
+    day: userData.getDay()
+  }
+  if (geo) {
+    var geoString = geo.lat + "," + geo.lng
+    searchParams.coordinates = geoString
+  }
 
   $.ajax({
     url: '/restaurants/getAll',
     type: 'GET',
-    data: {zipCode: zip, geoLocation: geoString, offset: userData.getOffset, time: userData.getTime(), day: userData.getDay()}
+    data: searchParams
   })
   .done(function(data) {
     var restaurantArray = sortByDistance(geo, addObjectsToArray(data))
@@ -202,6 +228,7 @@ function getMyPosition (defaultPosition, completeCallback) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
+      userData.setCoordinates(pos)
       if (completeCallback) {
         completeCallback(pos)
       }
@@ -273,7 +300,11 @@ function populateRestaurantList (restaurantArray, origin) {
   }
 }
 
-
+function searchYelp () {
+  var searchBar = document.getElementById('search-bar').value
+  userData.setLocation(searchBar)
+  getPositionByCity(searchBar)
+}
 
 
 

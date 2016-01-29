@@ -1,7 +1,9 @@
-#locationSearch{
+#search-bar{
+  height: 35px;
 }
 .stylish-input-group .input-group-addon{
     background: rgba(0,0,0,0.7) !important;
+    cursor: pointer;
 }
 .stylish-input-group .form-control{
   background: rgba(0,0,0,0.7) !important;
@@ -15,6 +17,6 @@
 }
 
 #butt {
-  line-height: 5px !important;
+  line-height: 6px !important;
 }
 
