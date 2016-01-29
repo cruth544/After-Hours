@@ -5,8 +5,8 @@
  <div id = "restaurantShow">
      <div id="showName"><%= restaurant.name %></div>
      <img id= "showImage" src="<%= restaurant.image %>">
-     <div id = "description"></div>
-     <div id="times">Happy Hour Times:
+     <div id = "description"><%= restaurant.body%></div>
+     <div id="times">Happy Hour Times: <br>
       <% var day = restaurant.hours %>
       <% var scheduled = restaurant.hours.scheduled %>
            <!-- MONDAY -->
