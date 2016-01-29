@@ -15,10 +15,11 @@
   border: 1px solid white;
   text-align: center;
 }
+
 #showImage{
   width: 400px;
   height: 250px;
-  margin-left: 20%;
+  margin: 0 auto;
   border: 1px solid blue;
 }
 #description {
