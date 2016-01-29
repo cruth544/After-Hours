@@ -11,6 +11,7 @@ var userData = function () {
   var offset = 0
   var time = dateObject.getHours() + dateObject.getMinutes() / 60
   var day = dateObject.getDay()
+  var displayedRestaurants = []
 
   return {
     getCoordinates: function () {
@@ -39,8 +40,10 @@ var userData = function () {
       return offset
     },
     incrementOffset: function () {
-      offset += 20
-      return offset
+      return offset += 10
+    },
+    resetOffset: function () {
+      return offset = 0
     },
     getTime: function () {
       return time
@@ -70,6 +73,19 @@ var userData = function () {
       }
       day = newDay
       return day // returns string of day
+    },
+    getDisplayedRestaurants: function () {
+      return displayedRestaurants
+    },
+    addToDisplayedRestaurants: function (restaurants) {
+      if (restaurants.name) {
+        displayedRestaurants.push(restaurants)
+      } else if (restaurants instanceof Array) {
+        for (var i = 0; i < restaurants.length; i++) {
+          displayedRestaurants.push(restaurants[i])
+        }
+      }
+      return displayedRestaurants
     }
   }
 }()
@@ -129,15 +145,20 @@ function placeMarkersOn (googleMaps) {
   map.fitBounds(bounds)
 }
 function clearMarkers () {
+  console.log('clearing')
   placeMarkersOn(null)
   map.markers = []
 }
 
+//////////////////////////////////START/////////////////////////////////
+getMyPosition(null, function (position) {
+  getCityByPosition(userData.setCoordinates(position), ajaxCall)
+})
 
-////////////////////////////////////CODE////////////////////////////////
+//////////////////////////////////CODE//////////////////////////////////
 
 
-function getCityByPosition (position) {
+function getCityByPosition (position, startSearch) {
   var geocoder = new google.maps.Geocoder()
   geocoder.geocode({ location: position }, function (results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
@@ -147,7 +168,11 @@ function getCityByPosition (position) {
           var zipCodeRegEx = /\d{5}/
           for (var j = 0; j < generalLocationArray.length; j++) {
             if (zipCodeRegEx.test(generalLocationArray[j].long_name)) {
-              ajaxCall(userData.setLocation(generalLocationArray[j].long_name), position)
+              userData.setLocation(generalLocationArray[j].long_name)
+              if (startSearch) {
+                startSearch(userData.getLocation(),
+                  userData.getCoordinates())
+              }
               break
             }
           }
@@ -159,7 +184,7 @@ function getCityByPosition (position) {
     }
   })
 }
-function getPositionByCity (city) {
+function getPositionByCity (city, startSearch, fail) {
   var geocoder = new google.maps.Geocoder()
   geocoder.geocode({ address: city }, function (results, status) {
     if (results.length === 1) {
@@ -167,28 +192,25 @@ function getPositionByCity (city) {
         lat: results[0].geometry.location.lat(),
         lng: results[0].geometry.location.lng()
       }
-      ajaxCall(userData.setLocation(results[0].formatted_address), userData.setCoordinates(pos))
+      startSearch(userData.setLocation(results[0].formatted_address), userData.setCoordinates(pos))
       clearMarkers()
       map.panTo(userData.getCoordinates())
     } else {
       alert("please specify further")
+      fail(status)
     }
   })
 }
 
-getMyPosition(null, function (position) {
-  getCityByPosition(userData.getCoordinates())
-})
-
-function ajaxCall (location, geo) {
+function ajaxCall () {
   var searchParams = {
-    location: location,
+    location: userData.getLocation(),
     offset: userData.getOffset(),
     time: userData.getTime(),
     day: userData.getDay()
   }
-  if (geo) {
-    searchParams.coordinates = geo
+  if (userData.getCoordinates()) {
+    searchParams.coordinates = userData.getCoordinates()
   }
 
   $.ajax({
@@ -199,7 +221,7 @@ function ajaxCall (location, geo) {
   .done(function(data) {
     console.log(data.restaurants)
     setUserData(data.settings)
-    var restaurantArray = sortByDistance(geo, addObjectsToArray(data.restaurants))
+    var restaurantArray = sortByDistance(userData.getCoordinates(), addObjectsToArray(data.restaurants))
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
     var allMarkers = []
@@ -235,13 +257,14 @@ function ajaxCall (location, geo) {
     }
     map.markers = allMarkers
     placeMarkersOn(map)
-    populateRestaurantList(restaurantArray, userData.getCoordinates())
+    populateRestaurantList(restaurantArray, userData.getCoordinates(), userData.getOffset() === 0)
   })
   .fail(function() {
     console.log("error")
   })
   .always(function() {
     console.log("complete")
+    $('.more-results').prop('disabled', false)
   })
 }
 
@@ -277,7 +300,6 @@ function getMyPosition (defaultPosition, completeCallback) {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
-      userData.setCoordinates(pos)
       if (completeCallback) {
         completeCallback(pos)
       }
@@ -292,7 +314,9 @@ function getMyPosition (defaultPosition, completeCallback) {
         lng: -118.2688299
       }
     }
-    userData.setCoordinates(pos)
+    if (completeCallback) {
+      completeCallback(pos)
+    }
     return pos
   }
 }
@@ -316,7 +340,9 @@ function getDistance (origin, destination) {
   return c * 3959 // miles
 }
 
-function populateRestaurantList (restaurantArray, origin) {
+function populateRestaurantList (restaurantArray, origin, reset) {
+  if (reset) $('#my_restaurant_list').html('')
+  var delayTime = 0
   function hoursLeft (t) {
     var userTime = 18//userData.getTime()
     if (userTime >= t.startTime
@@ -354,17 +380,26 @@ function populateRestaurantList (restaurantArray, origin) {
     restaurantHtml += distance !== 1 ? 's' : ''
     restaurantHtml += ' away</div>'
     restaurantHtml += '</div>'
-    $('#my_restaurant_list').append(restaurantHtml)
+    $('#my_restaurant_list').append($(restaurantHtml).hide().fadeIn(400).delay(delayTime += 250))
   }
 }
 
 function searchYelp () {
   var searchBar = document.getElementById('search-bar').value
-  userData.setLocation(searchBar)
-  getPositionByCity(searchBar)
+  userData.resetOffset()
+  getPositionByCity(searchBar, ajaxCall, function (error) {
+    getMyPosition(null, function (position) {
+      getCityByPosition(userData.setCoordinates(position))
+    })
+  })
 }
 
-
+function moreResults () {
+  console.log("MORE!!")
+  $('.more-results').prop('disabled', true)
+  userData.incrementOffset()
+  ajaxCall()
+}
 
 
 

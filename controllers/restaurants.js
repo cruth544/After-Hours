@@ -105,6 +105,7 @@ function getUserData () {
   var data = {}
   for (var method in userData) {
     if (method.includes('get')) {
+      console.log('getting... ' + method)
       data[method.slice(3).toLowerCase()] = userData[method]()
     }
   }
@@ -709,6 +710,7 @@ function storeTimes (restaurantList) {
 
         for (var i = 0; i < mostEqualsArray.length; i++) {
           var current = Number(mostEqualsArray[i][0])
+          if (current > 23) continue
           var avg = (second + current) / 2
 
           if (Math.abs(targetAverage - current) < Math.abs(targetAverage - most)) {
@@ -768,7 +770,7 @@ function saveRestaurantToDB (restaurant) {
   newRestaurant.hours = hourObj
   console.log("saving... " + newRestaurant.name)
   newRestaurant.save(function (err) {
-    if (err) console.log(err)
+    if (err) console.log(err); console.log(newRestaurant)
   })
   return newRestaurant
 }
