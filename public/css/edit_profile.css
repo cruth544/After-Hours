@@ -1,14 +1,3 @@
-/*#updateContainer {
-  background-color: rgba(0,0,0,0.7);
-  /*border: 2px solid;*/
-  padding: 20px;
-  width: 600px;
-  resize: both;
-  overflow: auto;
-  position:absolute;
-  top:50%;
-  left:50%;
-  margin-top:-50px; /* this is half the height of your div*/
-  margin-left:-100px; /*this is half of width of your div*/
+.modal-body, .modal-header{
+  background-color: rgba(0,0,0,0.7)!important;
 }
-

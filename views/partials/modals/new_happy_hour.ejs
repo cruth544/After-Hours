@@ -1,0 +1,94 @@
+
+<div id="newHappyHourContainer">
+
+<!-- Modal New Happy Hour -->
+  <div id="HHModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <head>
+  <link rel="stylesheet" type="text/css" href="/public/css/restaurant_form.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+</head>
+
+
+
+<h1>Add a Happy Hour</h1>
+<form class="form-container">
+ <!-- VENUE NAME -->
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control" name="name" placeholder="Venue name...">
+  </div>
+  <!-- IMAGE LINK -->
+  <div class="form-group">
+    <label>Image</label>
+    <input type="text" class="form-control" name="image" placeholder="Enter image URL">
+  </div>
+  <!-- TEXT AREA -->
+  <div class="form-group">
+  <textarea class="form-control" rows="3">Enter a description of your happy hour here!</textarea>
+  </div>
+  <!-- HAPPY HOUR DAYS -->
+  <div class="checkbox">
+    <strong>Happy Hour Days + Times:</strong>
+
+    <br>
+      <label><input type="checkbox" name="monday" value="true">Monday</label>
+      <label><input type="checkbox" name="tuesday" value="true">Tuesday</label>
+      <label><input type="checkbox" name="wednesday" value="true">Wednesday</label>
+      <label><input type="checkbox" name="thursday" value="true">Thursday</label>
+    <br>
+      <label><input type="checkbox" name="friday" value="true">Friday</label>
+      <label><input type="checkbox" name="saturday" value="true">Saturday</label>
+      <label><input type="checkbox" name="sunday" value="true">Sunday</label>
+  </div>
+  <!-- TIMES -->
+  <div class="form-group">
+     <strong>Start Time:</strong><input type="time" class="time" name="start_time">
+     <strong>End Time:</strong><input type="time" class="time" name="end_time"></br>
+  </div>
+  <!-- Drinks/Food -->
+  <div class="checkbox">
+    <strong>Happy Hour deals include:</strong>
+    <label><input type="checkbox" name="drinks" value="true">Drinks</label>
+    <label><input type="checkbox" name="food" value="true">Food</label>
+  </div>
+
+  <!-- Restaurant Information -->
+  <strong>Venue Information</strong>
+  <!-- Address -->
+  <div class="form-group">
+    <label>Address</label>
+    <input type="text" class="form-control" name="address" placeholder="123 Street City, State Zipcode">
+  </div>
+
+  <!-- Phone -->
+  <div class="form-group">
+    <label>Phone</label>
+    <input type="text" class="form-control" name="phone" placeholder="(123) 456-7890">
+  </div>
+  <!-- Website -->
+  <div class="form-group">
+    <label>Website</label>
+    <input type="url" value="http://" class="form-control" placeholder="http://www.your_website.com">
+  </div>
+  <!-- Yelp -->
+  <div class="form-group">
+    <label>Yelp Page</label>
+    <input type="url" value="http://" class="form-control" placeholder="www.yelp.com/...">
+
+  </div>
+
+
+  <!-- SUBMIT -->
+  <input type="submit" value="Add Happy Hour!">
+
+</form>
+
+    </div>
+
+  </div>
+</div>
+
