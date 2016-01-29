@@ -1,0 +1,15 @@
+#locationSearch{
+}
+.stylish-input-group .input-group-addon{
+    background: rgba(0,0,0,0.7) !important;
+}
+.stylish-input-group .form-control{
+  background: rgba(0,0,0,0.7) !important;
+  border-right:0;
+  box-shadow:0 0 0;
+  border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background: rgba(0,0,0,0.7);
+}
