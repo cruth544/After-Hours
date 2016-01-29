@@ -18,6 +18,12 @@ var userData = function () {
     },
     setCoordinates: function (newCoordinates) {
       if (newCoordinates) {
+        if (typeof newCoordinates.lat === 'string') {
+          newCoordinates.lat = Number(newCoordinates.lat)
+        }
+        if (typeof newCoordinates.lng === 'string') {
+          newCoordinates.lng = Number(newCoordinates.lng)
+        }
         return coordinates = newCoordinates
       }
     },
@@ -67,6 +73,30 @@ var userData = function () {
     }
   }
 }()
+function setUserData (data) {
+  for (var setting in data) {
+    for (var method in userData) {
+      if (method.includes('set')) {
+        if (method.toLowerCase().includes(setting)) {
+          if (!/[a-zA-Z]+/.test(data[setting])) {
+            data[setting] = Number(data[setting])
+          }
+          userData[method](data[setting])
+          break
+        }
+      }
+    }
+  }
+}
+function getUserData () {
+  var data = {}
+  for (var method in userData) {
+    if (method.includes('get')) {
+      data[method.slice(3).toLowerCase()] = userData[method]()
+    }
+  }
+  return data
+}
 
 ////////////////////////////HELPER METHODS//////////////////////////////
 function showTimeLeft (number) {
@@ -90,12 +120,24 @@ function showTimeLeft (number) {
   return timeLeftString
 }
 
+function placeMarkersOn (googleMaps) {
+  var bounds = new google.maps.LatLngBounds()
+  for (var i = 0; i < map.markers.length; i++) {
+    map.markers[i].setMap(googleMaps)
+    bounds.extend(map.markers[i].getPosition())
+  }
+  map.fitBounds(bounds)
+}
+function clearMarkers () {
+  placeMarkersOn(null)
+  map.markers = []
+}
+
 
 ////////////////////////////////////CODE////////////////////////////////
 
 
 function getCityByPosition (position) {
-  console.log(position)
   var geocoder = new google.maps.Geocoder()
   geocoder.geocode({ location: position }, function (results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
@@ -121,8 +163,13 @@ function getPositionByCity (city) {
   var geocoder = new google.maps.Geocoder()
   geocoder.geocode({ address: city }, function (results, status) {
     if (results.length === 1) {
-      console.log("SEARCHING")
-      ajaxCall(results[0])
+      var pos = {
+        lat: results[0].geometry.location.lat(),
+        lng: results[0].geometry.location.lng()
+      }
+      ajaxCall(userData.setLocation(results[0].formatted_address), userData.setCoordinates(pos))
+      clearMarkers()
+      map.panTo(userData.getCoordinates())
     } else {
       alert("please specify further")
     }
@@ -134,7 +181,6 @@ getMyPosition(null, function (position) {
 })
 
 function ajaxCall (location, geo) {
-  console.log(location, geo)
   var searchParams = {
     location: location,
     offset: userData.getOffset(),
@@ -142,8 +188,7 @@ function ajaxCall (location, geo) {
     day: userData.getDay()
   }
   if (geo) {
-    var geoString = geo.lat + "," + geo.lng
-    searchParams.coordinates = geoString
+    searchParams.coordinates = geo
   }
 
   $.ajax({
@@ -152,9 +197,12 @@ function ajaxCall (location, geo) {
     data: searchParams
   })
   .done(function(data) {
-    var restaurantArray = sortByDistance(geo, addObjectsToArray(data))
+    console.log(data.restaurants)
+    setUserData(data.settings)
+    var restaurantArray = sortByDistance(geo, addObjectsToArray(data.restaurants))
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
+    var allMarkers = []
     for (var i = 0; i < restaurantArray.length; i++) {
       restaurantArray[i]
       function toggleBounce() {
@@ -167,11 +215,10 @@ function ajaxCall (location, geo) {
       var marker = new google.maps.Marker({
         position: restaurantArray[i].contact.coordinates,
         title: restaurantArray[i].name,
-        label: {
-          text: labels[labelIndex++ % labels.length],
-          color: 'yellow'
-        },
-        map: map,
+        // label: {
+        //   text: labels[labelIndex++ % labels.length],
+        //   color: 'yellow'
+        // },
         attribution: {
           source: 'After Hours',
           webUrl: restaurantArray[i].contact.website
@@ -184,14 +231,16 @@ function ajaxCall (location, geo) {
                anchor: new google.maps.Point(32, 32)
             }
       })
+      allMarkers.push(marker)
     }
+    map.markers = allMarkers
+    placeMarkersOn(map)
     populateRestaurantList(restaurantArray, userData.getCoordinates())
   })
   .fail(function() {
     console.log("error")
   })
-  .always(function(data) {
-    console.log(data)
+  .always(function() {
     console.log("complete")
   })
 }
@@ -206,7 +255,7 @@ function sortByDistance (position, restaurantArray) {
     }
   }
   restaurantArray.sort(function (location1, location2) {
-    return getDistance(position, location1.contact.coordinates) - getDistance(position, location2.contact.coordinates)
+    return distance(position, location1.contact.coordinates) - distance(position, location2.contact.coordinates)
   })
   return restaurantArray
 }
@@ -249,7 +298,7 @@ function getMyPosition (defaultPosition, completeCallback) {
 }
 
 function getDistance (origin, destination) {
-  if (typeof(Number.prototype.toRad) === "undefined") {
+  if (typeof(Number.prototype.toRadians) === "undefined") {
     Number.prototype.toRadians = function() {
       return this * Math.PI / 180;
     }
@@ -268,22 +317,29 @@ function getDistance (origin, destination) {
 }
 
 function populateRestaurantList (restaurantArray, origin) {
+  function hoursLeft (t) {
+    var userTime = 18//userData.getTime()
+    if (userTime >= t.startTime
+      && userTime < t.endTime ) {
+      return t.endTime - userTime
+    }
+    return false
+  }
   for (var i = 0; i < restaurantArray.length; i++) {
     var restaurant = restaurantArray[i]
     var distance = getDistance(origin, restaurant.contact.coordinates)
-    var timesArray = restaurant.hours[userData.getDay()].time
-    if (timesArray.length > 0) {
-      for (var j = 0; j < timesArray.length; j++) {
-        var t = timesArray[j]
-        var userTime = 18//userData.getTime()
-        if (userTime >= t.startTime
-          && userTime < t.endTime ) {
-          var timeLeft = t.endTime - userTime
-          break
+    if (restaurant.hours) {
+      var timesArray = restaurant.hours[userData.getDay()].time
+      if (timesArray.length > 0) {
+        for (var j = 0; j < timesArray.length; j++) {
+          var timeLeft = hoursLeft(timesArray[j])
         }
       }
+    } else {
+      var timeLeft = hoursLeft(restaurant.time)
     }
 
+    if (!timeLeft) throw "No time left"
     var restaurantHtml = '<div class="restaurant">'
     restaurantHtml += '<div class="restaurant-picture-container">'
     restaurantHtml += '<img class="restaurant-picture" src="'
@@ -292,7 +348,7 @@ function populateRestaurantList (restaurantArray, origin) {
     restaurantHtml += restaurant.name + '</div>'
     restaurantHtml += '<div class="time-left">'
     restaurantHtml += showTimeLeft(timeLeft)
-    restaurantHtml += ' of Happy Hour left!</div>'
+    restaurantHtml += ' of Happy Hour left!!</div>'
     restaurantHtml += '<div class="distance">'
     restaurantHtml += distance.toFixed(1) + ' mi.</div>'
     restaurantHtml += '</div>'

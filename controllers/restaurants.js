@@ -29,6 +29,12 @@ var userData = (function () {
     },
     setCoordinates: function (newCoordinates) {
       if (newCoordinates) {
+        if (typeof newCoordinates.lat === 'string') {
+          newCoordinates.lat = Number(newCoordinates.lat)
+        }
+        if (typeof newCoordinates.lng === 'string') {
+          newCoordinates.lng = Number(newCoordinates.lng)
+        }
         return coordinates = newCoordinates
       }
     },
@@ -80,19 +86,20 @@ var userData = (function () {
     }
   }
 })()
-function setUserData (data, complete) {
+function setUserData (data) {
   for (var setting in data) {
     for (var method in userData) {
       if (method.includes('set')) {
-        console.log(setting, method)
         if (method.toLowerCase().includes(setting)) {
+          if (!/[a-zA-Z]+/.test(data[setting])) {
+            data[setting] = Number(data[setting])
+          }
           userData[method](data[setting])
           break
         }
       }
     }
   }
-  complete()
 }
 function getUserData () {
   var data = {}
@@ -308,7 +315,6 @@ module.exports = {
   //YELP STUFF
   yelp: function (req, res, next) {
     // CHECK FOR CURRENT USER
-    console.log(req.query)
     var businessJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -317,9 +323,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-    setUserData(req.query, function () {
-      console.log(getUserData())
-    })
+    setUserData(req.query)
 
     var searchParams = {
       term: 'happy hour',
@@ -328,7 +332,10 @@ module.exports = {
       offset: req.query.offset,
       sort: '0'
     }
-    if (req.query.coordinates) searchParams.cll = req.query.coordinates
+    if (req.query.coordinates) {
+      var geoString = req.query.lat + "," + req.query.lng
+      searchParams.cll = geoString
+    }
 
     yelp.search(searchParams)
     .then(function (data) {
@@ -340,7 +347,10 @@ module.exports = {
           businessJson = getTimes(businessJson)
           onlyShowHappyHourNow(businessJson, req.query.day, req.query.time, function (currentHappyHourJson) {
             console.log("onlyShowHappyHourNow complete")
-            res.send(currentHappyHourJson)
+            res.send({
+              restaurants: currentHappyHourJson,
+              settings: getUserData()
+            })
           })
           // res.send(businessJson)
 
