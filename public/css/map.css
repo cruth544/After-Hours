@@ -4,11 +4,13 @@ body {
 #map {
   width: 50%;
   height: 80%;
-  box-shadow: 0 0 0.1em black,
-              0 0 5em black;
+  box-shadow: 0 0 0.1em white;
   margin: 0 auto;
-  border: 1px solid pink;
+  margin-top: 50px;
+  border: 3px solid pink;
+  border-radius: 10px;
   position: relative;
+  box-shadow:
 }
 
 #target {

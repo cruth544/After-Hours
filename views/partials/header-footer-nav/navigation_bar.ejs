@@ -9,7 +9,6 @@
   <div id = "rightSideNav">
   <!-- FACEBOOK LOG IN -->
     <% if(user != undefined){ %>
-
           <% if(user.fb != '{}'){ %>
             <h5>Welcome <%= user.fb.firstName %></h5>
             <div id = "logOut"><a class="btn btn-link" role="button" id= "logOut" href="/logout">LOG OUT </a></div>
@@ -19,7 +18,6 @@
           <h5>Welcome <%= curr_user %></h5>
           <div id = "logOut"><a class="btn btn-link" role="button" id= "logOut" href="/logout">LOG OUT
           </a></div>
-
 
     <% } else { %>
 

@@ -25,6 +25,7 @@
 
 <div id = "main">
 <!-- Conditionals for hiding navigation, restaurant view list and settings if user is not logged in -->
+
   <% if(user != undefined){ %>
             <% if(user.fb != '{}'){ %>
             <%- include('../partials/sidebar/sidebar') %>
@@ -35,14 +36,17 @@
           <%- include('../partials/sidebar/sidebar') %>
           <%- include('../partials/maps/map') %>
           <%- include('../partials/maps/my-restaurant-list') %>
+          <%- include('../partials/header-footer-nav/footer') %>
   <% } else { %>
           <%- include('../partials/maps/map') %>
   <% } %>
 
 
   <!-- FOOTER / JS -->
-  <%- include('../partials/header-footer-nav/footer') %>
+
 </div>
+
+
 </body>
 
 </html>

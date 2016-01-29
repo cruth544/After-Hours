@@ -42,15 +42,23 @@ module.exports = {
   },
 
   show: function (req, res, next) {
-    Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
+
+    if (req.user == undefined ) {
+      res.render('enter')
+    } else {
+    {Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
+
           res.render('restaurants/show', { restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
                                            users: null })
-       })
-    })
-  },
+        }
+       )}
+    )}
+  }
+
+},
   // Submit form data via restaurants/new
   create: function (req, res, next) {
 
