@@ -4,10 +4,9 @@ body {
 #map {
   width: 50%;
   height: 80%;
-  box-shadow: 0 0 0.1em white;
   margin: 0 auto;
-  border: 3px solid pink;
-  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 4px;
   position: relative;
   box-shadow:
 }
@@ -66,16 +65,8 @@ body {
   font-weight: 300;
 }
 
-
 /*start css for restaurant list*/
 
-#my_restaurant_list {
-  height: 300px;
-  width: 600px;
-  border: 1px solid white;
-  margin: 0 auto;
-  margin-top: 40px;
-}
 
 .restaurants {
   height: 50px;
