@@ -1,35 +1,9 @@
-/*#restaurantForm {
-  width: 600px;
-  font-family: Arial;
-  color: white !important;
-  border: 1px solid blue;
-  background-image: url('../assets/chalkboard.png');
-  background-size: cover;
-}
-.form-control{
-  width: 70%;
-}
-.time{
-  width: 20%;
-}
-
-input {
-  border-radius: 4px;
-}
-
-#addHappyHour {
-  color: white !important;
-  border-radius: 4px;
-}*/
-.form-container {
-  background-color: rgba(0,0,0,0.6) !important;
-  border: 3px solid white;
-  box-shadow: 0 0 1.2em #f00,
-               0 0 1.0em #f00,
-               0 0 0.8em #f00;
+.form-container#intro {
+  background-color: rgba(0,0,0,0.8) !important;
   border-radius: 7px;
-  padding:48px;
+  padding: 35px;
 }
+
 label {
   color: white !important;
   font-family: 'Montserrat', sans-serif;
@@ -52,7 +26,9 @@ label {
 input {
   background-color: transparent !important;
 }
-
+#mySignUpModal, #myLoginModal {
+  padding: 3px;
+}
 .form-control {
   background-color: transparent !important;
   color: white !important;
@@ -63,10 +39,12 @@ input {
   margin: 0 auto;
 }
 
-#newRestaurantButton {
+#submit {
   height: 53px;
   margin: 23px;
   width: 235px;
+  background-color: transparent;
+  color: white !important;
   border-radius: 8px;
   margin-left: 132px;
   font-family: 'Montserrat', sans-serif;

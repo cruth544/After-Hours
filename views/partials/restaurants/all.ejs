@@ -1,0 +1,77 @@
+<strong><h1>Participating Restaurants</h1></strong>
+
+<% restaurants.forEach(function (restaurant){ %>
+  <% var day = restaurant.hours %>
+    <% var scheduled = restaurant.hours.scheduled %>
+  <% var info = restaurant.contact %>
+
+    <h2><strong><a href='/<%= restaurant.name%>'><%= restaurant.name%></a></strong></h2>
+    <!-- Display Happy Hour Times -->
+    <div><strong>HAPPY HOUR TIMES:</strong>
+    <br>
+    <!-- MONDAY -->
+      <% if (day.monday.scheduled === true) { %>
+      MONDAY:
+      <% for (var i = 0; i < day.monday.time.length; i++){ %>
+        <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+
+    <!-- TUESDAY -->
+      <% if (day.tuesday.scheduled == true) { %>
+      TUESDAY:
+      <% for (var i = 0; i < day.tuesday.time.length; i++){ %>
+        <li><%= changeTime(day.tuesday.time[i].startTime) %> - <%= changeTime(day.tuesday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- WEDNESDAY -->
+      <% if (day.wednesday.scheduled == true) { %>
+      WEDNESDAY:
+      <% for (var i = 0; i < day.wednesday.time.length; i++){ %>
+        <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- THURSDAY -->
+      <% if (day.thursday.scheduled == true) { %>
+      THURSDAY:
+      <% for (var i = 0; i < day.thursday.time.length; i++){ %>
+        <li><%= changeTime(day.thursday.time[i].startTime) %> - <%= changeTime(day.thursday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- FRIDAY -->
+      <% if (day.friday.scheduled == true) { %>
+      FRIDAY:
+      <% for (var i = 0; i < day.friday.time.length; i++){ %>
+        <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- SATURDAY -->
+      <% if (day.saturday.scheduled == true) { %>
+      SATURDAY:
+      <% for (var i = 0; i < day.saturday.time.length; i++){ %>
+        <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+      <% } %>
+      <% } %>
+    <!-- SUNDAY -->
+      <% if (day.sunday.scheduled == true) { %>
+      SUNDAY:
+      <% for (var i = 0; i < day.sunday.time.length; i++){ %>
+        <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
+        <% } %>
+      <% } %>
+
+    </div>
+   <%  if (restaurant.drinks == true) { %>
+    <div>Serves Drinks</div>
+    <% } %>
+   <% if (restaurant.food == true) { %>
+    <div>Serves Food</div>
+     <% } %>
+    <div>Contact:
+      <li>Phone: <%= info.phone%></li>
+      <li>Address: <%= info.address %></li>
+      <li>Website: <a href="<%= info.website %>"><%= info.website %></a></li>
+      <li>Yelp: <a href="<%= info.yelpUrl %>"><%= info.yelpUrl %></a></li>
+    </div>
+
+<% }) %>

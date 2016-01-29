@@ -138,10 +138,23 @@ module.exports = {
   },
 
   all: function (req, res, next) {
-    Restaurant.find({}, function (err, restaurants) {
-      res.render('restaurants/all', { restaurants: restaurants })
-    })
-  },
+
+    if (req.user == undefined ) {
+      res.render('enter')
+    } else {
+    {Restaurant.find({}, function (err, restaurants) {
+      User.findOne({ email: req.session.email }).then(function(user){
+
+          res.render('restaurants/all', { restaurants: restaurants,
+                                           curr_user: user.email,
+                                           user: req.user,
+                                           users: null })
+        }
+       )}
+    )}
+  }
+
+},
 
   show: function (req, res, next) {
 
