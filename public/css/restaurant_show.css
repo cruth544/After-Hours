@@ -1,3 +1,10 @@
+body {
+  color: white;
+  font-family: 'Dosis', sans-serif;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
 #restaurantShow {
 /*whole restaurant box*/
   width: 70%;
@@ -6,7 +13,8 @@
   margin-top: 90px;
   border: 1px solid red;
 }
-#showName{
+
+#showName {
   width: 100%;
   height: 8%;
   font-family: 'Delius Unicase', cursive;
@@ -16,12 +24,34 @@
   text-align: center;
 }
 
+#show-container {
+  display: inline-block;
+}
+
+#times{
+  width: 45%;
+  height: 570px;
+  margin: 0 auto;
+  border: 1px solid white;
+  float: left;
+}
+
+li{
+  list-style: none;
+}
+
+#info-container {
+  float: right;
+  width: 50%;
+}
+
 #showImage{
   width: 400px;
   height: 250px;
   margin: 0 auto;
   border: 1px solid blue;
 }
+
 #description {
   height: 100px;
   width: 500px;
@@ -29,30 +59,25 @@
   margin: 0 auto;
   text-align: center;
 }
-#times{
-  width: 200px;
-  height: 300px;
-  margin: 0 auto;
-  border: 1px solid white;
-}
 
-
-body {
-  color: white;
-  font-family: 'Dosis', sans-serif;
-  font-size: 16px;
-  margin: 0 auto;
-}
-li {
-  list-style: none;
+#foodDrinks {
+  border: 1px solid purple;
 }
 
 /*Address etc*/
-#showInfo {
+#venueInfo {
   border: 1px solid white;
-  width: 200px;
+  width: 100%;
   height: 200px;
   margin: 0 auto;
+}
+
+#venueMap {
+  border: 1px solid white;
+}
+#venueMap img {
+  height: 250px;
+  width: 350px;
 }
 
 
