@@ -374,7 +374,6 @@ module.exports = {
 
 function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
   var noHappyHoursArray = []
-  console.log(intTime)
 
   function currentlyHavingHappyHour (restaurant) {
     if (restaurant.hours) {
@@ -766,7 +765,7 @@ function saveRestaurantToDB (restaurant) {
   newRestaurant.hours = hourObj
   console.log("saving... " + newRestaurant.name)
   newRestaurant.save(function (err) {
-    if (err) console.log(err); console.log(newRestaurant)
+    if (err) console.log(err); console.log(newRestaurant.name)
   })
   return newRestaurant
 }

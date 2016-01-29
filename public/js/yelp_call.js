@@ -248,31 +248,25 @@ function fillInfoWindow (restaurant) {
   var timeLeft = hoursLeft(times)
   var distance = getDistance(userData.getCoordinates(), restaurant.contact.coordinates)
 
-  var infoWindowText = '<div class="infowindow">'
-  infoWindowText += '<div class="infowindow-picture-container">'
-  infoWindowText += '<img class="infowindow-picture" src="'
+  var infoWindowText = '<div id="my-infowindow" class="infowindow">'
+  infoWindowText += '<div class="infowindow infowindow-picture-container">'
+  infoWindowText += '<img class="infowindow infowindow-picture" src="'
   infoWindowText += restaurant.image +'"></div>'
-  infoWindowText += '<div class="infowindow-name">'
+  infoWindowText += '<div class="infowindow infowindow-name">'
   infoWindowText += restaurant.name + '</div>'
-  infoWindowText += '<div class="infowindow-time-left">'
+  infoWindowText += '<div class="infowindow infowindow-time-left">'
   infoWindowText += showTimeLeft(timeLeft)
   infoWindowText += ' of Happy Hour left!!</div>'
-  infoWindowText += '<div class="infowindow-distance">'
+  infoWindowText += '<div class="infowindow infowindow-distance">'
   infoWindowText += distance.toFixed(1) + ' mile'
   infoWindowText += distance !== 1 ? 's' : ''
   infoWindowText += ' away</div>'
+  infoWindowText += '<a href="' + restaurant.contact.website
+  infoWindowText += '" class="infowindow infowindow-website">Website</a>'
   infoWindowText += '</div>'
 
-  // var infoWindowText = '<div class="infowindow">'
-  // infoWindowText += '<div class="infowindow-name">'
-  // infoWindowText += restaurant.name + '</div>'
-  // infoWindowText += '<div class="infowindow-time">'
-  // infoWindowText += 'Happy Hour from: '
-  // infoWindowText += numberToString(times.startTime)
-  // infoWindowText += ' until ' + numberToString(times.endTime)
-  // infoWindowText += '</div><div class="infowindow-url'
-
   map.infowindow.setContent(infoWindowText)
+  // $('#my-infowindow').parent().parent().parent().parent().parent().attr('style', 'background-color: black;')
 }
 
 //////////////////////////////////START/////////////////////////////////
