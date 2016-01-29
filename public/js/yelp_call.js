@@ -72,7 +72,8 @@ function ajaxCall (zip, geo) {
   .fail(function() {
     console.log("error")
   })
-  .always(function() {
+  .always(function(data) {
+    console.log(data)
     console.log("complete")
   })
 }
