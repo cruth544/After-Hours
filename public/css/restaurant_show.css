@@ -28,6 +28,10 @@
   margin: 0 auto;
   text-align: center;
 }
+#hours{
+  border: 2px solid green;
+}
+
 #times{
   width: 200px;
   height: 300px;

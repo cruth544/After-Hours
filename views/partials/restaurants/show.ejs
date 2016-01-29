@@ -2,10 +2,12 @@
     <link rel="stylesheet" type="text/css" href="/public/css/restaurant_show.css">
 </head>
 
+<div class="container">
  <div id = "restaurantShow">
      <div id="showName"><%= restaurant.name %></div>
      <img id= "showImage" src="<%= restaurant.image %>">
      <div id = "description"><%= restaurant.body%></div>
+    <div id="hours">
      <div id="times">Happy Hour Times: <br>
       <% var day = restaurant.hours %>
       <% var scheduled = restaurant.hours.scheduled %>
@@ -31,6 +33,7 @@
         <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
       <% } %>
       <% } %>
+    <br>
     <!-- THURSDAY -->
       <% if (day.thursday.scheduled == true) { %>
       Thursday:
@@ -59,18 +62,19 @@
         <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
         <% } %>
       <% } %>
+     </div>
     </div>
 
     <div id="showInfo">Drinks: <%= restaurant.drinks %>
-       <div>Food: <%= restaurant.food %></div>
-       <div>Contact:
-         <li>Phone: <%= restaurant.contact.phone%></li>
-         <li>Address: <%= restaurant.contact.address %></li>
-         <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
-         <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
-       </div>
-      </div>
+        <div>Food: <%= restaurant.food %></div>
+        <div>Contact:
+            <li>Phone: <%= restaurant.contact.phone%></li>
+            <li>Address: <%= restaurant.contact.address %></li>
+            <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
+            <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
+        </div>
     </div>
 
 
   </div>
+</div>
