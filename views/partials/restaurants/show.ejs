@@ -3,8 +3,8 @@
 </head>
 
  <div id = "restaurantShow">
-     <div id="showName"><%= restaurant.name %>
-     <img id= "showImage" src="http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg"></div>
+     <div id="showName"><%= restaurant.name %></div>
+     <img id= "showImage" src="<%= restaurant.image %>">
      <div id = "description"></div>
      <div id="times">Happy Hour Times:
        <li>Monday: <%= changeTime(restaurant.hours.monday.time[0].startTime) %> - <%= changeTime(restaurant.hours.monday.time[0].endTime) %></li>
@@ -17,12 +17,15 @@
      </div>
 
     <div id="showInfo">Drinks: <%= restaurant.drinks %>
-     <div>Food: <%= restaurant.food %></div>
-     <div>Contact:
-       <li>Phone: <%= restaurant.contact.phone%></li>
-       <li>Address: <%= restaurant.contact.address %></li>
-       <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
-      <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
-     </div>
+       <div>Food: <%= restaurant.food %></div>
+       <div>Contact:
+         <li>Phone: <%= restaurant.contact.phone%></li>
+         <li>Address: <%= restaurant.contact.address %></li>
+         <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
+         <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
+       </div>
+      </div>
     </div>
- </div>
+
+
+  </div>
