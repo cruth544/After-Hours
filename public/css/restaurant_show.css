@@ -32,6 +32,8 @@ body {
   height: 570px;
   margin: 0 auto;
   float: left;
+  position: relative;
+  left: 120px;
 }
 
 li{
@@ -48,13 +50,16 @@ li{
   width: 400px;
   height: 250px;
   margin: 0 auto;
+  box-shadow: 0 0 3em;
 }
 
 #description {
   height: 100px;
   width: 500px;
   margin: 0 auto;
-  text-align: center;
+  position: relative;
+  left: 65px;
+  top: 20px;
 }
 
 #foodDrinks {
