@@ -85,6 +85,9 @@ var userData = function () {
         }
       }
       return displayedRestaurants
+    },
+    resetDisplayedRestaurants: function () {
+      return displayedRestaurants = []
     }
   }
 }()
@@ -114,6 +117,23 @@ function getUserData () {
 }
 
 ////////////////////////////HELPER METHODS//////////////////////////////
+function numberToString (number) {
+  var amOrPm = " am"
+  if (number >= 13) {
+    number -= 12
+    amOrPm = " pm"
+  } else if (number > 11 && number < 13) {
+     amOrPm = " pm"
+  } else if (number >= 0 && number < 1) {
+     number += 12
+     amOrPm = " am"
+  }
+  var minutes = number % 1
+  number = number - minutes
+  minutes = Math.floor(minutes * 60)
+  minutes = minutes > 10 ? minutes : "0" + minutes
+  return "" + number + ":" + minutes + amOrPm
+}
 function stringTimeToNumber (time) {
   time = time.split(':')
   var hours = Number(time[0])
@@ -124,7 +144,19 @@ function stringTimeToNumber (time) {
 
   return time
 }
-
+function hoursLeft (t) {
+  var userTime = userData.getTime()
+  if (userTime < t.endTime) {
+    if (t.startTime) {
+      if (userTime >= t.startTime) {
+        return t.endTime - userTime
+      }
+    } else {
+      return t.endTime - userTime
+    }
+  }
+  return false
+}
 function showTimeLeft (number) {
   var minute = number % 1
   var hour = number - minute
@@ -146,6 +178,49 @@ function showTimeLeft (number) {
   return timeLeftString
 }
 
+function getDistance (origin, destination) {
+  if (typeof(Number.prototype.toRadians) === "undefined") {
+    Number.prototype.toRadians = function() {
+      return this * Math.PI / 180;
+    }
+  }
+  var originLat = origin.lat.toRadians()
+  var destinationLat = destination.lat.toRadians()
+  var latDiff = (destination.lat - origin.lat).toRadians()
+  var lngDiff = (destination.lng - origin.lng).toRadians()
+
+  var a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+          Math.cos(originLat) * Math.cos(destinationLat) *
+          Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2)
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+  return c * 3959 // miles
+}
+
+// the smooth zoom function
+function smoothZoom (map, max, cnt, marker) {
+  console.log(marker)
+  if (cnt > max) {
+    var displayedRestaurants = userData.getDisplayedRestaurants()
+    for (var i = 0; i < displayedRestaurants.length; i++) {
+      if (displayedRestaurants[i].name === marker.title) {
+        var restaurant = displayedRestaurants[i]
+      }
+    }
+    if (restaurant) {
+      fillInfoWindow(restaurant)
+    }
+    map.infowindow.open(map, marker)
+    return
+  } else {
+    z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+      google.maps.event.removeListener(z)
+      smoothZoom(map, max, cnt + 1, marker)
+    })
+    setTimeout(function(){map.setZoom(cnt)}, 80) // 80ms is what I found to work well on my system -- it might not work well on all systems
+  }
+}
+
 function placeMarkersOn (googleMaps) {
   var bounds = new google.maps.LatLngBounds()
   for (var i = 0; i < map.markers.length; i++) {
@@ -164,6 +239,42 @@ function clearMarkers () {
   map.markers = []
 }
 
+function fillInfoWindow (restaurant) {
+  if (restaurant.hours) {
+    var times = restaurant.hours[userData.getDay()].time[0]
+  } else {
+    var times = restaurant.time
+  }
+  var timeLeft = hoursLeft(times)
+  var distance = getDistance(userData.getCoordinates(), restaurant.contact.coordinates)
+
+  var infoWindowText = '<div class="infowindow">'
+  infoWindowText += '<div class="infowindow-picture-container">'
+  infoWindowText += '<img class="infowindow-picture" src="'
+  infoWindowText += restaurant.image +'"></div>'
+  infoWindowText += '<div class="infowindow-name">'
+  infoWindowText += restaurant.name + '</div>'
+  infoWindowText += '<div class="infowindow-time-left">'
+  infoWindowText += showTimeLeft(timeLeft)
+  infoWindowText += ' of Happy Hour left!!</div>'
+  infoWindowText += '<div class="infowindow-distance">'
+  infoWindowText += distance.toFixed(1) + ' mile'
+  infoWindowText += distance !== 1 ? 's' : ''
+  infoWindowText += ' away</div>'
+  infoWindowText += '</div>'
+
+  // var infoWindowText = '<div class="infowindow">'
+  // infoWindowText += '<div class="infowindow-name">'
+  // infoWindowText += restaurant.name + '</div>'
+  // infoWindowText += '<div class="infowindow-time">'
+  // infoWindowText += 'Happy Hour from: '
+  // infoWindowText += numberToString(times.startTime)
+  // infoWindowText += ' until ' + numberToString(times.endTime)
+  // infoWindowText += '</div><div class="infowindow-url'
+
+  map.infowindow.setContent(infoWindowText)
+}
+
 //////////////////////////////////START/////////////////////////////////
 getMyPosition(null, function (position) {
   getCityByPosition(userData.setCoordinates(position), ajaxCall)
@@ -179,7 +290,6 @@ getMyPosition(null, function (position) {
 })()
 
 //////////////////////////////////CODE//////////////////////////////////
-
 
 function getCityByPosition (position, startSearch) {
   var geocoder = new google.maps.Geocoder()
@@ -247,6 +357,9 @@ function ajaxCall () {
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     var labelIndex = 0
     var allMarkers = []
+    map.infowindow = new google.maps.InfoWindow({
+      content: "Hello there"
+    })
     for (var i = 0; i < restaurantArray.length; i++) {
       restaurantArray[i]
       function toggleBounce() {
@@ -259,10 +372,6 @@ function ajaxCall () {
       var marker = new google.maps.Marker({
         position: restaurantArray[i].contact.coordinates,
         title: restaurantArray[i].name,
-        // label: {
-        //   text: labels[labelIndex++ % labels.length],
-        //   color: 'yellow'
-        // },
         attribution: {
           source: 'After Hours',
           webUrl: restaurantArray[i].contact.website
@@ -274,6 +383,13 @@ function ajaxCall () {
                origin: new google.maps.Point(0,0),
                anchor: new google.maps.Point(32, 32)
             }
+      })
+      marker.addListener('click', function () {
+        map.panTo(this.position) // set map center to marker position
+        smoothZoom(map, 16, map.getZoom(), this) // call smoothZoom, parameters map, final zoomLevel, and starting zoom level
+      })
+      map.addListener('dragend', function () {
+        map.infowindow.close()
       })
       allMarkers.push(marker)
     }
@@ -311,6 +427,7 @@ function addObjectsToArray (object) {
     object[val].name = val
     array.push(object[val])
   })
+  userData.addToDisplayedRestaurants(array)
   return array
 }
 
@@ -343,41 +460,10 @@ function getMyPosition (defaultPosition, completeCallback) {
   }
 }
 
-function getDistance (origin, destination) {
-  if (typeof(Number.prototype.toRadians) === "undefined") {
-    Number.prototype.toRadians = function() {
-      return this * Math.PI / 180;
-    }
-  }
-  var originLat = origin.lat.toRadians()
-  var destinationLat = destination.lat.toRadians()
-  var latDiff = (destination.lat - origin.lat).toRadians()
-  var lngDiff = (destination.lng - origin.lng).toRadians()
-
-  var a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
-          Math.cos(originLat) * Math.cos(destinationLat) *
-          Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2)
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-
-  return c * 3959 // miles
-}
-
 function populateRestaurantList (restaurantArray, origin, reset) {
   if (reset) $('#my_restaurant_list').html('')
   var delayTime = 0
-  function hoursLeft (t) {
-    var userTime = userData.getTime()
-    if (userTime < t.endTime) {
-      if (t.startTime) {
-        if (userTime >= t.startTime) {
-          return t.endTime - userTime
-        }
-      } else {
-        return t.endTime - userTime
-      }
-    }
-    return false
-  }
+
   for (var i = 0; i < restaurantArray.length; i++) {
     var restaurant = restaurantArray[i]
     var distance = getDistance(origin, restaurant.contact.coordinates)
@@ -416,6 +502,7 @@ function searchYelp () {
   var searchTime = document.getElementById('search-time').value
   userData.setTime(stringTimeToNumber(searchTime))
   userData.resetOffset()
+  userData.resetDisplayedRestaurants()
   getPositionByCity(searchBar, ajaxCall, function (error) {
     getMyPosition(null, function (position) {
       getCityByPosition(userData.setCoordinates(position))
