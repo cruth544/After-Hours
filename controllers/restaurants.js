@@ -241,9 +241,8 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '5', offset: req.query.offset, sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '1', offset: req.query.offset, sort: '0'})
     .then(function (data) {
-
       yelpParse(data, businessJson, function () {
         responsesCompleted++
         console.log(responsesCompleted)
@@ -251,8 +250,9 @@ module.exports = {
           console.log('returning')
           businessJson = getTimes(businessJson)
           // console.log(businessJson)
-          onlyShowHappyHourNow(businessJson, new Date(), function (currentHappyHourJson) {
-            currentHappyHourJson.origin = req.query.geolocation
+          onlyShowHappyHourNow(businessJson, req.query.day, req.query.time, function (currentHappyHourJson) {
+            console.log(currentHappyHourJson)
+            console.log(currentHappyHourJson)
             res.send(currentHappyHourJson)
           })
           // res.send(businessJson)
@@ -268,22 +268,21 @@ module.exports = {
   }
 }
 
-function onlyShowHappyHourNow (businessJson, time, complete) {
-  var daysOfTheWeekReference = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-  var dayOfWeek   = time.getDay()
-  var currentTime = time.getHours() + time.getMinutes() / 60
-  currentTime     = 18
+function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
+  console.log(intTime)
+  console.log(businessJson)
+  // intTime = 18
 
   function currentlyHavingHappyHour (restaurant) {
     if (restaurant.hours) {
-      var day = daysOfTheWeekReference[dayOfWeek]
       // console.log(restaurant.hours)
       var restaurantTimes = restaurant.hours[day].time
       for (var i = 0; i < restaurantTimes.length; i++) {
         if (restaurantTimes[i]) {
-          if (currentTime < restaurantTimes[i].endTime) {
+          console.log(restaurantTimes[i].endTime)
+          if (intTime < restaurantTimes[i].endTime) {
             if (restaurantTimes[i].startTime) {
-              if (currentTime >= restaurantTimes[i].startTime) {
+              if (intTime >= restaurantTimes[i].startTime) {
                 return true
               }
             } else {
@@ -295,9 +294,9 @@ function onlyShowHappyHourNow (businessJson, time, complete) {
     } else {
       var time = restaurant.time
       if (time) {
-        if (currentTime < time.endTime) {
+        if (intTime < time.endTime) {
           if (time.startTime) {
-            if (currentTime >= time.startTime) {
+            if (intTime >= time.startTime) {
               return true
             }
           } else {
@@ -311,6 +310,7 @@ function onlyShowHappyHourNow (businessJson, time, complete) {
 
   for (var restaurantName in businessJson) {
     console.log("checking " + restaurantName)
+    console.log(businessJson[restaurantName].hours)
     if (!currentlyHavingHappyHour(businessJson[restaurantName])) {
       console.log("No happy hour... Removing...")
       delete businessJson[restaurantName]
@@ -405,7 +405,7 @@ function getReviewCount (name, url, businessJson, complete) {
       if (!reviewCount) {
         console.log("no review count")
         console.log($('h2').text())
-        businessJson.delete(name)
+        delete businessJson[name]
         return complete()
       }
       console.log("there are reviews")
