@@ -81,7 +81,6 @@ var userData = (function () {
       } else {
         throw "Day needs to be a number 0 - 6 or a day of the week"
       }
-      day = newDay
       return day // returns string of day
     }
   }
@@ -353,7 +352,7 @@ module.exports = {
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessJson = getTimes(businessJson)
-          onlyShowHappyHourNow(businessJson, req.query.day, req.query.time, function (currentHappyHourJson) {
+          onlyShowHappyHourNow(businessJson, userData.getDay(), userData.getTime(), function (currentHappyHourJson) {
             console.log("onlyShowHappyHourNow complete")
             res.send({
               restaurants: currentHappyHourJson,
@@ -374,7 +373,6 @@ module.exports = {
 }
 
 function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
-  intTime = 18
   var noHappyHoursArray = []
 
   function currentlyHavingHappyHour (restaurant) {
@@ -417,7 +415,6 @@ function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
       noHappyHoursArray.push(restaurantName)
     } else console.log("Happy Hour!")
   }
-  console.log(noHappyHoursArray)
   for (var i = 0; i < noHappyHoursArray.length; i++) {
     delete businessJson[noHappyHoursArray[i]]
   };
@@ -440,7 +437,7 @@ function yelpParse (data, businessJson, complete) {
       // check database if entry exists
       checkDataBaseFor(restaurant.location.display_address.join(' '), function (dbRestaurant) {
         if (dbRestaurant) {
-          console.log("MATCH!\n")
+          console.log("MATCH! " + restaurant.name + "\n")
           // if entry does exist, add it to the businessJson and continue
           businessJson[restaurant.name] = dbRestaurant
           complete()
@@ -506,7 +503,6 @@ function getReviewCount (name, url, businessJson, complete) {
       // use regex to extract number from node
 
       reviewCount = reviewCount.match(reviewCountRegEx)
-      // console.log(body)
       if (!reviewCount) {
         console.log("no review count")
         console.log($('h2').text())
@@ -709,6 +705,7 @@ function storeTimes (restaurantList) {
 
         for (var i = 0; i < mostEqualsArray.length; i++) {
           var current = Number(mostEqualsArray[i][0])
+          if (current > 23) continue
           var avg = (second + current) / 2
 
           if (Math.abs(targetAverage - current) < Math.abs(targetAverage - most)) {
@@ -768,7 +765,7 @@ function saveRestaurantToDB (restaurant) {
   newRestaurant.hours = hourObj
   console.log("saving... " + newRestaurant.name)
   newRestaurant.save(function (err) {
-    if (err) console.log(err)
+    if (err) console.log(err); console.log(newRestaurant.name)
   })
   return newRestaurant
 }
