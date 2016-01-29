@@ -97,8 +97,6 @@ module.exports = {
   edit: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-          // console.log(restaurant)
-          // console.log(req.session)
           res.render('restaurants/edit', {restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -179,8 +177,6 @@ module.exports = {
      // else res.send("Restaurant updated");
      else Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-          // console.log(restaurant)
-          // console.log(req.session)
           res.render('restaurants/show', { restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -229,7 +225,7 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '1', offset: req.query.offset, sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', offset: req.query.offset, sort: '0'})
     .then(function (data) {
       yelpParse(data, businessJson, function () {
         responsesCompleted++
@@ -237,10 +233,8 @@ module.exports = {
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessJson = getTimes(businessJson)
-          // console.log(businessJson)
           onlyShowHappyHourNow(businessJson, req.query.day, req.query.time, function (currentHappyHourJson) {
-            console.log(currentHappyHourJson)
-            console.log(currentHappyHourJson)
+            console.log("onlyShowHappyHourNow complete")
             res.send(currentHappyHourJson)
           })
           // res.send(businessJson)
@@ -257,17 +251,14 @@ module.exports = {
 }
 
 function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
-  console.log(intTime)
-  console.log(businessJson)
-  // intTime = 18
+  intTime = 18
+  var noHappyHoursArray = []
 
   function currentlyHavingHappyHour (restaurant) {
     if (restaurant.hours) {
-      // console.log(restaurant.hours)
       var restaurantTimes = restaurant.hours[day].time
       for (var i = 0; i < restaurantTimes.length; i++) {
         if (restaurantTimes[i]) {
-          console.log(restaurantTimes[i].endTime)
           if (intTime < restaurantTimes[i].endTime) {
             if (restaurantTimes[i].startTime) {
               if (intTime >= restaurantTimes[i].startTime) {
@@ -298,12 +289,15 @@ function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
 
   for (var restaurantName in businessJson) {
     console.log("checking " + restaurantName)
-    console.log(businessJson[restaurantName].hours)
     if (!currentlyHavingHappyHour(businessJson[restaurantName])) {
       console.log("No happy hour... Removing...")
-      delete businessJson[restaurantName]
+      noHappyHoursArray.push(restaurantName)
     } else console.log("Happy Hour!")
   }
+  console.log(noHappyHoursArray)
+  for (var i = 0; i < noHappyHoursArray.length; i++) {
+    delete businessJson[noHappyHoursArray[i]]
+  };
   return complete(businessJson)
 }
 

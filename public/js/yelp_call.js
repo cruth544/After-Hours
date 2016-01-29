@@ -63,6 +63,30 @@ var userData = function () {
   }
 }()
 
+////////////////////////////HELPER METHODS//////////////////////////////
+function showTimeLeft (number) {
+  var minute = number % 1
+  var hour = number - minute
+  minute = Math.floor(minute * 60)
+  var minute_s = minute > 1 ? 's' : ''
+  var hour_s = hour > 1 ? 's' : ''
+  var and = ' and '
+  var timeLeftString = ''
+  if (hour >= 1) {
+    timeLeftString += hour + ' hour' + hour_s
+  }
+  if (hour >= 1 && minute >= 1) {
+    timeLeftString += ' and '
+  }
+  if (minute >= 1) {
+    minute = minute > 10 ? minute : '0' + minute
+    timeLeftString += minute + ' minute' + minute_s + ' left'
+  }
+  return timeLeftString
+}
+
+
+////////////////////////////////////CODE////////////////////////////////
 
 
 function getCityByPosition (position) {
@@ -137,7 +161,7 @@ function ajaxCall (zip, geo) {
             }
       })
     }
-    // populateRestaurantList(restaurantArray)
+    populateRestaurantList(restaurantArray, userData.getCoordinates())
   })
   .fail(function() {
     console.log("error")
@@ -158,7 +182,7 @@ function sortByDistance (position, restaurantArray) {
     }
   }
   restaurantArray.sort(function (location1, location2) {
-    return getDistance(position, location1.contact.coordinates) - getDistance(poistion, location2.contact.coordinates)
+    return getDistance(position, location1.contact.coordinates) - getDistance(position, location2.contact.coordinates)
   })
   // console.log(restaurantArray)
   return restaurantArray
@@ -201,6 +225,11 @@ function getMyPosition (defaultPosition, completeCallback) {
 }
 
 function getDistance (origin, destination) {
+  if (typeof(Number.prototype.toRad) === "undefined") {
+    Number.prototype.toRadians = function() {
+      return this * Math.PI / 180;
+    }
+  }
   var originLat = origin.lat.toRadians()
   var destinationLat = destination.lat.toRadians()
   var latDiff = (destination.lat - origin.lat).toRadians()
@@ -215,14 +244,16 @@ function getDistance (origin, destination) {
 }
 
 function populateRestaurantList (restaurantArray, origin) {
+  console.log(restaurantArray)
   for (var i = 0; i < restaurantArray.length; i++) {
     var restaurant = restaurantArray[i]
     var distance = getDistance(origin, restaurant.contact.coordinates)
     var timesArray = restaurant.hours[userData.getDay()].time
     if (timesArray.length > 0) {
-      for (var i = 0; i < timesArray.length; i++) {
-        var t = timesArray[i]
-        var userTime = userData.getTime()
+      console.log(timesArray)
+      for (var j = 0; j < timesArray.length; j++) {
+        var t = timesArray[j]
+        var userTime = 18//userData.getTime()
         if (userTime >= t.startTime
           && userTime < t.endTime ) {
           var timeLeft = t.endTime - userTime
@@ -232,12 +263,16 @@ function populateRestaurantList (restaurantArray, origin) {
     }
 
     var restaurantHtml = '<div class="restaurant">'
-    restaurantHtml += '<div class="restaurant-picture"></div>'
+    restaurantHtml += '<div class="restaurant-picture-container">'
+    restaurantHtml += '<img class="restaurant-picture" src="'
+    restaurantHtml += restaurant.image +'"></div>'
     restaurantHtml += '<div class="restaurant-name">'
     restaurantHtml += restaurant.name + '</div>'
-    restaurantHtml += '<div class="time-left">' + timeLeft + '</div>'
+    restaurantHtml += '<div class="time-left">'
+    restaurantHtml += showTimeLeft(timeLeft)
+    restaurantHtml += ' of Happy Hour left!</div>'
     restaurantHtml += '<div class="distance">'
-    restaurantHtml += distance + ' mi.</div>'
+    restaurantHtml += distance.toFixed(1) + ' mi.</div>'
     restaurantHtml += '</div>'
     $('#my_restaurant_list').append(restaurantHtml)
   }

@@ -13,6 +13,7 @@ function initMap() {
           { "gamma": 0.89 }
         ]
       }
+    ]
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
   var styledMap = new google.maps.StyledMapType(styles);
