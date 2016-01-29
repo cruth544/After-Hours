@@ -32,6 +32,11 @@ label, h4 {
   margin-left: 18px;
 }
 
+#spinner {
+  text-align: center;
+  margin: 75px auto;
+}
+
 /*Search Bar CSS*/
 
 #allRestaurants {

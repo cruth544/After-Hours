@@ -5,9 +5,111 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
+var bcrypt      = require('bcrypt')
 
 var mongoose = require('mongoose')
-require('../db/seed.js').seedRestaurants()
+// require('../db/seed.js').seedRestaurants()
+
+var userData = (function () {
+  var dateObject = new Date()
+  var daysOfTheWeekReference = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+  // accessible variables
+  var coordinates = {
+    lat: 34.031245,
+    lng: -118.266532
+  }
+  var location = ""
+  var offset = 0
+  var time = dateObject.getHours() + dateObject.getMinutes() / 60
+  var day = dateObject.getDay()
+
+  return {
+    getCoordinates: function () {
+      return coordinates
+    },
+    setCoordinates: function (newCoordinates) {
+      if (newCoordinates) {
+        if (typeof newCoordinates.lat === 'string') {
+          newCoordinates.lat = Number(newCoordinates.lat)
+        }
+        if (typeof newCoordinates.lng === 'string') {
+          newCoordinates.lng = Number(newCoordinates.lng)
+        }
+        return coordinates = newCoordinates
+      }
+    },
+    getLocation: function () {
+      return location
+    },
+    setLocation: function (newLocation) {
+      if (newLocation) {
+        return location = newLocation
+      }
+    },
+    getOffset: function () {
+      return offset
+    },
+    incrementOffset: function () {
+      offset += 20
+      return offset
+    },
+    getTime: function () {
+      return time
+    },
+    setTime: function (newTime) {
+      if (newTime) {
+        return time = newTime
+      }
+    },
+    getDay: function () {
+      return daysOfTheWeekReference[day] // returns string of day
+    },
+    setDay: function (newDay) {
+      if (typeof newDay === 'string') {
+        newDay = newDay.toLowerCase()
+        if (daysOfTheWeekReference.indexOf(newDay) > -1) {
+          day = daysOfTheWeekReference.indexOf(newDay)
+        } else {
+          throw "Day needs to be a day of the week"
+        }
+      } else if (typeof newDay === 'number') {
+        if (newDay >= 0 && newDay < 7) {
+          day = newDay
+        } else {
+          throw "Day needs to be a number 0 - 6"
+        }
+      } else {
+        throw "Day needs to be a number 0 - 6 or a day of the week"
+      }
+      return day // returns string of day
+    }
+  }
+})()
+function setUserData (data) {
+  for (var setting in data) {
+    for (var method in userData) {
+      if (method.includes('set')) {
+        if (method.toLowerCase().includes(setting)) {
+          if (!/[a-zA-Z]+/.test(data[setting])) {
+            data[setting] = Number(data[setting])
+          }
+          userData[method](data[setting])
+          break
+        }
+      }
+    }
+  }
+}
+function getUserData () {
+  var data = {}
+  for (var method in userData) {
+    if (method.includes('get')) {
+      data[method.slice(3).toLowerCase()] = userData[method]()
+    }
+  }
+  return data
+}
 
 
 module.exports = {
@@ -219,24 +321,48 @@ module.exports = {
 
 
   // API STUFF
-  showApi: function(req, res, next) {
-    Restaurant.find({}, function (err, restaurants) {
-      res.json(restaurants)
+  showApi: function(request, response, next) {
+    var email = request.params.email
+    var password = request.params.password
+    User.find({ email: email }, function (error, userList) {
+      userList.forEach(function (user) {
+        bcrypt.compare(password, user.password, function (err, res) {
+          if (res) {
+            Restaurant.find({}, function (error, restaurantList) {
+              response.send(restaurantList)
+            })
+          } else {
+            console.log("inside else")
+            response.json({error: 'You are not authorized to view this list'})
+          }
+        })
+      })
     })
   },
 
-  showOneApi: function(req, res, next) {
-    Restaurant.findOne({name: req.params.name}, function (err, restaurants) {
-      res.json(restaurants)
+  showOneApi: function(request, response, next) {
+    var name = request.params.name
+    var email = request.params.email
+    var password = request.params.password
+    User.find({ email: email }, function (error, userList) {
+      userList.forEach(function (user) {
+        bcrypt.compare(password, user.password, function (err, res) {
+          if (res) {
+            Restaurant.find({ name: name }, function (error, restaurantList) {
+              response.send(restaurantList)
+            })
+          } else {
+            console.log("inside else")
+            response.json({error: 'You are not authorized to view this list'})
+          }
+        })
+      })
     })
   },
-
-
-
-
 
   //YELP STUFF
   yelp: function (req, res, next) {
+    console.log('fetching from yelp...')
     // CHECK FOR CURRENT USER
     var businessJson = {}
     var responsesCompleted = 0
@@ -246,7 +372,21 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', offset: req.query.offset, sort: '0'})
+    setUserData(req.query)
+
+    var searchParams = {
+      term: 'happy hour',
+      location: req.query.location,
+      limit: '10',
+      offset: req.query.offset,
+      sort: '0'
+    }
+    if (req.query.coordinates) {
+      var geoString = req.query.lat + "," + req.query.lng
+      searchParams.cll = geoString
+    }
+
+    yelp.search(searchParams)
     .then(function (data) {
       yelpParse(data, businessJson, function () {
         responsesCompleted++
@@ -254,9 +394,12 @@ module.exports = {
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessJson = getTimes(businessJson)
-          onlyShowHappyHourNow(businessJson, req.query.day, req.query.time, function (currentHappyHourJson) {
+          onlyShowHappyHourNow(businessJson, userData.getDay(), userData.getTime(), function (currentHappyHourJson) {
             console.log("onlyShowHappyHourNow complete")
-            res.send(currentHappyHourJson)
+            res.send({
+              restaurants: currentHappyHourJson,
+              settings: getUserData()
+            })
           })
           // res.send(businessJson)
 
@@ -272,7 +415,6 @@ module.exports = {
 }
 
 function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
-  intTime = 18
   var noHappyHoursArray = []
 
   function currentlyHavingHappyHour (restaurant) {
@@ -315,7 +457,6 @@ function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
       noHappyHoursArray.push(restaurantName)
     } else console.log("Happy Hour!")
   }
-  console.log(noHappyHoursArray)
   for (var i = 0; i < noHappyHoursArray.length; i++) {
     delete businessJson[noHappyHoursArray[i]]
   };
@@ -338,7 +479,7 @@ function yelpParse (data, businessJson, complete) {
       // check database if entry exists
       checkDataBaseFor(restaurant.location.display_address.join(' '), function (dbRestaurant) {
         if (dbRestaurant) {
-          console.log("MATCH!\n")
+          console.log("MATCH! " + restaurant.name + "\n")
           // if entry does exist, add it to the businessJson and continue
           businessJson[restaurant.name] = dbRestaurant
           complete()
@@ -404,7 +545,6 @@ function getReviewCount (name, url, businessJson, complete) {
       // use regex to extract number from node
 
       reviewCount = reviewCount.match(reviewCountRegEx)
-      // console.log(body)
       if (!reviewCount) {
         console.log("no review count")
         console.log($('h2').text())
@@ -607,6 +747,7 @@ function storeTimes (restaurantList) {
 
         for (var i = 0; i < mostEqualsArray.length; i++) {
           var current = Number(mostEqualsArray[i][0])
+          if (current > 23) continue
           var avg = (second + current) / 2
 
           if (Math.abs(targetAverage - current) < Math.abs(targetAverage - most)) {
@@ -666,7 +807,7 @@ function saveRestaurantToDB (restaurant) {
   newRestaurant.hours = hourObj
   console.log("saving... " + newRestaurant.name)
   newRestaurant.save(function (err) {
-    if (err) console.log(err)
+    if (err) console.log(err); console.log(newRestaurant.name)
   })
   return newRestaurant
 }
