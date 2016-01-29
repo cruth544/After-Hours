@@ -32,6 +32,7 @@ exports.seedRestaurants = function seedRestaurants(){
 
         name: 'Bar Ama',
         image: 'http://bar-ama.com/img/super_nachos_v1.jpg',
+        body: 'Super Nacho Hour',
         hours: {
             monday:{
                 scheduled: true,
@@ -116,6 +117,7 @@ exports.seedRestaurants = function seedRestaurants(){
       Restaurant.create({
         name: 'Izakaya Fu-ga',
         image: 'http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg',
+        body: 'The off-beat Japanese pork-rib tacos offered at happy hour!',
         hours:{
             monday:{
                   scheduled: true,
@@ -181,6 +183,7 @@ exports.seedRestaurants = function seedRestaurants(){
       Restaurant.create({
         name: 'EMC Seafood',
         image: 'http://www.emcseafood.com/wp-content/uploads/2014/05/emc-front-1024x680.jpg',
+        body: 'Dollar oysters...$5 beer/wines during happy hour!',
         hours: {
             monday:{
                   scheduled: true,
