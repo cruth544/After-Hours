@@ -81,7 +81,6 @@ var userData = (function () {
       } else {
         throw "Day needs to be a number 0 - 6 or a day of the week"
       }
-      day = newDay
       return day // returns string of day
     }
   }
@@ -105,7 +104,6 @@ function getUserData () {
   var data = {}
   for (var method in userData) {
     if (method.includes('get')) {
-      console.log('getting... ' + method)
       data[method.slice(3).toLowerCase()] = userData[method]()
     }
   }
@@ -354,7 +352,7 @@ module.exports = {
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessJson = getTimes(businessJson)
-          onlyShowHappyHourNow(businessJson, req.query.day, req.query.time, function (currentHappyHourJson) {
+          onlyShowHappyHourNow(businessJson, userData.getDay(), userData.getTime(), function (currentHappyHourJson) {
             console.log("onlyShowHappyHourNow complete")
             res.send({
               restaurants: currentHappyHourJson,
@@ -375,8 +373,8 @@ module.exports = {
 }
 
 function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
-  intTime = 18
   var noHappyHoursArray = []
+  console.log(intTime)
 
   function currentlyHavingHappyHour (restaurant) {
     if (restaurant.hours) {
@@ -418,7 +416,6 @@ function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
       noHappyHoursArray.push(restaurantName)
     } else console.log("Happy Hour!")
   }
-  console.log(noHappyHoursArray)
   for (var i = 0; i < noHappyHoursArray.length; i++) {
     delete businessJson[noHappyHoursArray[i]]
   };
@@ -441,7 +438,7 @@ function yelpParse (data, businessJson, complete) {
       // check database if entry exists
       checkDataBaseFor(restaurant.location.display_address.join(' '), function (dbRestaurant) {
         if (dbRestaurant) {
-          console.log("MATCH!\n")
+          console.log("MATCH! " + restaurant.name + "\n")
           // if entry does exist, add it to the businessJson and continue
           businessJson[restaurant.name] = dbRestaurant
           complete()
@@ -507,7 +504,6 @@ function getReviewCount (name, url, businessJson, complete) {
       // use regex to extract number from node
 
       reviewCount = reviewCount.match(reviewCountRegEx)
-      // console.log(body)
       if (!reviewCount) {
         console.log("no review count")
         console.log($('h2').text())

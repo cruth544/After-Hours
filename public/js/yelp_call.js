@@ -49,7 +49,7 @@ var userData = function () {
       return time
     },
     setTime: function (newTime) {
-      if (newTime) {
+      if (newTime && newTime !== "NaN") {
         return time = newTime
       }
     },
@@ -71,7 +71,6 @@ var userData = function () {
           throw "Day needs to be a number 0 - 6 or a day of the week"
         }
       }
-      day = newDay
       return day // returns string of day
     },
     getDisplayedRestaurants: function () {
@@ -115,6 +114,17 @@ function getUserData () {
 }
 
 ////////////////////////////HELPER METHODS//////////////////////////////
+function stringTimeToNumber (time) {
+  time = time.split(':')
+  var hours = Number(time[0])
+  var minutes = Number(time[1])
+
+  time = hours + minutes / 60
+  time = (Math.round(time * 4) / 4).toFixed(2);
+
+  return time
+}
+
 function showTimeLeft (number) {
   var minute = number % 1
   var hour = number - minute
@@ -142,7 +152,11 @@ function placeMarkersOn (googleMaps) {
     map.markers[i].setMap(googleMaps)
     bounds.extend(map.markers[i].getPosition())
   }
-  map.fitBounds(bounds)
+  if (map.markers.length > 0) {
+    map.fitBounds(bounds)
+  } else {
+    map.setZoom(13)
+  }
 }
 function clearMarkers () {
   console.log('clearing')
@@ -153,7 +167,16 @@ function clearMarkers () {
 //////////////////////////////////START/////////////////////////////////
 getMyPosition(null, function (position) {
   getCityByPosition(userData.setCoordinates(position), ajaxCall)
-})
+}); // semi-colon is required here
+
+(function setDefaultSearchTime () {
+  var currentTime = userData.getTime()
+  var minutes = currentTime % 1
+  currentTime -= minutes
+  minutes = Math.round(minutes * 60)
+  if (currentTime < 10) currentTime = '0' + currentTime
+  document.getElementById('search-time').value = currentTime + ':' + minutes
+})()
 
 //////////////////////////////////CODE//////////////////////////////////
 
@@ -212,7 +235,6 @@ function ajaxCall () {
   if (userData.getCoordinates()) {
     searchParams.coordinates = userData.getCoordinates()
   }
-
   $.ajax({
     url: '/restaurants/getAll',
     type: 'GET',
@@ -344,10 +366,15 @@ function populateRestaurantList (restaurantArray, origin, reset) {
   if (reset) $('#my_restaurant_list').html('')
   var delayTime = 0
   function hoursLeft (t) {
-    var userTime = 18//userData.getTime()
-    if (userTime >= t.startTime
-      && userTime < t.endTime ) {
-      return t.endTime - userTime
+    var userTime = userData.getTime()
+    if (userTime < t.endTime) {
+      if (t.startTime) {
+        if (userTime >= t.startTime) {
+          return t.endTime - userTime
+        }
+      } else {
+        return t.endTime - userTime
+      }
     }
     return false
   }
@@ -386,6 +413,8 @@ function populateRestaurantList (restaurantArray, origin, reset) {
 
 function searchYelp () {
   var searchBar = document.getElementById('search-bar').value
+  var searchTime = document.getElementById('search-time').value
+  userData.setTime(stringTimeToNumber(searchTime))
   userData.resetOffset()
   getPositionByCity(searchBar, ajaxCall, function (error) {
     getMyPosition(null, function (position) {
