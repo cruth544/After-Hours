@@ -97,8 +97,6 @@ module.exports = {
   edit: function (req, res, next) {
     Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-          // console.log(restaurant)
-          // console.log(req.session)
           res.render('restaurants/edit', {restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -179,8 +177,6 @@ module.exports = {
      // else res.send("Restaurant updated");
      else Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
-          // console.log(restaurant)
-          // console.log(req.session)
           res.render('restaurants/show', { restaurant: restaurant,
                                            curr_user: user.email,
                                            user: req.user,
@@ -220,6 +216,7 @@ module.exports = {
 
   //YELP STUFF
   yelp: function (req, res, next) {
+    // CHECK FOR CURRENT USER
     var businessJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
@@ -228,17 +225,16 @@ module.exports = {
       token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
       token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
     })
-      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', sort: '0'})
+      yelp.search({ term: 'happy hour', location: req.query.zipCode, cll: req.query.geoLocation, limit: '10', offset: req.query.offset, sort: '0'})
     .then(function (data) {
-
       yelpParse(data, businessJson, function () {
         responsesCompleted++
         console.log(responsesCompleted)
         if (responsesCompleted === data.businesses.length) {
           console.log('returning')
           businessJson = getTimes(businessJson)
-          // console.log(businessJson)
-          onlyShowHappyHourNow(businessJson, new Date(), function (currentHappyHourJson) {
+          onlyShowHappyHourNow(businessJson, req.query.day, req.query.time, function (currentHappyHourJson) {
+            console.log("onlyShowHappyHourNow complete")
             res.send(currentHappyHourJson)
           })
           // res.send(businessJson)
@@ -254,21 +250,18 @@ module.exports = {
   }
 }
 
-function onlyShowHappyHourNow (businessJson, time, complete) {
-  var daysOfTheWeekReference = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-  var dayOfWeek   = time.getDay()
-  var currentTime = time.getHours() + time.getMinutes() / 60
+function onlyShowHappyHourNow (businessJson, day, intTime, complete) {
+  intTime = 18
+  var noHappyHoursArray = []
 
   function currentlyHavingHappyHour (restaurant) {
     if (restaurant.hours) {
-      var day = daysOfTheWeekReference[dayOfWeek]
-      // console.log(restaurant.hours)
       var restaurantTimes = restaurant.hours[day].time
       for (var i = 0; i < restaurantTimes.length; i++) {
         if (restaurantTimes[i]) {
-          if (currentTime < restaurantTimes[i].endTime) {
+          if (intTime < restaurantTimes[i].endTime) {
             if (restaurantTimes[i].startTime) {
-              if (currentTime >= restaurantTimes[i].startTime) {
+              if (intTime >= restaurantTimes[i].startTime) {
                 return true
               }
             } else {
@@ -280,9 +273,9 @@ function onlyShowHappyHourNow (businessJson, time, complete) {
     } else {
       var time = restaurant.time
       if (time) {
-        if (currentTime < time.endTime) {
+        if (intTime < time.endTime) {
           if (time.startTime) {
-            if (currentTime >= time.startTime) {
+            if (intTime >= time.startTime) {
               return true
             }
           } else {
@@ -298,9 +291,13 @@ function onlyShowHappyHourNow (businessJson, time, complete) {
     console.log("checking " + restaurantName)
     if (!currentlyHavingHappyHour(businessJson[restaurantName])) {
       console.log("No happy hour... Removing...")
-      delete businessJson[restaurantName]
+      noHappyHoursArray.push(restaurantName)
     } else console.log("Happy Hour!")
   }
+  console.log(noHappyHoursArray)
+  for (var i = 0; i < noHappyHoursArray.length; i++) {
+    delete businessJson[noHappyHoursArray[i]]
+  };
   return complete(businessJson)
 }
 
@@ -390,7 +387,7 @@ function getReviewCount (name, url, businessJson, complete) {
       if (!reviewCount) {
         console.log("no review count")
         console.log($('h2').text())
-        businessJson.delete(name)
+        delete businessJson[name]
         return complete()
       }
       console.log("there are reviews")
@@ -474,6 +471,7 @@ function checkDataBaseFor (restaurantAddress, complete) {
 function getTimes (restaurantList) {
   var sortedHappyHourTimes = {}
   for (var restaurantName in restaurantList) {
+    if (restaurantList[restaurantName].hours) continue
     var obj = {}
     obj.timeFrequency = {}
     obj.timeStrings = []
@@ -501,6 +499,7 @@ function getTimes (restaurantList) {
 
 function probableHappyHourTimes (restaurantList) {
   for (var restaurantName in restaurantList) {
+    if (restaurantList[restaurantName].hours) continue
     var obj = {}
     var frequency = restaurantList[restaurantName].timeCalculations.timeFrequency
     var sortTime = []
@@ -520,6 +519,7 @@ function storeTimes (restaurantList) {
   var targetAverage = 6
 
   for (var restaurantName in restaurantList) {
+    if (restaurantList[restaurantName].hours) continue
     var obj = {}
     var sortedTime = restaurantList[restaurantName].timeCalculations.sortedTime
     if (sortedTime.length === 0) {
@@ -616,6 +616,7 @@ function storeTimes (restaurantList) {
     restaurantList[restaurantName].time = obj.time
     restaurantList[restaurantName].drinks = true
     saveRestaurantToDB(restaurantList[restaurantName])
+
   }
   return restaurantList
 }
