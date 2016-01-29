@@ -2,11 +2,13 @@ body {
   color: white;
 }
 #map {
-  height: 400px;
-  width: 600px;
+  width: 50%;
+  height: 80%;
   box-shadow: 0 0 0.1em black,
               0 0 5em black;
   margin: 0 auto;
+  border: 1px solid pink;
+  position: relative;
 }
 
 #target {
