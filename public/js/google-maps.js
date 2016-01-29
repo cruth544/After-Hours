@@ -110,7 +110,6 @@ function initMap() {
 
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter())
->>>>>>> development
     })
 
   } else {
