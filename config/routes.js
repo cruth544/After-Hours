@@ -65,13 +65,13 @@ router.route('/restaurants/new')
   .get(restaurantsController.new)
 
 // API ROUTE (RESTAURANTS)
-router.route('/restaurants/api')
+router.route('/api/restaurants/:email/:password')
   .get(restaurantsController.showApi)
-  .post(restaurantsController.create)
-router.route('/restaurants/api/:name')
+  // .post(restaurantsController.create)
+router.route('/api/restaurants/:name/:email/:password')
   .get(restaurantsController.showOneApi)
-  .post(restaurantsController.update)
-  .delete(restaurantsController.delete)
+  // .post(restaurantsController.update)
+  // .delete(restaurantsController.delete)
 
 
 

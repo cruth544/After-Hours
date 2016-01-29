@@ -5,6 +5,7 @@ var cheerio     = require('cheerio')
 var async       = require('async')
 var fs          = require('fs')
 var request     = require('request')
+var bcrypt      = require('bcrypt')
 
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants()
@@ -307,15 +308,42 @@ module.exports = {
 
 
   // API STUFF
-  showApi: function(req, res, next) {
-    Restaurant.find({}, function (err, restaurants) {
-      res.json(restaurants)
+  showApi: function(request, response, next) {
+    var email = request.params.email
+    var password = request.params.password
+    User.find({ email: email }, function (error, userList) {
+      userList.forEach(function (user) {
+        bcrypt.compare(password, user.password, function (err, res) {
+          if (res) {
+            Restaurant.find({}, function (error, restaurantList) {
+              response.send(restaurantList)
+            })
+          } else {
+            console.log("inside else")
+            response.json({error: 'You are not authorized to view this list'})
+          }
+        })
+      })
     })
   },
 
-  showOneApi: function(req, res, next) {
-    Restaurant.findOne({name: req.params.name}, function (err, restaurants) {
-      res.json(restaurants)
+  showOneApi: function(request, response, next) {
+    var name = request.params.name
+    var email = request.params.email
+    var password = request.params.password
+    User.find({ email: email }, function (error, userList) {
+      userList.forEach(function (user) {
+        bcrypt.compare(password, user.password, function (err, res) {
+          if (res) {
+            Restaurant.find({ name: name }, function (error, restaurantList) {
+              response.send(restaurantList)
+            })
+          } else {
+            console.log("inside else")
+            response.json({error: 'You are not authorized to view this list'})
+          }
+        })
+      })
     })
   },
 
