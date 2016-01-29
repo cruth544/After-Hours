@@ -5,17 +5,17 @@
 <div id = "navBar">
   <!-- LOGO -->
   <a href="/"><div id = "afterHoursLogo"></div></a>
-
+<div id = "navBorder">
   <div id = "rightSideNav">
   <!-- FACEBOOK LOG IN -->
     <% if(user != undefined){ %>
           <% if(user.fb != '{}'){ %>
-            <h5>Welcome <%= user.fb.firstName %></h5>
+<!--             <h5>Welcome <%= user.fb.firstName %></h5> -->
             <div id = "logOut"><a class="btn btn-link" role="button" id= "logOut" href="/logout">LOG OUT </a></div>
           <% } %>
   <!-- OUR LOG IN  -->
     <% } else if( curr_user ){ %>
-          <h5>Welcome <%= curr_user %></h5>
+<!--           <h5>Welcome <%= curr_user %></h5> -->
           <div id = "logOut"><a class="btn btn-link" role="button" id= "logOut" href="/logout">LOG OUT
           </a></div>
 
@@ -25,5 +25,6 @@
             <div id = "logIn"><a class="btn btn-link" role="button" id= "logIn" data-toggle="modal" data-target="#myLoginModal">LOG IN</a></div>
     <% } %>
   </div>
+</div>
 </div>
 <script src="/public/js/google-maps.js" type="text/javascript" charset="utf-8"></script>

@@ -1,4 +1,8 @@
-
+<head>
+  <link rel="stylesheet" type="text/css" href="/public/css/signUplogIn.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Fredoka+One|Montserrat' rel='stylesheet' type='text/css'>
+</head>
 <div class="containerLogin">
 
 <!-- Modal Login -->
@@ -6,10 +10,10 @@
     <div class="modal-dialog">
 
       <!-- Modal content-->
-      <div class="modal-content">
+      <form class="form-container" id="intro">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Log In</h4>
+          <h4 class="modal-title">LOG IN</h4>
         </div>
         <div class="modal-body">
           <form role="form" action='/login' method='post'>
@@ -25,10 +29,11 @@
              <label><input type="checkbox">Remember me</label>
              <a href='/auth/facebook'><img id = "facebookLogin" src = "../../../public/assets/facebook-login.png"></a>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button id="submit" type="submit" class="btn btn-default">Submit</button>
           </form>
         </div>
       </div>
+      </form>
 
     </div>
 

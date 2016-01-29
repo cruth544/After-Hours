@@ -7,27 +7,28 @@
         <aside data-sidebar>
             <div  class="padding">
                 <br>
-                <a href="#" data-sidebar-button>Hide Sidebar</a>
+                <a href="#" data-sidebar-button><div id="collapse"><img class = "sideBarIcon" src = "../../../public/assets/sidebar_icons/icon-collapse.png"></div></a>
                 <br>
                 <br>
-                <a href="/restaurants/all">View all Happy Hours</a>
+                <div class="navBarTab"><a href="/restaurants/all"><img class="sideBarIcon" id="martini" src = "../../../public/assets/sidebar_icons/icon-martini-glass.png">  View All Happy Hours</a></div>
                 <br>
-                <a href="/messenger">Messenger</a>
+                  <div class="navBarTab"><a id="navButton" class="btn btn-link" role="button" id= "addHH" data-toggle="modal" data-target="#HHModal"><img class="sideBarIcon" id="add" src = "../../../public/assets/sidebar_icons/icon-add.png">Add a Happy Hour</a></div>
                 <br>
-                <a class="btn btn-link" role="button" id= "addHH" data-toggle="modal" data-target="#HHModal">Add a Happy Hour</a>
+                <div class="navBarTab"><a href="/messenger"><img class="sideBarIcon" id="messenger" src = "../../../public/assets/sidebar_icons/icon-messenger.png">Messenger</a></div>
                 <br>
-                <a class="btn btn-link" role="button" id= "editProfile" data-toggle="modal" data-target="#updateModal">Edit Profile</a>
+                <div class="navBarTab"><a id="navButton"class="btn btn-link" role="button" id= "editProfile" data-toggle="modal" data-target="#updateModal"><img class="sideBarIcon" id="pencil" src = "../../../public/assets/sidebar_icons/icon-pencil.png">Edit Profile</a>
 
             </div>
         </aside>
 
-        <main>
+
             <div class="padding">
-                <a href="#" data-sidebar-button>Show Sidebar</a>
+             <div id="sidebar-pull"><a href="#" data-sidebar-button><img class = "sideBarIcon"src = "../../../public/assets/sidebar_icons/icon-sidebar.png"></a></div>
             </div>
             <!-- "overlay" is linked to the closing 'hide sidebar'. if commented out, sidebar will not close. -->
             <div class="overlay" data-sidebar-overlay></div>
-        </main>
+
 
   <script src="public/js/sidebar.js"></script>
 </html>
+
