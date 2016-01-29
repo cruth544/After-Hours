@@ -2,27 +2,95 @@
     <link rel="stylesheet" type="text/css" href="/public/css/restaurant_show.css">
 </head>
 
- <div id = "restaurantShow">
-     <div id="showName"><%= restaurant.name %>
-     <img id= "showImage" src="http://www-tc.pbs.org/food/files/2012/09/Sushi-5-1.jpg"></div>
-     <div id = "description"></div>
-     <div id="times">Happy Hour Times:
-       <li>Monday: <%= changeTime(restaurant.hours.monday.time[0].startTime) %> - <%= changeTime(restaurant.hours.monday.time[0].endTime) %></li>
-       <li>Tuesday: <%= changeTime(restaurant.hours.tuesday.time[0].startTime) %> - <%= changeTime(restaurant.hours.tuesday.time[0].endTime) %></li>
-       <li>Wednesday: <%= changeTime(restaurant.hours.wednesday.time[0].startTime) %> - <%= changeTime(restaurant.hours.wednesday.time[0].endTime) %></li>
-       <li>Thursday: <%= changeTime(restaurant.hours.thursday.time[0].startTime) %> - <%= changeTime(restaurant.hours.thursday.time[0].endTime) %></li>
-       <li>Friday: <%= changeTime(restaurant.hours.friday.time[0].startTime) %> - <%= changeTime(restaurant.hours.friday.time[0].endTime) %></li>
-       <li>Saturday: <%= changeTime(restaurant.hours.saturday.time[0].startTime) %> - <%= changeTime(restaurant.hours.saturday.time[0].endTime) %></li>
-       <li>Sunday: <%= changeTime(restaurant.hours.sunday.time[0].startTime) %> - <%= changeTime(restaurant.hours.sunday.time[0].endTime) %></li>
-     </div>
 
-    <div id="showInfo">Drinks: <%= restaurant.drinks %>
-     <div>Food: <%= restaurant.food %></div>
-     <div>Contact:
-       <li>Phone: <%= restaurant.contact.phone%></li>
-       <li>Address: <%= restaurant.contact.address %></li>
-       <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
-      <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
-     </div>
+<div id = "restaurantShow">
+    <div id ="name-container">
+      <div id="showName"><%= restaurant.name %></div>
+      <div id="showImage"><img id= "showImage" src="<%= restaurant.image %>"></div>
     </div>
- </div>
+
+    <div id="show-container">
+      <div id="times">
+          Happy Hour Times: <br>
+            <% var day = restaurant.hours %>
+            <% var scheduled = restaurant.hours.scheduled %>
+
+
+          <!-- MONDAY -->
+            <% if (day.monday.scheduled === true) { %>
+            <ul>Monday:
+            <% for (var i = 0; i < day.monday.time.length; i++){ %>
+              <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+
+          <!-- TUESDAY -->
+            <% if (day.tuesday.scheduled == true) { %>
+            <ul>Tuesday:
+            <% for (var i = 0; i < day.tuesday.time.length; i++){ %>
+              <li><%= changeTime(day.tuesday.time[i].startTime) %> - <%= changeTime(day.tuesday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- WEDNESDAY -->
+            <% if (day.wednesday.scheduled == true) { %>
+            <ul>Wednesday:
+            <% for (var i = 0; i < day.wednesday.time.length; i++){ %>
+              <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- THURSDAY -->
+            <% if (day.thursday.scheduled == true) { %>
+            <ul>Thursday:
+            <% for (var i = 0; i < day.thursday.time.length; i++){ %>
+              <li><%= changeTime(day.thursday.time[i].startTime) %> - <%= changeTime(day.thursday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- FRIDAY -->
+            <% if (day.friday.scheduled == true) { %>
+            <ul>Friday:
+            <% for (var i = 0; i < day.friday.time.length; i++){ %>
+              <li><%= changeTime(day.friday.time[i].startTime) %> - <%= changeTime(day.friday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- SATURDAY -->
+            <% if (day.saturday.scheduled == true) { %>
+            <ul>Saturday:
+            <% for (var i = 0; i < day.saturday.time.length; i++){ %>
+              <li><%= changeTime(day.wednesday.time[i].startTime) %> - <%= changeTime(day.wednesday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+          <!-- SUNDAY -->
+            <% if (day.sunday.scheduled == true) { %>
+            <ul>Sunday:
+            <% for (var i = 0; i < day.sunday.time.length; i++){ %>
+              <li><%= changeTime(day.sunday.time[i].startTime) %> - <%= changeTime(day.sunday.time[i].endTime) %></li>
+            <% } %>
+            </ul>
+            <% } %>
+      </div>
+
+      <div id="info-container">
+        <div id ="description"><%= restaurant.body%></div>
+        <div id="foodDrinks">
+            Drinks: <%= restaurant.drinks %>
+            Food: <%= restaurant.food %>
+        </div>
+        <div id="venueInfo">
+            Contact:
+              <li>Phone: <%= restaurant.contact.phone%></li>
+              <li>Address: <%= restaurant.contact.address %></li>
+              <li>Website: <a href="<%= restaurant.contact.website %>"><%= restaurant.contact.website %></a></li>
+              <li>Yelp: <a href="<%= restaurant.contact.yelpUrl %>"><%= restaurant.contact.yelpUrl %></a></li>
+        </div>
+        <div id="venueMap">
+          <img src="../../public/assets/EMCSeafood.png">
+        </div>
+      </div>
+    </div>
+</div>

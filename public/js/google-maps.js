@@ -1,45 +1,20 @@
 function initMap() {
 
  var styles =
-//old map
- // [
- //    {
- //      stylers: [
- //        { hue: "#00a1ff" },
- //        { saturation: 1 },
- //        { weight: 0.5},
- //        { gamma: 0.88},
- //        {invert_lightness: true}
- //      ]
- //    },{
- //      featureType: "road",
- //      elementType: "geometry",
- //      stylers: [
- //        { lightness: -12 },
- //        { visibility: "simplified" },
- //      ]
- //    },{
- //      featureType: "road",
- //      elementType: "labels",
- //      stylers: [
- //        { visibility: "on" }
- //      ]
- //    }
- //  ]
 //new map
-[
-  {
-    "elementType": "geometry",
-    "stylers": [
-      { "invert_lightness": true },
-      { "lightness": -7 },
-      { "weight": 0.6 },
-      { "hue": "#1900ff" },
-      { "saturation": 8 },
-      { "gamma": 0.89 }
-    ]
-  }
-]
+  [
+    {
+      "elementType": "geometry",
+      "stylers": [
+        { "invert_lightness": true },
+        { "lightness": -7 },
+        { "weight": 0.6 },
+        { "hue": "#1900ff" },
+        { "saturation": 8 },
+        { "gamma": 0.89 }
+      ]
+    }
+  ]
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
   var styledMap = new google.maps.StyledMapType(styles,
@@ -114,19 +89,6 @@ function initMap() {
         if (places.length == 0) {
           return;
         }
-
-        // Clear out the old markers.
-// <<<<<<< HEAD
-//         // markers.forEach(function(marker) {
-//           marker.setMap(null);
-//         // });
-//         markers = [];
-// =======
-//         markers.forEach(function(marker) {
-//           marker.setMap(null)
-//         });
-//         markers = []
-// >>>>>>> development
 
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();

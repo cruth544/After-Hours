@@ -10,8 +10,7 @@
     <div><strong>Happy Hour Times:</strong>
     <br>
     <!-- MONDAY -->
-
-      <% if (day.tuesday.scheduled === true) { %>
+      <% if (day.monday.scheduled === true) { %>
       Monday:
       <% for (var i = 0; i < day.monday.time.length; i++){ %>
         <li><%= changeTime(day.monday.time[i].startTime) %> - <%= changeTime(day.monday.time[i].endTime) %></li>
