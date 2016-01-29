@@ -13,21 +13,16 @@ function initMap() {
           { "gamma": 0.89 }
         ]
       }
-    ]
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
-  var styledMap = new google.maps.StyledMapType(styles,
-    {name: "CURRENT LOCATION"}
-    );
+  var styledMap = new google.maps.StyledMapType(styles);
 
   // Create a map object, and include the MapTypeId to add
   // to the map type control.
   var mapOptions = {
     zoom: 10,
     center: new google.maps.LatLng(34.031245, -118.266532),
-    mapTypeControlOptions: {
-      mapTypeIds: ['map_style']
-    }
+    mapTypeControl: false
   }
   map = new google.maps.Map(document.getElementById('map'),
     mapOptions);

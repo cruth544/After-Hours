@@ -2,12 +2,13 @@ body {
   color: white;
 }
 #map {
-  height: 400px;
-  width: 600px;
+  width: 50%;
+  height: 80%;
   box-shadow: 0 0 0.1em black,
               0 0 5em black;
   margin: 0 auto;
-  margin-top: 75px;
+  border: 1px solid pink;
+  position: relative;
 }
 
 #target {
@@ -64,3 +65,19 @@ body {
   font-weight: 300;
 }
 
+
+/*start css for restaurant list*/
+
+#my_restaurant_list {
+  height: 300px;
+  width: 600px;
+  border: 1px solid white;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.restaurants {
+  height: 50px;
+  width: 550px;
+  border: 1px solid yellow;
+}

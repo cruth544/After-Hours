@@ -6,6 +6,11 @@ var restaurantsController = require('../controllers/restaurants')
  var passport = require('passport')
   require("./passport")(passport)
 
+
+// entry page for After Hours
+router.route('/welcome')
+  .get(usersController.enter)
+
 // USER ROUTES
 
 router.route('/')
@@ -26,6 +31,11 @@ router.route('/signUp')
 router.route('/logout')
   .get(usersController.logout)
 
+router.route('/editProfile')
+  .get(usersController.show)
+  .put(usersController.update)
+  .delete(usersController.delete)
+
 router.route('/auth/facebook')
   .get(passport.authenticate('facebook', {scope: 'email'}));
 
@@ -34,6 +44,7 @@ router.route('/auth/facebook/callback')
     successRedirect: '/',
     failureRedirect: '/'
   }));
+
 
 // RESTAURANT ROUTES
 router.route('/restaurants/all')
@@ -50,8 +61,19 @@ router.route('/:name/edit')
   .get(restaurantsController.edit)
   .post(restaurantsController.update)
 
-
 router.route('/restaurants/new')
   .get(restaurantsController.new)
+
+// API ROUTE (RESTAURANTS)
+router.route('/restaurants/api')
+  .get(restaurantsController.showApi)
+  .post(restaurantsController.create)
+router.route('/restaurants/api/:name')
+  .get(restaurantsController.showOneApi)
+  .post(restaurantsController.update)
+  .delete(restaurantsController.delete)
+
+
+
 
 module.exports = router;

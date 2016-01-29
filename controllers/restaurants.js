@@ -9,13 +9,15 @@ var request     = require('request')
 var mongoose = require('mongoose')
 require('../db/seed.js').seedRestaurants()
 
+
 module.exports = {
+
   index: function (req, res, next) {
 
     // if there is a match for someone in the database, find them and render their profile
     if(req.session && req.session.email){
         User.findOne({ email: req.session.email }).then(function(user){
-            res.render('index',{
+            res.render('restaurants/index',{
                 curr_user: user.email,
                 user: req.user,
                 users: null  })
@@ -24,7 +26,7 @@ module.exports = {
     else{
         User.findAsync({})
             .then( function(users){
-                res.render('index', {
+                res.render('restaurants/index', {
                     curr_user: null,
                     user: req.user,
                     users: users
@@ -62,71 +64,34 @@ module.exports = {
 
   return time
 }
-
-    var newRestaurant = new Restaurant ({
-          name   : req.body.name,
-          image  : req.body.image,
-          hours  :{
-              monday: { scheduled: req.body.monday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              tuesday:{ scheduled: req.body.tuesday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              wednesday: { scheduled: req.body.wednesday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              thursday: { scheduled: req.body.thursday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              friday: { scheduled: req.body.friday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              saturday: { scheduled: req.body.saturday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              },
-              sunday: { scheduled: req.body.saturday,
-                        time: [{
-                                startTime: stringTimeToNumber(req.body.start_time),
-                                endTime  : stringTimeToNumber(req.body.end_time)
-                        }]
-              }
-          },
-          drinks : req.body.drinks,
-          food   : req.body.food,
-          contact: { website: req.body.website,
-                     phone  : req.body.phone,
-                     address: req.body.address,
-                     yelpUrl: req.body.yelpUrl
-                    }
-    })
-
-    newRestaurant.save(function (err) {
+    saveRestaurant(req.body).save(function (err) {
       if (err) console.log(err)
       else res.send('Restaurant created!')
     })
   },
   // Restaurant Form Page
+
   new: function (req, res, next) {
-    res.render('restaurants/new')
+
+    // if there is a match for someone in the database, find them and render their profile
+    if(req.session && req.session.email){
+        User.findOne({ email: req.session.email }).then(function(user){
+            res.render('restaurants/new',{
+                curr_user: user.email,
+                user: req.user,
+                users: null  })
+        })
+    }
+    else{
+        User.findAsync({})
+            .then( function(users){
+                res.render('restaurants/new', {
+                    curr_user: null,
+                    user: req.user,
+                    users: users
+                })
+            }).catch()
+        }
   },
 
   edit: function (req, res, next) {
@@ -143,6 +108,7 @@ module.exports = {
   },
 
   update: function (req, res, next) {
+    // if(user.admin){
 
       function stringTimeToNumber(time) {
         time = time.split(':')
@@ -223,14 +189,36 @@ module.exports = {
    })
 
   })
+// }
 },
 
   delete: function (req, res, next) {
+    if(user.admin){
     Restaurant.findOneAndRemove({name: String(req.params.name)}, function (err, restaurant) {
       res.send('Restaurant deleted')
     })
+  }
   },
 
+
+  // API STUFF
+  showApi: function(req, res, next) {
+    Restaurant.find({}, function (err, restaurants) {
+      res.json(restaurants)
+    })
+  },
+
+  showOneApi: function(req, res, next) {
+    Restaurant.findOne({name: req.params.name}, function (err, restaurants) {
+      res.json(restaurants)
+    })
+  },
+
+
+
+
+
+  //YELP STUFF
   yelp: function (req, res, next) {
     // CHECK FOR CURRENT USER
     var businessJson = {}
@@ -671,47 +659,63 @@ function saveRestaurantToDB (restaurant) {
 
 
 
+function saveRestaurant( data ){
+  var newRestaurant = new Restaurant ({
+          name   : req.body.name,
+          image  : req.body.image,
+          hours  :{
+              monday: { scheduled: req.body.monday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              tuesday:{ scheduled: req.body.tuesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              wednesday: { scheduled: req.body.wednesday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              thursday: { scheduled: req.body.thursday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              friday: { scheduled: req.body.friday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              saturday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              },
+              sunday: { scheduled: req.body.saturday,
+                        time: [{
+                                startTime: stringTimeToNumber(req.body.start_time),
+                                endTime  : stringTimeToNumber(req.body.end_time)
+                        }]
+              }
+          },
+          drinks : req.body.drinks,
+          food   : req.body.food,
+          contact: { website: req.body.website,
+                     phone  : req.body.phone,
+                     address: req.body.address,
+                     yelpUrl: req.body.yelpUrl
+                    }
+    })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  return newRestaurant
+}
 
