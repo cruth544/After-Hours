@@ -8,7 +8,7 @@ var request     = require('request')
 var bcrypt      = require('bcrypt')
 
 var mongoose = require('mongoose')
-require('../db/seed.js').seedRestaurants()
+// require('../db/seed.js').seedRestaurants()
 
 var userData = (function () {
   var dateObject = new Date()
@@ -349,6 +349,7 @@ module.exports = {
 
   //YELP STUFF
   yelp: function (req, res, next) {
+    console.log('fetching from yelp...')
     // CHECK FOR CURRENT USER
     var businessJson = {}
     var responsesCompleted = 0
