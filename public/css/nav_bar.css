@@ -92,18 +92,25 @@ a#logOut:hover {
   font-size: 45px;
 }
 
+#signUp {
+  padding-right: 7px;
+}
 #logIn, #logOut {
   margin-left: 20px;
 }
 
+#logOut {
+  margin-left: 40px;
+}
 #rightSideNav {
   height: 70px;
-  width: 222px;
+  width: 252px;
 /*  border: 1px solid red;*/
   display: flex;
   position: absolute;
-  right: 100px;
-  top: 24px;
+  right: 95px;
+  top: 30px;
+  padding: 4px;
 }
 
 #navBar {
