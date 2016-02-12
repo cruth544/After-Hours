@@ -29,6 +29,9 @@ var credentials = require('./config/credentials.js')
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));
 
+
+
+
 // Middlewares
 app.use(logger('dev'))
 app.use(bodyParser.json())
@@ -50,7 +53,7 @@ app.get('/yelp/:location/:term', function (req, res) {
   console.log("Made yelp api call")
 })
 
-// test
+// require('./db/seed.js').seedUsers()
 
 // use db connection string based on whether the environment is development or production
 switch(app.get('env')){
@@ -74,10 +77,19 @@ switch(app.get('env')){
       throw new Error('Unknown execution environment: ' + app.get('env'));
 }
 
+var PORT = 3000
+app.listen(PORT)
+console.log("Server starting...go to localhost:" + PORT)
+
+
+
+/***************************REVISIT LATER******************************\
+
+
 // var server = http.createServer(app).listen( process.env.PORT || 3000, function () {
 //     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 //   })
 app.listen(process.env.PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);});
 // console.log("Server starting...go to localhost:3000")
-
+/**********************************************************************\

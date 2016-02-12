@@ -1,45 +1,54 @@
 var mongoose = require('mongoose')
 
 var restaurantSchema = mongoose.Schema({
-      name   : String,
-      hours  :{
+      name     : { type: String, required: true },
+      image    : String,
+      body     : String,
+      hours    :{
               monday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
-              tuesday:{
+              tuesday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               wednesday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               thursday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               friday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               saturday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
                         }]
               },
               sunday: {
+                        scheduled: Boolean,
                         time: [{
                                 startTime: Number,
                                 endTime  : Number
@@ -47,11 +56,16 @@ var restaurantSchema = mongoose.Schema({
               }
 
       },
+      timeStrings: [ String ],
       drinks : Boolean,
       food   : Boolean,
-      contact: { website: String,
-                 phone  : String,
+      contact: { phone  : String,
                  address: String,
+                 coordinates: {
+                              lat: Number,
+                              lng: Number
+                 },
+                 website: String,
                  yelpUrl: String
                 }
 })

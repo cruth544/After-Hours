@@ -1,28 +1,33 @@
-<h1>All Restaurants</h1>
+<!-- PROFILE PAGE OF RESTAURANT -->
+<!DOCTYPE html>
+ <html>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/main.css">
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One|Dosis:500,600|Asap|Josefin+Sans:400,700,600,600italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Delius+Unicase' rel='stylesheet' type='text/css'>
+ </head>
 
-<% restaurants.forEach(function (restaurant){ %>
-  <%- console.log(restaurant) %>
-  <% var day = restaurant.hours %>
-  <% var info = restaurant.contact %>
+<body>
+<!-- NAV BAR -->
+   <%- include('../partials/header-footer-nav/navigation_bar') %>
+<div id="allRestaurants">
+<!-- RESTAURANT SHOW INFO -->
 
-    <strong><%= restaurant.name %></strong>
-    <div><strong>Hours</strong>
-      <li>Monday: <%= changeTime(day.monday.time[0].startTime) %> - <%= changeTime(day.monday.time[0].endTime) %></li>
-      <li>Tuesday: <%= changeTime(day.tuesday.time[0].startTime) %> - <%= changeTime(day.tuesday.time[0].endTime) %></li>
-      <li>Wednesday: <%= changeTime(day.wednesday.time[0].startTime) %> - <%= changeTime(day.wednesday.time[0].endTime) %></li>
-      <li>Thursday: <%= changeTime(day.thursday.time[0].startTime) %> - <%= changeTime(day.thursday.time[0].endTime) %></li>
-      <li>Friday: <%= changeTime(day.friday.time[0].startTime) %> - <%= changeTime(day.friday.time[0].endTime) %></li>
+   <%- include('../partials/restaurants/all') %>
 
-    </div>
+</div>
+<!-- GOOGLE MAP -->
+<!-- FOOTER / JS -->
+<a><img src = "../../public/assets/icon-scroll.png" id="scroll"></a>
+   <%- include('../partials/header-footer-nav/footer') %>
+  <script src="public/js/main.js"></script>
+</body>
 
-    <div>Drinks: <%= restaurant.drinks %></div>
-    <div>Food: <%= restaurant.food %></div>
-    <div>Contact:
-      <li>Phone: <%= info.phone%></li>
-      <li>Address: <%= info.address %></li>
-      <li>Website: <a href="<%= info.website %>"><%= info.website %></a></li>
-      <li>Yelp: <a href="<%= info.yelpUrl %>"><%= info.yelpUrl %></a></li>
-    </div>
+</html>
 
-<% }) %>
 

@@ -2,13 +2,13 @@
     <link rel="stylesheet" type="text/css" href="/public/css/map.css">
 </head>
 
-<div id = "main">
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 <div id = "map"> </div>
-</div>
+<br>
+<button id="see-more-results" class="more-results" type="button" onclick="moreResults(); return false">SEE MORE</button>
 
 <script src="/public/js/google-maps.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZYqdGCiP3a1xbvJsYYbAt5ZEoe896axU&libraries=places&callback=initMap"
-    async defer>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZYqdGCiP3a1xbvJsYYbAt5ZEoe896axU&callback=initMap">
 </script>
+<script src="/public/js/yelp_call.js" async defer></script>
+
 

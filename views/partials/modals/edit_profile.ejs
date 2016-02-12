@@ -1,0 +1,49 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/public/css/edit_profile.css">
+    <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two' rel='stylesheet' type='text/css'>
+</head>
+
+<!-- Modal Update -->
+  <div id="updateModal" class="modal fade" role="dialog">
+<!--       <div id = "chalkboard"><img src = "../../../public/assets/chalkboard.png" id = "chalkboard"></div> -->
+      <!-- Modal content-->
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <form id = "profile" role="form" action='#' method='post'>
+            <div id = "profileBox">
+            <div id="updateYourProfile">
+
+              <h1>EDIT PROFILE</h1><br>
+            </div>
+              <div class = "field">
+              <label class= "profileUpdate">FIRST NAME: </label>
+              <input type="text" class="inputProfile1" id="firstName" name="firstName" placeholder="Enter first name">
+              </div>
+            <div class = "field">
+              <label class= "profileUpdate">LAST NAME: </label>
+              <input type="text" class="inputProfile2" id="firstName" name="lastName" placeholder="Enter last name">
+            </div>
+            <div class = "field">
+              <label class= "profileUpdate">USERNAME: </label>
+              <input type="text" class="inputProfile3" id="username" name="username" placeholder="Enter new username">
+            </div>
+            <div class = "field">
+              <label class= "profileUpdate">EMAIL: </label>
+              <input type="email" class="inputProfile4"  id="email" name="email" placeholder="Enter email">
+            </div>
+            <div class = "field">
+              <label class= "profileUpdate">NEW PASSWORD: </label>
+              <input type="password" class="inputProfile5" id="email" name="password" placeholder="Enter Password">
+             </div>
+             <div class = "field">
+              <label class= "profileUpdate">PROFILE IMAGE: </label>
+              <input type="text" class="inputProfile6" id="image" name="profile_image" placeholder="Upload new image">
+             </div>
+              <button id = "submitProfile" type="submit" class="btn btn-default">UPDATE</button>
+            </div>
+          </form>
+
+     </div>
+
+
+
+

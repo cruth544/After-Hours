@@ -1,3 +1,90 @@
 body {
   color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+#restaurantShow {
+/*whole restaurant box*/
+  width: 70%;
+  height: 900px;
+  margin: 0 auto;
+  margin-top: 90px;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+#showName {
+  width: 100%;
+  height: 8%;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 50px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#show-container {
+  display: inline-block;
+}
+
+#times{
+  width: 45%;
+  height: 570px;
+  margin: 0 auto;
+  float: left;
+  position: relative;
+  left: 120px;
+}
+
+li{
+  list-style: none;
+  font-size: 20px;
+}
+
+#info-container {
+  float: right;
+  width: 50%;
+}
+
+#showImage{
+  width: 400px;
+  height: 250px;
+  margin: 0 auto;
+  box-shadow: 0 0 3em;
+}
+
+#description {
+  height: 100px;
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+  left: 65px;
+  top: 20px;
+}
+
+#foodDrinks {
+}
+
+/*Address etc*/
+#venueInfo {
+  width: 100%;
+  height: 200px;
+  margin: 0 auto;
+}
+
+#venueMap img {
+  height: 250px;
+  width: 350px;
+}
+
+
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }

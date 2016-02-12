@@ -1,9 +1,12 @@
 body {
-  color: white;
   background-image: url('../assets/brick_wall.jpg');
+/*body {*/
+/*  background-image: url("http://cache4.asset-cache.net/xd/88890097.jpg?v=1&c=IWSAsset&k=2&d=F13A1F9190F00936EA272FDC72335597074BBCA9A1064BC062A6EB77C051821EE863D4D98B81BB04");*/
+/*  background-image: url("http://www.uptowngrille.com/hsimages/bar_outside_night1.jpg");*/
+/*  background-image: url("http://cache3.asset-cache.net/gc/187878922-night-photo-of-a-bar-front-door-and-steps-gettyimages.jpg?v=1&c=IWSAsset&k=2&d=GkZZ8bf5zL1ZiijUmxa7QTEP%2bqbuDe2p%2bdyrxH8IF0kp3NzvE4f7pVIX3hFwHMC1")*/;
+/*  background-image: url("http://cache4.asset-cache.net/xd/93235953.jpg?v=1&c=IWSAsset&k=2&d=F13A1F9190F00936D96D34359C7DD519E47391A8B87F08E2B7FAE8F3901F56F7D5929F04ABB91D99");*/
   background-color: black;
   background-size: cover;
-  color: black;
 }
 
 #searchBox {
@@ -14,6 +17,52 @@ body {
 #main {
   height: 70%;
   width: 100%;
-  position: relative;
+  position: absolute;
+  top: 160px;
 /*  text-align: center;*/
+}
+
+label, h4 {
+  color: black;
+}
+
+#facebookLogin {
+  height: 39px;
+  width: 157px;
+  margin-left: 18px;
+}
+
+#spinner {
+  text-align: center;
+  margin: 75px auto;
+}
+
+/*Search Bar CSS*/
+
+#allRestaurants {
+  width: 61%;
+  height: 80%;
+  border: 1px solid white;
+  color: white;
+  font-family: Josefin Sans, sans serif;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 7%;
+  margin-left: 26%;
+
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color: white !important;
+}
+
+#scroll {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  left: 140px;
 }

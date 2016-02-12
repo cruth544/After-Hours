@@ -1,0 +1,25 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="/public/css/search_bar.css">
+</head>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-3">
+      <div id="locationSearch">
+        <div class="input-group stylish-input-group">
+          <form name="yelp-search" onsubmit="searchYelp(); return false">
+            <input id="search-bar" type="text" class="form-control"  placeholder="Enter location" >
+            </form>
+            <input type="time" id="search-time" class="form-control" name="start_time">
+            <span class="input-group-addon" onclick="searchYelp()">
+              <button id="search-button" form="yelp-search" type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

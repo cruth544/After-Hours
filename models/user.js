@@ -20,6 +20,7 @@ var userSchema = Schema({
       email               : String,
       password            : String,
       profile_image_url   : String,
+      admin               : Boolean,
       reviews             : [{ restaurant : { type  : Schema.Types.ObjectId,
                                               ref   : 'Restaurant'},
                                body  : String,

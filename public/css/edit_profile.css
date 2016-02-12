@@ -1,0 +1,142 @@
+.modal-body {
+/*/*  background-color: rgba(0,0,0,0.7)!important;*/
+  /*background-image: url('../assets/chalkboard.png');*/
+  background-size: 40px 80px;
+  background-repeat: none;
+  background-color: transparent;
+}
+
+#updateYourProfile {
+  color: black;
+}
+
+.profileUpdate {
+ font-family: 'Shadows Into Light Two', cursive;
+ color: white !important;
+}
+
+label, input, .field {
+  left: 40px;
+}
+div.field {
+  width: 200px;
+}
+form {
+  position: relative;
+}
+
+.inputProfile1, .inputProfile2 {
+  height: 36px;
+  width: 247px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid;
+  font-family: 'Shadows Into Light Two', cursive;
+  font-size: 20px;
+}
+
+.inputProfile3 {
+  height: 36px;
+  width: 260px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid;
+  font-family: 'Shadows Into Light Two', cursive;
+  font-size: 20px;
+}
+
+.inputProfile5 {
+  height: 36px;
+  width: 224px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid;
+  font-family: 'Shadows Into Light Two', cursive;
+  font-size: 20px;
+}
+
+.inputProfile4 {
+  height: 36px;
+  width: 291px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid;
+  font-family: 'Shadows Into Light Two', cursive;
+  font-size: 20px;
+}
+
+.inputProfile6 {
+  height: 36px;
+  width: 235px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid;
+  font-family: 'Shadows Into Light Two', cursive;
+  font-size: 20px;
+}
+
+#profile {
+ height: 600px;
+ width: 800px;
+ background-image: url('../assets/chalkboard.png') !important;
+ background-size: 895px 635px !important;
+ margin: 0 auto !important;
+ padding: 0px !important;
+ position: relative;
+}
+
+#profileBox {
+ margin: 0 auto!;
+ margin-top: 77px !important;
+ padding: 0px;
+}
+
+div.field {
+  width: 400px;
+  margin-left: 222px;
+  position: relative;
+  top: 130px;
+}
+
+h1 {
+  left: 315px !important;
+  position: absolute;
+  top: 60px;
+
+}
+
+.field {
+  width: 339px;
+  margin: 18px;
+  margin-left: 220px;
+}
+/*
+#chalkboard {
+  height: 630px;
+  width: 900px;
+  margin: 0 auto;
+  position: absolute;
+  margin-left: 132px;
+  margin-top: 40px;
+}*/
+
+#updateYourProfile {
+  color: white;
+  size: 20px;
+ font-family: 'Shadows Into Light Two', cursive;
+}
+
+input, select {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+#submitProfile {
+  margin: 0 auto;
+  border-radius: 4px;
+  position: absolute;
+  left: 392px;
+  bottom: 45px;
+
+}

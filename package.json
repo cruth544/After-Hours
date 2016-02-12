@@ -30,10 +30,14 @@
     "express-session": "^1.13.0",
     "mongoose": "^4.3.7",
     "morgan": "^1.6.1",
-    "passport": "^0.3.2",
+    "passport": "^0.3.2",		
     "passport-facebook": "^2.0.0",
     "path": "^0.12.7",
     "request": "^2.67.0",
     "yelp": "^1.0.1"
+  },
+  "engines": {
+  "node": "5.0.0",
+  "npm": "3.4.4"
   }
 }
