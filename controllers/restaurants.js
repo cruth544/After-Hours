@@ -130,6 +130,7 @@ module.exports = {
         console.log("NO USER")
         User.findAsync({})
             .then( function(users){
+                console.log("IN THEN")
                 res.render('restaurants/index', {
                     curr_user: null,
                     user: req.user,
