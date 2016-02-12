@@ -136,8 +136,7 @@ module.exports = {
                     user: req.user,
                     users: users
                 })
-            }).catch(function (err) {
-              console.log("FAILED DB CALL")
+            }, function (err) {
               console.log(err)
             })
         }
