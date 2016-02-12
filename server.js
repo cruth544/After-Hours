@@ -77,8 +77,9 @@ switch(app.get('env')){
       throw new Error('Unknown execution environment: ' + app.get('env'));
 }
 
-var PORT = 3000
+var PORT = process.env.PORT || 3000
 app.listen(PORT)
+// app.listen(PORT)
 console.log("Server starting...go to localhost:" + PORT)
 
 
