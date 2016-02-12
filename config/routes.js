@@ -14,9 +14,9 @@ router.route('/welcome')
 // USER ROUTES
 
 router.route('/')
-  .get(function () {
+  .get(function (req, res, next) {
     console.log("GRABBING ROOT\n\n\n")
-    return restaurantsController.index
+    return restaurantsController.index(req, res, next)
   })
 
 router.route('/restaurants/getAll')
