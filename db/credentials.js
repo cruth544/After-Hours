@@ -1,10 +1,10 @@
 module.exports = {
     mongo: {
         dev: {
-            conn: "mongodb://washburn.michael@gmail.com:abc123@ds051665.mongolab.com:51665/heroku_h1907377"
+            conn: process.env.DEV_CONN_STRING
         },
         prod: {
-            conn: "mongodb://washburn.michael@gmail.com:abc123@ds051665.mongolab.com:51665/heroku_h1907377"
+            conn: process.env.PROD_CONN_STRING
         },
         options:{
             server: {
