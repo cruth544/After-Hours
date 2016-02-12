@@ -128,7 +128,7 @@ module.exports = {
     }
     else{
         console.log("NO USER")
-        User.findAsync({})
+        User.find({})
             .then( function(users){
                 console.log("IN THEN")
                 res.render('restaurants/index', {
