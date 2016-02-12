@@ -136,9 +136,9 @@ module.exports = {
                     users: users
                 })
             }).catch(function (err) {
+              console.log("FAILED DB CALL")
               console.log(err)
             })
-          console.log("ENDED INDEX")
         }
   },
 
