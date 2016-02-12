@@ -118,6 +118,7 @@ module.exports = {
     console.log("IN INDEX")
     // if there is a match for someone in the database, find them and render their profile
     if(req.session && req.session.email){
+        console.log("There is a USER")
         User.findOne({ email: req.session.email }).then(function(user){
             res.render('restaurants/index',{
                 curr_user: user.email,
@@ -126,6 +127,7 @@ module.exports = {
         })
     }
     else{
+        console.log("NO USER")
         User.findAsync({})
             .then( function(users){
                 res.render('restaurants/index', {
@@ -133,7 +135,9 @@ module.exports = {
                     user: req.user,
                     users: users
                 })
-            }).catch()
+            }).catch(function (err) {
+              console.log(err)
+            })
         }
   },
 
