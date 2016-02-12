@@ -1,5 +1,5 @@
 function initMap() {
-
+console.log("INIT MAP")
   var styles =
     [
       {

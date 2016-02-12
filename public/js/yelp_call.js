@@ -350,6 +350,7 @@ function getPositionByCity (city, startSearch, fail) {
 }
 
 function ajaxCall () {
+  console.log("AJAX")
   if (userData.fetchingData()) return
   userData.setFetchingData(true)
   $('.spinner').show()

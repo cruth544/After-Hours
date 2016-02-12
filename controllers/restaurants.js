@@ -138,6 +138,7 @@ module.exports = {
             }).catch(function (err) {
               console.log(err)
             })
+          console.log("ENDED INDEX")
         }
   },
 
@@ -385,6 +386,8 @@ module.exports = {
       offset: req.query.offset,
       sort: '0'
     }
+    if (!searchParams.location) searchParams.location = 'Los Angeles'
+    if (!searchParams.offset) searchParams.offset = 0
     if (req.query.coordinates) {
       var geoString = req.query.lat + "," + req.query.lng
       searchParams.cll = geoString
