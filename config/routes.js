@@ -14,7 +14,10 @@ router.route('/welcome')
 // USER ROUTES
 
 router.route('/')
-  .get(restaurantsController.index)
+  .get(function () {
+    console.log("GRABBING ROOT\n\n\n")
+    return restaurantsController.index
+  })
 
 router.route('/restaurants/getAll')
   .get(restaurantsController.yelp)

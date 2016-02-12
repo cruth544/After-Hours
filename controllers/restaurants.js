@@ -115,7 +115,7 @@ function getUserData () {
 module.exports = {
 
   index: function (req, res, next) {
-
+    console.log("IN INDEX")
     // if there is a match for someone in the database, find them and render their profile
     if(req.session && req.session.email){
         User.findOne({ email: req.session.email }).then(function(user){
