@@ -101,6 +101,28 @@ body {
   color: black !important;
 }
 
+#spinner {
+  position: relative;
+  top: -300px;
+  display: none;
+}
+
+.map-container {
+  height: 400px;
+  width: 80%;
+  margin: auto;
+  /*border: 1px solid blue;*/
+  /*position: absolute;*/
+}
+#no-happy-hour {
+  font-size: 2em;
+  font-family: 'Josefin Sans', sans-serif;
+  position: relative;
+  display: none;
+  top: -90%;
+  text-align: center;
+  margin: 0 auto;
+}
 /*.gm-style-iw {
   width: 350px !important;
    top: 15px !important;

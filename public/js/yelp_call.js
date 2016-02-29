@@ -316,6 +316,10 @@ function getCityByPosition (position, startSearch) {
           for (var j = 0; j < generalLocationArray.length; j++) {
             if (zipCodeRegEx.test(generalLocationArray[j].long_name)) {
               userData.setLocation(generalLocationArray[j].long_name)
+              console.log("LOCATION: ", generalLocationArray)
+              var location = generalLocationArray[1].long_name + ', '
+                + generalLocationArray[3].short_name
+              $('#search-bar').val(location)
               if (startSearch) {
                 startSearch(userData.getLocation(),
                   userData.getCoordinates())
@@ -353,7 +357,8 @@ function ajaxCall () {
   console.log("AJAX")
   if (userData.fetchingData()) return
   userData.setFetchingData(true)
-  $('.spinner').show()
+  $('#spinner').show()
+  $('#no-happy-hour').hide()
   var searchParams = {
     location: userData.getLocation(),
     offset: userData.getOffset(),
@@ -369,12 +374,12 @@ function ajaxCall () {
     data: searchParams
   })
   .done(function(data) {
-    $('#spinner').hide()
-    console.log(data.restaurants)
+    console.log("RESAURANTS: ", data.restaurants)
+    if (Object.keys(data.restaurants).length < 1) {
+      $('#no-happy-hour').show()
+    }
     setUserData(data.settings)
     var restaurantArray = sortByDistance(userData.getCoordinates(), addObjectsToArray(data.restaurants))
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    var labelIndex = 0
     var allMarkers = []
     map.infowindow = new google.maps.InfoWindow({
       content: "Hello there"
@@ -422,6 +427,7 @@ function ajaxCall () {
   .always(function() {
     console.log("complete")
     $('.more-results').prop('disabled', false)
+    $('#spinner').hide()
     userData.setFetchingData(false)
   })
 }
@@ -536,48 +542,3 @@ function moreResults () {
   userData.incrementOffset()
   ajaxCall()
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

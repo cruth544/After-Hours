@@ -2,13 +2,19 @@
     <link rel="stylesheet" type="text/css" href="/public/css/map.css">
 </head>
 
-<div id = "map"> </div>
+<div class="map-container">
+  <div id = "map"></div>
+  <div id="spinner">
+    <img src="./public/assets/ajax-loader.gif">
+  </div>
+</div>
 <br>
-<button id="see-more-results" class="more-results" type="button" onclick="moreResults(); return false">SEE MORE</button>
+<div id="no-happy-hour">
+  NO HAPPY HOURS CURRENTLY<br>
+  PLEASE SELECT DIFFERENT TIME
+</div>
 
 <script src="/public/js/google-maps.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZYqdGCiP3a1xbvJsYYbAt5ZEoe896axU&callback=initMap">
 </script>
 <script src="/public/js/yelp_call.js" async defer></script>
-
-
