@@ -31,7 +31,7 @@
 }
 
 .restaurant-picture {
-  height:97px;
+  height: 97px;
   width: 100px;
   border-right: 1px solid white;
 }
@@ -57,7 +57,7 @@
                0 0 0.4em #79f,
                0 0 0.3em #fff,
                0 0 0.2em #fff,
-               0 0 0.1em #fff, !important;
+               0 0 0.1em #fff;
   padding-top: 7px;
   font-family: 'Josefin Sans', sans-serif;
 }

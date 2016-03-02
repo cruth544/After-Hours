@@ -17,7 +17,7 @@ a#signUp:hover {
                0 0 0.6em #00f,
                0 0 0.8em #00f,
                0 0 1.0em #00f,
-               0 0 1.2em #00f, !important
+               0 0 1.2em #00f;
 }
 
 a#logIn:hover {
@@ -28,7 +28,7 @@ a#logIn:hover {
                0 0 0.6em #f00,
                0 0 0.8em #f00,
                0 0 1.0em #f00,
-               0 0 1.2em #f00, !important
+               0 0 1.2em #f00;
 }
 
 a#logOut {
@@ -40,14 +40,14 @@ a#logOut {
                0 0 0.4em #77f,
                0 0 0.3em #fff,
                0 0 0.2em #fff,
-               0 0 0.1em #fff, !important
+               0 0 0.1em #fff;
 }
 
 a#logOut:hover {
   text-decoration: none !important;
   color: #999999 !important;
   text-shadow: 0 0 0.1em #000,
-               0 0 0.2em #000, !important;
+               0 0 0.2em #000;
 }
 
 

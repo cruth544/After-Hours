@@ -144,9 +144,9 @@ module.exports = {
 
   all: function (req, res, next) {
 
-    if (req.user == undefined ) {
-      res.render('enter')
-    } else {
+    // if (req.user == undefined ) {
+    //   res.render('enter')
+    // } else {
     {Restaurant.find({}, function (err, restaurants) {
       User.findOne({ email: req.session.email }).then(function(user){
 
@@ -157,15 +157,16 @@ module.exports = {
         }
        )}
     )}
-  }
+  // }
 
 },
 
   show: function (req, res, next) {
 
-    if (req.user == undefined ) {
-      res.render('enter')
-    } else {
+    // if (req.user == undefined ) {
+      // console.log(req.user)
+      // res.render('enter')
+    // } else {
     {Restaurant.findOne({ name: String(req.params.name)}, function (err, restaurant) {
       User.findOne({ email: req.session.email }).then(function(user){
 
@@ -176,7 +177,7 @@ module.exports = {
         }
        )}
     )}
-  }
+  // }
 
 },
   // Submit form data via restaurants/new
