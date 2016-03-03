@@ -4,9 +4,21 @@
   padding: 35px;
 }
 
+#checkbox {
+  padding-left: 50px;
+}
+.modal-dialog {
+  border: 1px solid white;
+  background-color: black;
+  border-radius: 10px;
+}
 label {
   color: white !important;
   font-family: 'Montserrat', sans-serif;
+}
+
+.modal-header {
+  text-align: center;
 }
 
 #addHappyHourTitle {

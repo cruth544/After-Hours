@@ -43,7 +43,7 @@ body {
   border-radius: 2px 0 0 2px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  height: 32px;
+  height: 100px;
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
@@ -60,6 +60,7 @@ body {
   width: 300px;
   height: 60px;
   border-radius: 6px;
+  z-index: -1;
 /*  text-shadow: 0 0 0.1em #fff,
                0 0 0.3em blue, !important;*/
 }
@@ -73,6 +74,7 @@ body {
   font-family: Roboto;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
+  z-index: -1;
 
 }
 
@@ -123,6 +125,25 @@ body {
   text-align: center;
   margin: 0 auto;
 }
+
+.input-group {
+  z-index: -1;
+}
+
+.form-control {
+  z-index: -1;
+}
+
+.form-control {
+  /*margin-right: 2px;*/
+  left: 0px;
+/*  border: 3px solid white;*/
+}
+#search-button .input-group-addon .glyphicon-search {
+  z-index: 100;
+  /*border: 1px solid red;*/
+}
+
 /*.gm-style-iw {
   width: 350px !important;
    top: 15px !important;
