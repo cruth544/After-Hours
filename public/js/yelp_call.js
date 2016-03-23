@@ -294,13 +294,13 @@ getMyPosition(null, function (position) {
 })()
 
 window.onscroll = function () {
-  if (document.getElementById('my_restaurant_list')) {
-    var screenBottomPosition = window.scrollY + window.innerHeight
-    if (screenBottomPosition >= document.body.scrollHeight - 100) {
-      console.log('more')
-      moreResults()
-    }
-  }
+  // if (document.getElementById('my_restaurant_list')) {
+  //   var screenBottomPosition = window.scrollY + window.innerHeight
+  //   if (screenBottomPosition >= document.body.scrollHeight - 100) {
+  //     console.log('more')
+  //     moreResults()
+  //   }
+  // }
 }
 
 //////////////////////////////////CODE//////////////////////////////////
