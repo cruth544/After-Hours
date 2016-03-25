@@ -23,3 +23,6 @@ input{
   line-height: 6px !important;
 }
 
+#search-button {
+  display: none;
+}

@@ -121,7 +121,7 @@ body {
   font-family: 'Josefin Sans', sans-serif;
   position: relative;
   display: none;
-  top: -90%;
+  top: 0%;
   text-align: center;
   margin: 0 auto;
 }
