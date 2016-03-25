@@ -19,24 +19,24 @@
   <%- include('../partials/header-footer-nav/navigation_bar') %>
   <%- include('../partials/header-footer-nav/search_bar') %>
   <!-- Sidebar -->
-  <%- include('../partials/modals/new_happy_hour') %>
+  <%- /* include('../partials/modals/new_happy_hour') %>
   <%- include('../partials/modals/edit_profile') %>
   <%- include('../partials/modals/login') %>
-  <%- include('../partials/modals/sign-up') %>
+  <%- include('../partials/modals/sign-up') */%>
 
 <div id = "main">
 <!-- Conditionals for hiding navigation, restaurant view list and settings if user is not logged in -->
 
   <% if(user != undefined){ %>
             <% if(user.fb != '{}'){ %>
-            <%- include('../partials/sidebar/sidebar') %>
+            <%- /* include('../partials/sidebar/sidebar') */%>
             <%- include('../partials/maps/map') %>
             <%- include('../partials/maps/my-restaurant-list') %>
             <%- include('../partials/header-footer-nav/footer') %>
 
           <% } %>
   <% } else if( curr_user ){ %>
-          <%- include('../partials/sidebar/sidebar') %>
+          <%- /* include('../partials/sidebar/sidebar') */%>
           <%- include('../partials/maps/map') %>
           <%- include('../partials/maps/my-restaurant-list') %>
            <%- include('../partials/header-footer-nav/footer') %>
