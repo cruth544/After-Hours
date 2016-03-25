@@ -44,11 +44,11 @@
   font-color: rgba(255,255,255,0.5);
   font-family: 'Josefin Sans', sans-serif;
 /*  border: 1px solid yellow;*/
-  font-size: 13px;
+  font-size: 10px;
 }
 
 #time-number {
-  font-size: 26px;
+  font-size: 18px;
   text-align: center;
   text-shadow: 0 0 1.2em #f00,
                0 0 1.0em #f00,
