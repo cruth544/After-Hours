@@ -373,10 +373,10 @@ module.exports = {
     var businessJson = {}
     var responsesCompleted = 0
     var yelp = new Yelp({
-      consumer_key: 'ppGF7cs331hgnbdAMFtrKQ',
-      consumer_secret: 'vZIA3bJyHdn9q9JLLgLeY6c35eE',
-      token: '8pSTKEbNQJ7P8zx8ECZdIUDknncrjPLq',
-      token_secret: 'Z2t6RPX8FOlA43xpFmWppg8J_hI'
+      consumer_key: process.env.YELP_CONSUMER_KEY,
+      consumer_secret: process.env.YELP_CONSUMER_SECRET,
+      token: process.env.YELP_TOKEN_KEY,
+      token_secret: process.env.YELP_TOKEN_SECRET
     })
     setUserData(req.query)
 
