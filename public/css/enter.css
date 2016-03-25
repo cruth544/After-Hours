@@ -1,20 +1,32 @@
+.row {
+  display: flex;
+}
+
 #welcomeLogo {
   height: 620px;
-  width: 760px;
-  margin-left: 33px;
+  width: 620px;
   background-image: url('../assets/logo-animate/after-hours-off.png');
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   -webkit-animation: logo_animate 7s ease-out infinite;
   -moz-animation: logo_animate 7s ease-out infinite;
   -o-animation: logo_animate 7s ease-out infinite;
   animation: logo_animate 7s ease-out infinite;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   margin-top: 85px;
+}
+
+#welcomeIntro {
+  color: white;
+  font-family: Verdana;
+  float: right;
+  width: 50%;
+  margin-top: 20%;
 }
 
 
 @keyframes logo_animate {
-/*  0% {background-image: url('../assets/logo-animate/after-hours-off.png');}*/
+  0% {background-image: url('../assets/logo-animate/after-hours-off.png');}
   0% {background-image: url('../assets/logo-animate/after-hours-off.png');}
   15% {background-image: url('../assets/logo-animate/A-after-hours.png');}
   20% {background-image: url('../assets/logo-animate/f-after-hours.png');}
@@ -33,7 +45,7 @@
 }
 
 body {
-  background-image: url('../assets/brick_wall.jpg');
+  /*background-image: url('../assets/brick_wall.jpg');*/
   background-color: black;
   background-size: cover;
   margin: 0 auto;
@@ -41,12 +53,13 @@ body {
 
 #enter {
   height: 180px;
-  width: 360px;
+  width: 250px;
   background-image: url('../assets/enter-logo-off.png');
   position: relative;
-  background-size: cover;
-  top: 375px;
-  left: 15px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 320px;
+  left: 150px;
 }
 
 #enter:hover {
